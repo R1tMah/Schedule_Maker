@@ -132,21 +132,21 @@ class SettingsPage extends StatelessWidget {
             },
             child: Text('Retake personalized quiz'),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
               // Action for Notifications
             },
             child: Text('Notifications'),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
               // Action for About Us
             },
             child: Text('About Us'),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
               // Action for Help
