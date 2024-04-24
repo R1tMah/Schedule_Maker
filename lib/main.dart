@@ -123,7 +123,38 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Settings Page'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              // Action for Retake personalized quiz
+            },
+            child: Text('Retake personalized quiz'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Action for Notifications
+            },
+            child: Text('Notifications'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Action for About Us
+            },
+            child: Text('About Us'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Action for Help
+            },
+            child: Text('Help'),
+          ),
+        ],
+      ),
     );
   }
 }
