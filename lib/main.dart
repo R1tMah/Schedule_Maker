@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[200],
+        backgroundColor: Colors.teal[900],
         title: Text(_getAppBarTitle(_selectedIndex)),
       ),
       body: _pages[_selectedIndex],
