@@ -101,6 +101,8 @@ class SchedulePage extends StatelessWidget {
   }
 }
 
+
+
 class RemindersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -119,6 +121,8 @@ class HistoryPage extends StatelessWidget {
   }
 }
 
+
+
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -129,12 +133,17 @@ class SettingsPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Action for Retake personalized quiz
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RetakePersonalizedQuizPage()),
+              );
             },
             child: Text('Retake personalized quiz'),
           ),
           SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
+
               // Action for Notifications
             },
             child: Text('Notifications'),
@@ -155,6 +164,41 @@ class SettingsPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RetakePersonalizedQuizPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Retake Personalized Quiz'),
+    );
+  }
+}
+
+class NotificationsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Notifications Page'),
+    );
+  }
+}
+
+class AboutUsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('About Us Page'),
+    );
+  }
+}
+class HelpPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Help Page'),
     );
   }
 }
