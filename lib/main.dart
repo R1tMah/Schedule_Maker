@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 
@@ -22,8 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(// Define a primary color swatch
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
-        scaffoldBackgroundColor: Colors.teal[900],
+        //colorScheme: ColorScheme.fromSwatch(primarySwatch: myPrimaryColor[200]),
+        colorSchemeSeed: Colors.teal[900],
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -57,9 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal[900],
+        backgroundColor: Colors.red[200],
         title: Text(_getAppBarTitle(_selectedIndex)),
-        foregroundColor: Colors.white,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Theme(
