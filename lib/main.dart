@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.teal[900],
         title: Text(_getAppBarTitle(_selectedIndex)),
+        foregroundColor: Colors.white,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Theme(
