@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
-              label: 'Schedule',
+              label: 'Schedulepp',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
