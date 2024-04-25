@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(// Define a primary color swatch
-        //colorScheme: ColorScheme.fromSwatch(primarySwatch: myPrimaryColor[200]),
-        colorSchemeSeed: Colors.teal[900],
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
+        scaffoldBackgroundColor: Colors.teal[900],
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -56,8 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[200],
+        backgroundColor: Colors.teal[900],
         title: Text(_getAppBarTitle(_selectedIndex)),
+          foregroundColor: Colors.white,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Theme(
@@ -73,24 +74,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              label: 'Schedulepp',
+              icon: Icon(Icons.calendar_today,
+                  color: Colors.teal),
+              label: 'Schedule',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
+              icon: Icon(Icons.notifications,
+                  color: Colors.teal),
               label: 'Reminders',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history),
+              icon: Icon(Icons.history,
+                  color: Colors.teal),
               label: 'History',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings,
+                  color: Colors.teal),
               label: 'Settings',
             ),
           ],
           currentIndex: _selectedIndex,
-          fixedColor: Colors.blue[800],
+          fixedColor: Colors.teal[900],
           onTap: _onItemTapped,
         ),
       ),
@@ -117,7 +122,10 @@ class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Schedule Page'),
+      child: Text(
+          'Schedule Page',
+          style: TextStyle(color: Colors.white),
+          ),
     );
   }
 }
@@ -128,7 +136,10 @@ class RemindersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Reminders Page'),
+      child: Text(
+          'Reminders Page',
+        style: TextStyle(color: Colors.white),
+      ),
     );
   }
 }
@@ -137,7 +148,9 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('History Page'),
+      child: Text('History Page',
+        style: TextStyle(color: Colors.white),
+      ),
     );
   }
 }
