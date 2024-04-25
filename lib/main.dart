@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return 'Schedule';
       case 1:
-        return 'Remindersjjj';
+        return 'Remiblers';
       case 2:
         return 'History';
       case 3:
