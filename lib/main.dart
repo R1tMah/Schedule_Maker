@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             textTheme: Theme
                 .of(context)
                 .textTheme
-                .copyWith(caption: new TextStyle(color: Colors.yellow))),
+                .copyWith(bodySmall: new TextStyle(color: Colors.yellow))),
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
