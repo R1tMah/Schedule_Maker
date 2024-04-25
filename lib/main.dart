@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(// Define a primary color swatch
-        //colorScheme: ColorScheme.fromSwatch(primarySwatch: myPrimaryColor[200]),
-        colorSchemeSeed: Colors.teal[900],
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
+        scaffoldBackgroundColor: Colors.teal[900],
         useMaterial3: true,
       ),
       home: const MyHomePage(),
