@@ -159,7 +159,7 @@ class SettingsPage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => RetakePersonalizedQuizPage()),
               );
             },
-            child: Text('Retake personalized quiz'),
+            child: Text('Retakk personalized quiz'),
           ),
           SizedBox(height: 50),
           ElevatedButton(
