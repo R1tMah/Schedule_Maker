@@ -172,7 +172,7 @@ class SettingsPage extends StatelessWidget {
               );
               // Action for Notifications
             },
-            child: Text('Notifications'),
+            child: Text('Notifimktions'),
           ),
           SizedBox(height: 50),
           ElevatedButton(
