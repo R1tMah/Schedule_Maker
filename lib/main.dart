@@ -7,8 +7,7 @@ because you can actually change those, stateless widgets don't work because
 if we want user input or whatever, a stateless widget won't work for that
 I didn't feel like changing them for now because a stateful widget requires different
 functions for it. We should change them sometime. Also need to decide if we want
-the bar to be there whenever we do the quiz or do we not need it cus it doeesn't transfer over
-
+the bar to be there whenever we do the quiz or do we not need it cus it doesn't transfer over
 */
 void main() {
   runApp(const MyApp());
