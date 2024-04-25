@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           // sets the background color of the `BottomNavigationBar`
-            canvasColor: Colors.brown[50],
+            canvasColor: Colors.amber[50],
             // sets the active color of the `BottomNavigationBar` if `Brightness` is light
             primaryColor: Colors.red,
             textTheme: Theme
