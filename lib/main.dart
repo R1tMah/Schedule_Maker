@@ -285,7 +285,7 @@ class HelpPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Back to Settings'),
+          child: const Text('Back to dickings'),
         ),
       ),
     );
