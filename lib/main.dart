@@ -143,7 +143,10 @@ class SettingsPage extends StatelessWidget {
           SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsPage()),
+              );
               // Action for Notifications
             },
             child: Text('Notifications'),
@@ -151,6 +154,10 @@ class SettingsPage extends StatelessWidget {
           SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutUsPage()),
+              );
               // Action for About Us
             },
             child: Text('About Us'),
@@ -158,6 +165,10 @@ class SettingsPage extends StatelessWidget {
           SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HelpPage()),
+              );
               // Action for Help
             },
             child: Text('Help'),
@@ -169,36 +180,80 @@ class SettingsPage extends StatelessWidget {
 }
 
 class RetakePersonalizedQuizPage extends StatelessWidget {
+  const RetakePersonalizedQuizPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Retake Personalized Quiz'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Retake Personalized Quiz'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Back to Settings'),
+        ),
+      ),
     );
   }
 }
 
 class NotificationsPage extends StatelessWidget {
+  const NotificationsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Notifications Page'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notifications Page'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Back to Settings'),
+        ),
+      ),
     );
   }
 }
 
 class AboutUsPage extends StatelessWidget {
+  const AboutUsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('About Us Page'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('About Us Page'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Back to Settings'),
+        ),
+      ),
     );
   }
 }
 class HelpPage extends StatelessWidget {
+  const HelpPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Help Page'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Help Page'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Back to Settings'),
+        ),
+      ),
     );
   }
 }
