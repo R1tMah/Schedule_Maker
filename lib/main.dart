@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             textTheme: Theme
                 .of(context)
                 .textTheme
-                .copyWith(caption: new TextStyle(color: Colors.yellow))),
+                .copyWith(bodySmall: new TextStyle(color: Colors.yellow))),
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return 'Schedule';
       case 1:
-        return 'Reminders';
+        return 'Remindersjjj';
       case 2:
         return 'History';
       case 3:
