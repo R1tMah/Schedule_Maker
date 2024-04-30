@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 
+
 /*
 Need to change all of the widgets to stateful widgets
 because you can actually change those, stateless widgets don't work because
@@ -172,7 +173,7 @@ class SettingsPage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => RetakePersonalizedQuizPage()),
               );
             },
-            child: Text('Retakk personalized quiz'),
+            child: Text('Retake personalized quiz'),
           ),
           SizedBox(height: 50),
           ElevatedButton(
@@ -224,7 +225,10 @@ class RetakePersonalizedQuizPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  QuizApp()),
+            );
           },
           child: const Text('Back to Settings'),
         ),
@@ -285,9 +289,112 @@ class HelpPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Back to dickings'),
+          child: const Text('Back to Settings'),
         ),
       ),
     );
   }
 }
+
+
+class QuizApp extends StatefulWidget {
+  @override
+  _QuizAppState createState() => _QuizAppState();
+}// A State created by StatefulWidget to be displayed on screen.
+
+class _QuizAppState extends State<QuizApp>{
+  Widget build(BuildContext context){
+    return Column(//Column contains question section, true-false buttons and scorecard (Row).
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child:
+              Text("I am a ... "),
+            ),// Question section is styled by wrapping it in Center,Padding and Expanded widgets.
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: ElevatedButton(
+              child: Text('True'),
+              onPressed: () {/*Functionality what to do when button is pressed*/},
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: ElevatedButton(
+              child: Text('False'),
+              onPressed: () {/*Functionality what to do when button is pressed*/},
+            ),
+          ),
+        ),
+        Expanded(
+          child: Row(// Scorecard to maintain user's result
+            children: <Widget>[
+              Icon(Icons.check, color: Colors.green),//For correct response
+              Icon(Icons.close, color: Colors.red),// For wrong response
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+/*
+class Question {
+  String qText;
+  bool qAns;
+
+  Question(this.qText, this.qAns); // Constructor used to create an object of 'Question' datatype.
+}//Question is now a user-defined datatype used to store Q&A.
+
+class QuizBrain {
+  int _qNo = 0;//To store the current question number.
+
+  List<Question> _questions = [
+    Question(
+        'You should maintain at least 1 metre distance between yourself and anyone who is coughing or sneezing.',
+        true),
+    Question(
+        'It is safe to shake hands with your neighbours as you know them well.',
+        false),
+    Question('Covid-19 virus can spread through droplets in air.', true),
+  ];//The actual database of Q&A. It is a list of 'Question' datatype objects.
+
+  void nextQuestion() {
+    if (_qNo < _questions.length - 1) _qNo++;
+  }// It updates current question number to the next question number.
+
+  String getQuestion() {
+    return _questions[_qNo].qText;
+  }// It retrieves the current question from database to display on the screen.
+
+  bool getAnswer() {
+    return _questions[_qNo].qAns;
+  }// It retrieves the correct answer corresponding to current question to validate user's choice.
+
+  int getCountOfQuestions() {
+    return _questions.length;
+  }// It retrieves total number of questions to dispaly in result page.
+
+  bool isFinished() {
+    if (_qNo == _questions.length - 1)
+      return true;
+    else
+      return false;
+  }// It checks if the questions in the database are completed.
+
+  void reset() {
+    _qNo = 0;
+  }// It resets the quiz, after completing display of all questions.
+}
+*/
