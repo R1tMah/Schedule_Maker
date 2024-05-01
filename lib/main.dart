@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-
+var firstTime = 1;
+var name = '';
 
 /*
 COMMENTS FOR CHANGE:
 ADDED A QUESTION FOR THE QUIZ BUT NEED TO FIGURE OUT HOW TO STORE THE DIFFERENT
 QUESTIONS WITHIN THE APP AND NEED TO FIND A WAY TO CHANGE THE SCREEN AND SEE IF QUESTIONS ARE RIGHT
-
 */
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.teal[900],
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const NameInputPage(),
     );
   }
 }
@@ -117,12 +117,77 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+
+class NameInputPage extends StatefulWidget {
+  const NameInputPage({Key? key}) : super(key: key);
+
+  @override
+  _NameInputPageState createState() => _NameInputPageState();
+}
+
+class _NameInputPageState extends State<NameInputPage> {
+  TextEditingController _nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal[900],
+        title: const Text('Enter Your Name'),
+        foregroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              style: TextStyle(
+                color: Colors.white
+              ),
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
+                labelStyle: TextStyle(
+                  color: Colors.white
+                ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Get the entered name
+                name = _nameController.text;
+                // Call the callback function to pass the name to the parent widget
+                firstTime = 0;
+                // Navigate back
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyHomePage()),
+                );
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-          'Schedule Page',
+          'Hello, ' + name + ', Schedule Page',
           style: TextStyle(color: Colors.white),
           ),
     );
@@ -165,10 +230,9 @@ class SettingsPage extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              // Action for Retake personalized quiz
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RetakePersonalizedQuizPage()),
+                MaterialPageRoute(builder: (context) => QuizApp()),
               );
             },
             child: Text('Retake personalized quiz'),
@@ -223,12 +287,9 @@ class RetakePersonalizedQuizPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) =>  QuizApp()),
-            );
+
           },
-          child: const Text('Back to Settings'),
+          child: const Text('Retake Personalized Quiz'),
         ),
       ),
     );
@@ -312,7 +373,7 @@ class _QuizAppState extends State<QuizApp>{
             padding: EdgeInsets.all(10.0),
             child: Center(
               child:
-              Text("I am a ... "),
+              Text("I am a ..."),
             ),// Question section is styled by wrapping it in Center,Padding and Expanded widgets.
           ),
         ),
