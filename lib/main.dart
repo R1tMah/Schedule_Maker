@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return 'Schedule';
       case 1:
-        return 'Remindersjjj';
+        return 'Reminders';
       case 2:
         return 'History';
       case 3:
@@ -182,7 +182,7 @@ class SettingsPage extends StatelessWidget {
               );
               // Action for Notifications
             },
-            child: Text('Notifimktions'),
+            child: Text('Notification'),
           ),
           SizedBox(height: 50),
           ElevatedButton(
