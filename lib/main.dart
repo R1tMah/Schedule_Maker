@@ -361,50 +361,79 @@ class QuizApp extends StatefulWidget {
   _QuizAppState createState() => _QuizAppState();
 }// A State created by StatefulWidget to be displayed on screen.
 
-class _QuizAppState extends State<QuizApp>{
-  Widget build(BuildContext context){
-    return Column(//Column contains question section, true-false buttons and scorecard (Row).
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child:
-              Text("I am a ..."),
-            ),// Question section is styled by wrapping it in Center,Padding and Expanded widgets.
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: ElevatedButton(
-              child: Text('True'),
-              onPressed: () {/*Functionality what to do when button is pressed*/},
+class _QuizAppState extends State<QuizApp> {
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("I am a..."),
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: ElevatedButton(
-              child: Text('False'),
-              onPressed: () {/*Functionality what to do when button is pressed*/},
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToHomePage(context);
+                },
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Row(// Scorecard to maintain user's result
-            children: <Widget>[
-              Icon(Icons.check, color: Colors.green),//For correct response
-              Icon(Icons.close, color: Colors.red),// For wrong response
-            ],
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('High School Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'High School Student';
+                  });
+                  _navigateToHomePage(context);
+                },
+              ),
+            ),
           ),
-        )
-      ],
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Teacher'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Teacher';
+                  });
+                  _navigateToHomePage(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  void _navigateToHomePage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.pop(context, _selectedOption);
+    });
   }
 }
 
