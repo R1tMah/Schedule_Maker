@@ -415,7 +415,107 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("I am a..."),
+                child: Text("I spend __ hours on my phone"),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('1-3'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = '1-3';
+                  });
+                  _navigateToSecondPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('4-6'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = '4-6';
+                  });
+                  _navigateToSecondPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('7-9'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'High School Student';
+                  });
+                  _navigateToSecondPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('9+'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Teacher';
+                  });
+                  _navigateToSecondPage(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  void _navigateToSecondPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  SecondQuestion()),
+      );
+    });
+  }
+}
+
+class SecondQuestion extends StatefulWidget {
+  @override
+  SecondQuestionState createState() => SecondQuestionState();
+}// A State created by StatefulWidget to be displayed on screen.
+
+class SecondQuestionState extends State<SecondQuestion> {
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("Do you take breaks when you do work"),
               ),
             ),
           ),
@@ -428,7 +528,21 @@ class _QuizAppState extends State<QuizApp> {
                   setState(() {
                     _selectedOption = 'College Student';
                   });
-                  _navigateToHomePage(context);
+                  _navigateToThirdPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToThirdPage(context);
                 },
               ),
             ),
@@ -442,7 +556,7 @@ class _QuizAppState extends State<QuizApp> {
                   setState(() {
                     _selectedOption = 'High School Student';
                   });
-                  _navigateToHomePage(context);
+                  _navigateToThirdPage(context);
                 },
               ),
             ),
@@ -456,7 +570,7 @@ class _QuizAppState extends State<QuizApp> {
                   setState(() {
                     _selectedOption = 'Teacher';
                   });
-                  _navigateToHomePage(context);
+                  _navigateToThirdPage(context);
                 },
               ),
             ),
@@ -466,59 +580,418 @@ class _QuizAppState extends State<QuizApp> {
     );
   }
 
-  void _navigateToHomePage(BuildContext context) {
+
+
+  void _navigateToThirdPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.pop(context, _selectedOption);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  ThirdQuestion()),
+      );
     });
   }
 }
 
-/*
-class Question {
-  String qText;
-  bool qAns;
 
-  Question(this.qText, this.qAns); // Constructor used to create an object of 'Question' datatype.
-}//Question is now a user-defined datatype used to store Q&A.
+class ThirdQuestion extends StatefulWidget {
+  @override
+  ThirdQuestionState createState() => ThirdQuestionState();
+}// A State created by StatefulWidget to be displayed on screen.
 
-class QuizBrain {
-  int _qNo = 0;//To store the current question number.
+class ThirdQuestionState extends State<ThirdQuestion> {
+  String? _selectedOption;
 
-  List<Question> _questions = [
-    Question(
-        'You should maintain at least 1 metre distance between yourself and anyone who is coughing or sneezing.',
-        true),
-    Question(
-        'It is safe to shake hands with your neighbours as you know them well.',
-        false),
-    Question('Covid-19 virus can spread through droplets in air.', true),
-  ];//The actual database of Q&A. It is a list of 'Question' datatype objects.
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("Do you have anxiety"),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToFourthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToFourthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('High School Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'High School Student';
+                  });
+                  _navigateToFourthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Teacher'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Teacher';
+                  });
+                  _navigateToFourthPage(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  void nextQuestion() {
-    if (_qNo < _questions.length - 1) _qNo++;
-  }// It updates current question number to the next question number.
 
-  String getQuestion() {
-    return _questions[_qNo].qText;
-  }// It retrieves the current question from database to display on the screen.
 
-  bool getAnswer() {
-    return _questions[_qNo].qAns;
-  }// It retrieves the correct answer corresponding to current question to validate user's choice.
-
-  int getCountOfQuestions() {
-    return _questions.length;
-  }// It retrieves total number of questions to dispaly in result page.
-
-  bool isFinished() {
-    if (_qNo == _questions.length - 1)
-      return true;
-    else
-      return false;
-  }// It checks if the questions in the database are completed.
-
-  void reset() {
-    _qNo = 0;
-  }// It resets the quiz, after completing display of all questions.
+  void _navigateToFourthPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  FourthQuestion()),
+      );
+    });
+  }
 }
-*/
+
+class FourthQuestion extends StatefulWidget {
+  @override
+  FourthQuestionState createState() => FourthQuestionState();
+}// A State created by StatefulWidget to be displayed on screen.
+
+class FourthQuestionState extends State<FourthQuestion> {
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("Motivation Question 1"),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToFifthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToFifthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('High School Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'High School Student';
+                  });
+                  _navigateToFifthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Teacher'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Teacher';
+                  });
+                  _navigateToFifthPage(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  void _navigateToFifthPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  FifthQuestion()),
+      );
+    });
+  }
+}
+
+
+class FifthQuestion extends StatefulWidget {
+  @override
+  FifthQuestionState createState() => FifthQuestionState();
+}// A State created by StatefulWidget to be displayed on screen.
+
+class FifthQuestionState extends State<FifthQuestion> {
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("Motivation Question 2"),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('High School Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'High School Student';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Teacher'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Teacher';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  void _navigateToSixthPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  SixthQuestion()),
+      );
+    });
+  }
+}
+
+
+class SixthQuestion extends StatefulWidget {
+  @override
+  SixthQuestionState createState() => SixthQuestionState();
+}// A State created by StatefulWidget to be displayed on screen.
+
+class SixthQuestionState extends State<SixthQuestion> {
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("Overthinking Question 1"),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('College Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'College Student';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('High School Student'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'High School Student';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Teacher'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Teacher';
+                  });
+                  _navigateToSixthPage(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  void _navigateToSixthPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  SixthQuestion()),
+      );
+    });
+  }
+}
+
