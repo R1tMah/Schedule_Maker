@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.teal[900],
         useMaterial3: true,
       ),
-      home: const NameInputPage(),
+      home: firstTime == 1 ? const NameInputPage() : const MyHomePage(),
     );
   }
 }
@@ -484,9 +484,13 @@ class _QuizAppState extends State<QuizApp> {
 
   void _navigateToSecondPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  SecondQuestion()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => SecondQuestion(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     });
   }
@@ -584,9 +588,13 @@ class SecondQuestionState extends State<SecondQuestion> {
 
   void _navigateToThirdPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  ThirdQuestion()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => ThirdQuestion(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     });
   }
@@ -685,9 +693,13 @@ class ThirdQuestionState extends State<ThirdQuestion> {
 
   void _navigateToFourthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  FourthQuestion()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => FourthQuestion(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     });
   }
@@ -785,9 +797,13 @@ class FourthQuestionState extends State<FourthQuestion> {
 
   void _navigateToFifthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  FifthQuestion()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => FifthQuestion(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     });
   }
@@ -886,9 +902,13 @@ class FifthQuestionState extends State<FifthQuestion> {
 
   void _navigateToSixthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  SixthQuestion()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => SixthQuestion(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     });
   }
@@ -987,9 +1007,13 @@ class SixthQuestionState extends State<SixthQuestion> {
 
   void _navigateToSixthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  SixthQuestion()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => SixthQuestion(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     });
   }
