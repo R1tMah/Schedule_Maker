@@ -353,7 +353,7 @@ class _OurMissionState extends State<OurMission> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Our Mission Page'),
+        title: const Text('Our Mission'),
       ),
       body: Center(
         child: Padding(
