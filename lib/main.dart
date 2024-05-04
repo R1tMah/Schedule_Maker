@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.teal[900],
         title: Text(_getAppBarTitle(_selectedIndex)),
-        foregroundColor: Colors.white,
+          foregroundColor: Colors.white,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Theme(
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return 'Schedule';
       case 1:
-        return 'RemindHiers';
+        return 'Reminders';
       case 2:
         return 'History';
       case 3:
@@ -149,13 +149,13 @@ class _NameInputPageState extends State<NameInputPage> {
           children: [
             TextField(
               style: TextStyle(
-                  color: Colors.white
+                color: Colors.white
               ),
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: 'Name',
                 labelStyle: TextStyle(
-                    color: Colors.white
+                  color: Colors.white
                 ),
                 border: OutlineInputBorder(),
               ),
@@ -187,9 +187,9 @@ class SchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Hello, ' + name + ', Schedule Page',
-        style: TextStyle(color: Colors.white),
-      ),
+          'Hello, ' + name + ', Schedule Page',
+          style: TextStyle(color: Colors.white),
+          ),
     );
   }
 }
@@ -201,7 +201,7 @@ class RemindersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Reminders Page',
+          'Reminders Page',
         style: TextStyle(color: Colors.white),
       ),
     );
@@ -305,7 +305,7 @@ class NotificationsPage extends StatelessWidget {
         title: const Text('Notifications Page'),
       ),
       body: Center(
-      ),
+        ),
     );
   }
 }
@@ -319,7 +319,7 @@ class AboutUsPage extends StatelessWidget {
         title: const Text('About Us Page'),
       ),
       body: Center(
-      ),
+        ),
     );
   }
 }
