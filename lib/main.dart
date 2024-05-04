@@ -264,11 +264,11 @@ class SettingsPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpPage()),
+                MaterialPageRoute(builder: (context) => OurMission()),
               );
               // Action for Help
             },
-            child: Text('Help'),
+            child: Text('Our Mission'),
           ),
         ],
       ),
@@ -305,13 +305,7 @@ class NotificationsPage extends StatelessWidget {
         title: const Text('Notifications Page'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Back to Settings'),
         ),
-      ),
     );
   }
 }
@@ -325,35 +319,77 @@ class AboutUsPage extends StatelessWidget {
         title: const Text('About Us Page'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Back to Settings'),
         ),
-      ),
     );
   }
 }
-class HelpPage extends StatelessWidget {
-  const HelpPage({super.key});
+class OurMission extends StatefulWidget {
+  const OurMission({Key? key}) : super(key: key);
+
+  @override
+  _OurMissionState createState() => _OurMissionState();
+}
+
+class _OurMissionState extends State<OurMission> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 500), // Set animation duration
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _controller.forward(); // Start the animation
+  }
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose the animation controller
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Help Page'),
+        title: const Text('Our Mission Page'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Back to Settings'),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FadeTransition(
+                opacity: _animation, // Apply the animation to the opacity property
+                child: Text(
+                  'About Our Mission',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.0),
+              FadeTransition(
+                opacity: _animation, // Apply the animation to the opacity property
+                child: Text(
+                  'At Schedule Maker, we aim to...',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
 
 
 class QuizApp extends StatefulWidget {
