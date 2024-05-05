@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/homepage.dart';
+import 'package:ran_app/questions/quiz.dart';
 var name = ' ';
 var firstTime = 1;
 class NameInputPage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _NameInputPageState extends State<NameInputPage> {
                 // Navigate back
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MyHomePage()),
+                  MaterialPageRoute(builder: (context) =>  QuizApp()),
                 );
               },
               child: const Text('Submit'),

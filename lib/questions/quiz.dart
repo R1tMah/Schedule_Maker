@@ -12,7 +12,7 @@ class _QuizAppState extends State<QuizApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
+        title: Text('Question 1'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,7 +23,7 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("I spend __ hours on my phone"),
+                child: Text("How frequently do you check your phone notifications throughout the day?"),
               ),
             ),
           ),
@@ -31,10 +31,10 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('1-3'),
+                child: Text('Very Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = '1-3';
+                    _selectedOption = 'Very Frequently';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -45,10 +45,10 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('4-6'),
+                child: Text('Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = '4-6';
+                    _selectedOption = 'Frequently';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -59,10 +59,10 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('7-9'),
+                child: Text('Sometimes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'High School Student';
+                    _selectedOption = 'Sometimes';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -73,10 +73,24 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('9+'),
+                child: Text('Not Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Teacher';
+                    _selectedOption = 'Not Frequently';
+                  });
+                  _navigateToSecondPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Rarely'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Rarely';
                   });
                   _navigateToSecondPage(context);
                 },

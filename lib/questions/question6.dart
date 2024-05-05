@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ran_app/questions/question6.dart';
+import 'package:ran_app/questions/question7.dart';
 
 class SixthQuestion extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class SixthQuestionState extends State<SixthQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
+        title: Text('Question 6'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -24,7 +24,7 @@ class SixthQuestionState extends State<SixthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Overthinking Question 1"),
+                child: Text("Are you often preoccupied with 'what-if' scenarios or potential negative outcomes?"),
               ),
             ),
           ),
@@ -32,12 +32,12 @@ class SixthQuestionState extends State<SixthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('College Student'),
+                child: Text('Very Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Very Frequently';
                   });
-                  _navigateToSixthPage(context);
+                  _navigateToSeventhPage(context);
                 },
               ),
             ),
@@ -46,12 +46,12 @@ class SixthQuestionState extends State<SixthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('College Student'),
+                child: Text('Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Frequently';
                   });
-                  _navigateToSixthPage(context);
+                  _navigateToSeventhPage(context);
                 },
               ),
             ),
@@ -60,12 +60,12 @@ class SixthQuestionState extends State<SixthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('High School Student'),
+                child: Text('Sometimes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'High School Student';
+                    _selectedOption = 'Sometimes';
                   });
-                  _navigateToSixthPage(context);
+                  _navigateToSeventhPage(context);
                 },
               ),
             ),
@@ -74,12 +74,26 @@ class SixthQuestionState extends State<SixthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('Teacher'),
+                child: Text('Not Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Teacher';
+                    _selectedOption = 'Not Frequently';
                   });
-                  _navigateToSixthPage(context);
+                  _navigateToSeventhPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Rarely'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Rarely';
+                  });
+                  _navigateToSeventhPage(context);
                 },
               ),
             ),
@@ -91,12 +105,12 @@ class SixthQuestionState extends State<SixthQuestion> {
 
 
 
-  void _navigateToSixthPage(BuildContext context) {
+  void _navigateToSeventhPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => SixthQuestion(),
+          pageBuilder: (context, animation1, animation2) => SeventhQuestion(),
           transitionDuration: Duration.zero,
           reverseTransitionDuration: Duration.zero,
         ),

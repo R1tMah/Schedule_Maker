@@ -8,12 +8,13 @@ class FifthQuestion extends StatefulWidget {
 
 class FifthQuestionState extends State<FifthQuestion> {
   String? _selectedOption;
+  double _currentSliderValue = 5;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
+        title: Text('Question 5'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -24,57 +25,27 @@ class FifthQuestionState extends State<FifthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Motivation Question 2"),
+                child: Text("How easily on a scale of 1-10 do you get bored when engaging in repetitive or monotonous activities?"),
               ),
             ),
+          ),
+          Slider(
+            value: _currentSliderValue,
+            min: 1,
+            max: 10,
+            divisions: 9, // One less than the range (1-10)
+            label: _currentSliderValue.round().toString(),
+            onChanged: (double value) {
+              setState(() {
+                _currentSliderValue = value;
+              });
+            },
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('College Student'),
-                onPressed: () {
-                  setState(() {
-                    _selectedOption = 'College Student';
-                  });
-                  _navigateToSixthPage(context);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                child: Text('College Student'),
-                onPressed: () {
-                  setState(() {
-                    _selectedOption = 'College Student';
-                  });
-                  _navigateToSixthPage(context);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                child: Text('High School Student'),
-                onPressed: () {
-                  setState(() {
-                    _selectedOption = 'High School Student';
-                  });
-                  _navigateToSixthPage(context);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                child: Text('Teacher'),
+                child: Text('Done'),
                 onPressed: () {
                   setState(() {
                     _selectedOption = 'Teacher';

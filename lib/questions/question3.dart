@@ -13,7 +13,7 @@ class ThirdQuestionState extends State<ThirdQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
+        title: Text('Question 3'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -24,7 +24,7 @@ class ThirdQuestionState extends State<ThirdQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Do you have anxiety"),
+                child: Text("How often do you find yourself procrastinating"),
               ),
             ),
           ),
@@ -32,10 +32,10 @@ class ThirdQuestionState extends State<ThirdQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('College Student'),
+                child: Text('Very Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Very Frequently';
                   });
                   _navigateToFourthPage(context);
                 },
@@ -46,10 +46,10 @@ class ThirdQuestionState extends State<ThirdQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('College Student'),
+                child: Text('Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Frequently';
                   });
                   _navigateToFourthPage(context);
                 },
@@ -60,10 +60,10 @@ class ThirdQuestionState extends State<ThirdQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('High School Student'),
+                child: Text('Sometimes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'High School Student';
+                    _selectedOption = 'Sometimes';
                   });
                   _navigateToFourthPage(context);
                 },
@@ -74,10 +74,24 @@ class ThirdQuestionState extends State<ThirdQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('Teacher'),
+                child: Text('Not Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Teacher';
+                    _selectedOption = 'Not Frequently';
+                  });
+                  _navigateToFourthPage(context);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Rarely'),
+                onPressed: () {
+                  setState(() {
+                    _selectedOption = 'Rarely';
                   });
                   _navigateToFourthPage(context);
                 },

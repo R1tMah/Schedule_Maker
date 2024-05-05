@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question3.dart';
+
+
 class SecondQuestion extends StatefulWidget {
   @override
   SecondQuestionState createState() => SecondQuestionState();
@@ -7,12 +9,13 @@ class SecondQuestion extends StatefulWidget {
 
 class SecondQuestionState extends State<SecondQuestion> {
   String? _selectedOption;
-
+  double _currentSliderValue = 5;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
+        title: Text('Question 2'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,57 +26,27 @@ class SecondQuestionState extends State<SecondQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Do you take breaks when you do work"),
+                child: Text("On a scale of 1 to 10, how motivated do you feel to accomplish tasks and challenges"),
               ),
             ),
+          ),
+          Slider(
+            value: _currentSliderValue,
+            min: 1,
+            max: 10,
+            divisions: 9, // One less than the range (1-10)
+            label: _currentSliderValue.round().toString(),
+            onChanged: (double value) {
+              setState(() {
+                _currentSliderValue = value;
+              });
+            },
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
-                child: Text('College Student'),
-                onPressed: () {
-                  setState(() {
-                    _selectedOption = 'College Student';
-                  });
-                  _navigateToThirdPage(context);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                child: Text('College Student'),
-                onPressed: () {
-                  setState(() {
-                    _selectedOption = 'College Student';
-                  });
-                  _navigateToThirdPage(context);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                child: Text('High School Student'),
-                onPressed: () {
-                  setState(() {
-                    _selectedOption = 'High School Student';
-                  });
-                  _navigateToThirdPage(context);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                child: Text('Teacher'),
+                child: Text('Done'),
                 onPressed: () {
                   setState(() {
                     _selectedOption = 'Teacher';
