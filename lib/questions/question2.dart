@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question3.dart';
 
+var answer1 = '';
 
 class SecondQuestion extends StatefulWidget {
   @override
