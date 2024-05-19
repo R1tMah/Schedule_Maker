@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/settings/settings.dart';
 import 'package:ran_app/homepage/history.dart';
 import 'package:ran_app/homepage/reminders.dart';
-import 'package:ran_app/homepage/schedule.dart';
+import 'package:ran_app/schedule/schedule.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = <Widget>[
-    SchedulePage(),
+    ScheduleHomePageState(),
     RemindersPage(),
     HistoryPage(),
     SettingsPage(),
