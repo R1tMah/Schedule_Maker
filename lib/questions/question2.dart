@@ -9,7 +9,7 @@ class SecondQuestion extends StatefulWidget {
 }// A State created by StatefulWidget to be displayed on screen.
 
 class SecondQuestionState extends State<SecondQuestion> {
-  String? _selectedOption;
+  double _selectedOption = 0;
   double _currentSliderValue = 5;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class SecondQuestionState extends State<SecondQuestion> {
                 child: Text('Done'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Teacher';
+                    _selectedOption = _currentSliderValue;
                   });
                   _navigateToThirdPage(context);
                 },

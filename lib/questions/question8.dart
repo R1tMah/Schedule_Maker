@@ -35,7 +35,7 @@ class EighthQuestionState extends State<EighthQuestion> {
                 child: Text('Intrinsic Satisfaction'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Very Frequently';
+                    _selectedOption = 'Intrinsic Satisfaction';
                   });
                   _navigateToNinthPage(context);
                 },
@@ -49,7 +49,7 @@ class EighthQuestionState extends State<EighthQuestion> {
                 child: Text('Extrinsic Rewards'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Frequently';
+                    _selectedOption = 'Extrinsic Rewards';
                   });
                   _navigateToNinthPage(context);
                 },

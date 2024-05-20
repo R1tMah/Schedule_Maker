@@ -35,7 +35,7 @@ class TenthQuestionState extends State<TenthQuestion> {
                 child: Text('Yes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Yes';
                   });
                   _navigateToHomePage(context);
                 },
@@ -49,7 +49,7 @@ class TenthQuestionState extends State<TenthQuestion> {
                 child: Text('No'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'No';
                   });
                   _navigateToHomePage(context);
                 },

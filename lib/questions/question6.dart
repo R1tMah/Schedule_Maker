@@ -35,7 +35,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Very Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Very Frequently';
+                    _selectedOption = 'Very Often';
                   });
                   _navigateToSeventhPage(context);
                 },
@@ -49,7 +49,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Frequently';
+                    _selectedOption = 'Often';
                   });
                   _navigateToSeventhPage(context);
                 },
@@ -77,7 +77,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Not Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Not Frequently';
+                    _selectedOption = 'Not Often';
                   });
                   _navigateToSeventhPage(context);
                 },

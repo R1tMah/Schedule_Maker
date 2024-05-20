@@ -7,7 +7,7 @@ class FifthQuestion extends StatefulWidget {
 }// A State created by StatefulWidget to be displayed on screen.
 
 class FifthQuestionState extends State<FifthQuestion> {
-  String? _selectedOption;
+  double _selectedOption = 0;
   double _currentSliderValue = 5;
 
   @override
@@ -48,7 +48,7 @@ class FifthQuestionState extends State<FifthQuestion> {
                 child: Text('Done'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Teacher';
+                    _selectedOption = _currentSliderValue;
                   });
                   _navigateToSixthPage(context);
                 },

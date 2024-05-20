@@ -35,7 +35,7 @@ class FourthQuestionState extends State<FourthQuestion> {
                 child: Text('Yes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Yes';
                   });
                   _navigateToFifthPage(context);
                 },
@@ -49,7 +49,7 @@ class FourthQuestionState extends State<FourthQuestion> {
                 child: Text('No'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'No';
                   });
                   _navigateToFifthPage(context);
                 },

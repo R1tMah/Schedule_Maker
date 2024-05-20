@@ -35,7 +35,7 @@ class ThirdQuestionState extends State<ThirdQuestion> {
                 child: Text('Very Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Very Frequently';
+                    _selectedOption = 'Very Often';
                   });
                   _navigateToFourthPage(context);
                 },
@@ -49,7 +49,7 @@ class ThirdQuestionState extends State<ThirdQuestion> {
                 child: Text('Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Frequently';
+                    _selectedOption = 'Often';
                   });
                   _navigateToFourthPage(context);
                 },
@@ -77,7 +77,7 @@ class ThirdQuestionState extends State<ThirdQuestion> {
                 child: Text('Not Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Not Frequently';
+                    _selectedOption = 'Not Often';
                   });
                   _navigateToFourthPage(context);
                 },
