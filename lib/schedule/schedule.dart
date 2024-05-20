@@ -22,7 +22,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text( 'Hello, ' + name + ' pp, Schedule Page',style: TextStyle(color: Colors.white),)
+                child: Text( 'Hello, ' + name + ', Schedule Page',style: TextStyle(color: Colors.white),)
               )
             )
           ),
