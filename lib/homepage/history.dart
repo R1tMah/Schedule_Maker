@@ -67,8 +67,8 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
             ),
             headerStyle: HeaderStyle(
-              titleTextStyle: TextStyle(color: Colors.black, fontSize: 16), // Title text color
-              formatButtonTextStyle: TextStyle(color: Colors.black), // Format button text color
+              titleTextStyle: TextStyle(color: Colors.black, fontSize: 16),
+              formatButtonTextStyle: TextStyle(color: Colors.black),
               formatButtonDecoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(12.0),
