@@ -107,7 +107,7 @@ class NinthQuestionState extends State<NinthQuestion> {
 
   void _navigateToTenthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation1, animation2) => TenthQuestion(),

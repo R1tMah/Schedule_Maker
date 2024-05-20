@@ -64,7 +64,7 @@ class FifthQuestionState extends State<FifthQuestion> {
 
   void _navigateToSixthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation1, animation2) => SixthQuestion(),
