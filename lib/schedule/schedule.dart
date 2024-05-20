@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/name_input.dart';
+import 'package:ran_app/schedule/taskpage.dart';
 
 
 class ScheduleHomePageState extends StatefulWidget {
@@ -32,7 +33,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
                 child: Text('Enter Tasks'),
                 onPressed: () {
                     setState(() {
-
+                      _navigateToTaskPage(context);
                     });
                 },
               ),
@@ -41,5 +42,17 @@ class SchedulePage extends  State<ScheduleHomePageState>{
         ]
       )
     );
+  }
+  void _navigateToTaskPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => TaskPage(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    });
   }
 }
