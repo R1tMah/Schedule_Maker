@@ -1,5 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:ran_app/schedule/schedule.dart';
+import 'package:ran_app/schedule/schedulepage.dart';
 import 'package:ran_app/schedule/task.dart';
 
 class TaskPage extends StatefulWidget {
@@ -8,6 +10,9 @@ class TaskPage extends StatefulWidget {
 }// A State created by StatefulWidget to be displayed on screen.
 
 class TaskPageState extends State<TaskPage> {
+  List<Task> taskList = [];
+  Task currentTask = Task();
+
   String? _selectedOption;
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,7 @@ class TaskPageState extends State<TaskPage> {
                 border: TableBorder.all(color: Colors.black),
                 children: [
                   TableRow(children: [
-                    Text('Task 1'),
+                    Text(_textNameController.text),
                     Text('Cell 2'),
                     Text('Cell 3'),
                     Text('Text 4'),
@@ -52,7 +57,19 @@ class TaskPageState extends State<TaskPage> {
               ),
             ),
           ),
-
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Add Task'),
+                onPressed: () {
+                  setState(() {
+                    _displayTextInputDialog(context);
+                  });
+                },
+              ),
+            ),
+          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
@@ -70,6 +87,41 @@ class TaskPageState extends State<TaskPage> {
       ),
     );
   }
+  TextEditingController _textNameController = TextEditingController();
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Enter Task Name'),
+          content: TextField(
+            controller: _textNameController,
+            decoration: InputDecoration(hintText: "Text Field in Dialog"),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            ElevatedButton(
+              child: Text('OK'),
+              onPressed: () {
+                setState(() {
+                  currentTask.setArea(_textNameController.text);
+                });
+                print(_textNameController.text);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 
 }
