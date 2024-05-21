@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/schedulepage.dart';
 import 'package:ran_app/schedule/task.dart';
+import 'package:ran_app/schedule/todoinformationpopup.dart';
 
 class TaskPage extends StatefulWidget {
   @override
@@ -10,6 +11,10 @@ class TaskPage extends StatefulWidget {
 }// A State created by StatefulWidget to be displayed on screen.
 
 class TaskPageState extends State<TaskPage> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController durationController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
   List<Task> taskList = [];
   Task currentTask = Task();
 
@@ -63,8 +68,19 @@ class TaskPageState extends State<TaskPage> {
               child: ElevatedButton(
                 child: Text('Add Task'),
                 onPressed: () {
-                  setState(() {
-                    _displayTextInputDialog(context);
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return TodoInformationPopup(titleController: titleController, descriptionController: descriptionController, durationController: durationController, areaController: areaController,);
+                      }
+                  ).then((value) {
+                    setState(() {
+                      if (descriptionController.text == "" || titleController.text == "") {
+                      } else {
+                        titleController.clear();
+                        descriptionController.clear();
+                      }
+                    });
                   });
                 },
               ),
