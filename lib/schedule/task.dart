@@ -6,7 +6,7 @@ class Task{
     this.area = "", //1 Study, 2
     this.label = "",
     this.background = Colors.red,
-    this.duration = 0,
+    this.duration = "",
     this.preferredTimeOfTask = "",
     this.difficultyOfTask = "",
       });
@@ -15,7 +15,7 @@ class Task{
   String label;
   String area;
   Color background;
-  int duration;
+  String duration;
   String preferredTimeOfTask;
   String difficultyOfTask;
 
@@ -43,7 +43,7 @@ class Task{
   }
 
 
-  void setDuration(int duration){
+  void setDuration(String duration){
     this.duration = duration;
   }
 

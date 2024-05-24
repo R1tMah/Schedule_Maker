@@ -1,13 +1,16 @@
 
 import 'package:flutter/material.dart';
 
-class TodoInformationPopup extends StatefulWidget {
-  final TextEditingController descriptionController;
-  final TextEditingController titleController;
-  final TextEditingController durationController;
-  final TextEditingController areaController;
+String areaDropdownValue= 'Study';
+String durationDropdownValue = '15';
+String preftimeDropDownValue = 'Morning';
+String difficultyDropDownValue = 'Easy';
 
-  const TodoInformationPopup({Key? key, required this.titleController, required this.descriptionController, required this.durationController, required this.areaController}) : super(key: key);
+class TodoInformationPopup extends StatefulWidget {
+
+  final TextEditingController titleController;
+
+  TodoInformationPopup({Key? key, required this.titleController}) : super(key: key);
 
 
   @override
@@ -15,9 +18,11 @@ class TodoInformationPopup extends StatefulWidget {
 }
 
 class _TodoInformationPopupState extends State<TodoInformationPopup> {
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
+
       backgroundColor: Colors.deepPurpleAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 20,
@@ -40,42 +45,161 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
             ),
             const SizedBox(height: 20,),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment:
+            CrossAxisAlignment.start,
+            children: [
+              Text(
+                "please select the Area of the task: ",
+              ),
+              DropdownButton<String>(
+                value: areaDropdownValue,
+                isExpanded: true,
+                items: <String>[
+                  'Study',
+                  'Food',
+                  'Exercise',
+                ].map<DropdownMenuItem<String>>(
+                        (String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                onChanged: (String? selectedvalue) {
+                   areaDropdownValue = selectedvalue!;
+                  this.setState(() {
+                     areaDropdownValue= selectedvalue!;
+                  });
+                  print(areaDropdownValue);
+                },
+              ),
+            ],
+          ),
+        ),
+
+            const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: TextField(
-                controller: widget.descriptionController,
-                decoration: const InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                  labelText: "Description",
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Please select the Duration of the task in minutes: ",
+                  ),
+                  DropdownButton<String>(
+                    value: durationDropdownValue,
+                    isExpanded: true,
+                    items: <String>[
+                      '15',
+                      '30',
+                      '45',
+                      '60',
+                      '75',
+                      '90',
+                      '105',
+                      '120',
+                    ].map<DropdownMenuItem<String>>(
+                            (String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                    onChanged: (String? selectedvalue) {
+                      durationDropdownValue= selectedvalue!;
+                      this.setState(() {
+                        durationDropdownValue= selectedvalue!;
+                      });
+                      print(durationDropdownValue);
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: TextField(
-                controller: widget.durationController,
-                decoration: const InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                  labelText: "Duration",
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Please select the Duration of the task in minutes: ",
+                  ),
+                  DropdownButton<String>(
+                    value: durationDropdownValue,
+                    isExpanded: true,
+                    items: <String>[
+                      'Morning',
+                      'Afternoon',
+                      'Night',
+                      'Late Night',
+
+                    ].map<DropdownMenuItem<String>>(
+                            (String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                    onChanged: (String? selectedvalue) {
+                      preftimeDropDownValue = selectedvalue!;
+                      this.setState(() {
+                        preftimeDropDownValue= selectedvalue!;
+                      });
+                      print(preftimeDropDownValue);
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: TextField(
-                controller: widget.areaController,
-                decoration: const InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                  labelText: "Area",
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Please select the Duration of the task in minutes: ",
+                  ),
+                  DropdownButton<String>(
+                    value: durationDropdownValue,
+                    isExpanded: true,
+                    items: <String>[
+                      '15',
+                      '30',
+                      '45',
+                      '60',
+                      '75',
+                      '90',
+                      '105',
+                      '120',
+                    ].map<DropdownMenuItem<String>>(
+                            (String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                    onChanged: (String? selectedvalue) {
+                      durationDropdownValue= selectedvalue!;
+                      this.setState(() {
+                        durationDropdownValue= selectedvalue!;
+                        durationDropdownValue= selectedvalue!;
+                      });
+                      print(durationDropdownValue);
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20,),

@@ -13,8 +13,7 @@ class TaskPage extends StatefulWidget {
 class TaskPageState extends State<TaskPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController durationController = TextEditingController();
-  TextEditingController areaController = TextEditingController();
+
   List<Task> taskList = [];
   Task currentTask = Task();
 
@@ -42,21 +41,31 @@ class TaskPageState extends State<TaskPage> {
             flex: 4,
             child: Container(
 
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(10.0),
               child: Table(
                 border: TableBorder.all(color: Colors.black),
                 children: [
-                  TableRow(children: [
-                    Text(_textNameController.text),
-                    Text('Cell 2'),
-                    Text('Cell 3'),
-                    Text('Text 4'),
+                  TableRow(
+                      decoration: BoxDecoration(
+                        color: Colors.blue[100],
+                        border: Border.all(
+                          width: 1,
+                        ),
+                      ),
+                      children: [
+                    Text("Label"),
+                    Text('Area'),
+                    Text('Duration'),
+                    Text('Pref. Time'),
+                    Text('Difficulty'),
+
                   ]),
                   TableRow(children: [
                     Text('Task 4'),
                     Text('Cell 5'),
                     Text('Cell 6'),
-                    Text('Cell 6')
+                    Text('Cell 6'),
+                    Text('Hi')
                   ])
                 ],
               ),
@@ -71,16 +80,16 @@ class TaskPageState extends State<TaskPage> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return TodoInformationPopup(titleController: titleController, descriptionController: descriptionController, durationController: durationController, areaController: areaController,);
+                        return TodoInformationPopup(titleController: titleController);
                       }
                   ).then((value) {
+                    currentTask.setArea(areaDropdownValue);
+                    currentTask.setLabel(titleController.text);
                     setState(() {
-                      if (descriptionController.text == "" || titleController.text == "") {
-                      } else {
-                        titleController.clear();
-                        descriptionController.clear();
-                      }
+                      taskList.add(currentTask);
+
                     });
+
                   });
                 },
               ),
@@ -103,40 +112,8 @@ class TaskPageState extends State<TaskPage> {
       ),
     );
   }
-  TextEditingController _textNameController = TextEditingController();
 
-  Future<void> _displayTextInputDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Enter Task Name'),
-          content: TextField(
-            controller: _textNameController,
-            decoration: InputDecoration(hintText: "Text Field in Dialog"),
-          ),
-          actions: <Widget>[
-            ElevatedButton(
-              child: Text('CANCEL'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            ElevatedButton(
-              child: Text('OK'),
-              onPressed: () {
-                setState(() {
-                  currentTask.setArea(_textNameController.text);
-                });
-                print(_textNameController.text);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
 
 
