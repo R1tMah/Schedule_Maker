@@ -16,6 +16,31 @@ import 'package:ran_app/questions/question9.dart';
 import 'package:ran_app/questions/question10.dart';
 
 var response = '';
+var prompt = 'Questions and options: 1) How frequently do you check your phone '
+    'notifications throughout the day? [Very frequently, Frequently, Sometimes'
+    ', Not frequently, Very rarely] 2) On a scale of 1 to 10, how motivated do'
+    ' you feel to accomplish tasks and challenges? [1-10] 3) How often do you '
+    'find yourself procrastinating? [Very often, Often, Sometimes, Not often, '
+    'Very rarely] 4) Do you find that your motivation varies depending on the '
+    'type or nature of the task? [Yes, No] 5) How easily on a scale of 1-10 do'
+    ' you get bored when engaging in repetitive or monotonous activities? '
+    '[1-10] 6) Are you often preoccupied with "what-if" scenarios or potential'
+    ' negative outcomes? [Very often, Often, Sometimes, Not often, Very '
+    'rarely] 7) How frequently do you experience "mind wandering" or '
+    'daydreaming during daily activities? [Very frequently, Frequently, '
+    'Sometimes, Not frequently, Very rarely] 8) Do you find that you are '
+    'more motivated by external rewards or intrinsic satisfaction? [External '
+    'rewards, Intrinsic satisfaction] 9) Do you often find it difficult to '
+    'quiet your mind or relax? [Very often, Often, Sometimes, Not often, Very '
+    'rarely] 10) Are you easily distracted by external stimuli, such as noise '
+    'or movement? [Yes, No]          Answers: 1) ${answer1} 2) ${answer2} '
+    '3) ${answer3} 4) ${answer4} 5) ${answer5} 6) ${answer6} 7) ${answer7} '
+    '8) ${answer8} 9) ${answer9} 10) ${answer10}          Using these answers'
+    ' to the questions, choose one of the following that best fits the person:'
+    ' Animedoro Technique, 50-20 rule, 90-30 rule          And choose one of '
+    'the following that best fits the person: Interleaved Practice, Eat That '
+    'Frog Technique, ABCDE method, Premack          When giving the answer, '
+    'only give the answers to the two questions separated by a comma';
 
 class EndPage extends StatelessWidget {
   const EndPage({super.key});
@@ -31,7 +56,7 @@ class EndPage extends StatelessWidget {
         {
           "model": "gpt-3.5-turbo",
           "messages": [
-            {"role": "user", "content": "Hi, how are you"} // Include the user prompt
+            {"role": "user", "content": prompt} // Include the user prompt
           ],
           "max_tokens": 250,
           "temperature": 0,
@@ -48,8 +73,6 @@ class EndPage extends StatelessWidget {
       throw Exception('Failed to load response');
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +97,8 @@ class EndPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Center(
-                      child: Text('${response}'),
+                      child: Text('Split: ${(response.split(', '))[0]}\nWork: '
+                          '${(response.split(', '))[1]}'),
                       //child: Text("Quiz Complete"),
                     ),
                   ),
