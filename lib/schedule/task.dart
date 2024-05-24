@@ -6,7 +6,7 @@ class Task{
     this.area = "", //1 Study, 2
     this.label = "",
     this.background = Colors.red,
-    this.duration = "",
+    this.duration = "15",
     this.preferredTimeOfTask = "",
     this.difficultyOfTask = "",
       });

@@ -10,7 +10,7 @@ class TodoInformationPopup extends StatefulWidget {
 
   final TextEditingController titleController;
 
-  TodoInformationPopup({Key? key, required this.titleController}) : super(key: key);
+  const TodoInformationPopup({Key? key, required this.titleController}) : super(key: key);
 
 
   @override
@@ -122,6 +122,8 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 ],
               ),
             ),
+
+
             const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
@@ -134,7 +136,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                     "Please select the Duration of the task in minutes: ",
                   ),
                   DropdownButton<String>(
-                    value: durationDropdownValue,
+                    value: preftimeDropDownValue,
                     isExpanded: true,
                     items: <String>[
                       'Morning',
@@ -172,17 +174,12 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                     "Please select the Duration of the task in minutes: ",
                   ),
                   DropdownButton<String>(
-                    value: durationDropdownValue,
+                    value: difficultyDropDownValue,
                     isExpanded: true,
                     items: <String>[
-                      '15',
-                      '30',
-                      '45',
-                      '60',
-                      '75',
-                      '90',
-                      '105',
-                      '120',
+                      'Easy',
+                      'Medium',
+                      'Hard',
                     ].map<DropdownMenuItem<String>>(
                             (String value) {
                           return DropdownMenuItem<String>(
@@ -191,17 +188,19 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                           );
                         }).toList(),
                     onChanged: (String? selectedvalue) {
-                      durationDropdownValue= selectedvalue!;
+                      difficultyDropDownValue= selectedvalue!;
                       this.setState(() {
-                        durationDropdownValue= selectedvalue!;
-                        durationDropdownValue= selectedvalue!;
+                        difficultyDropDownValue= selectedvalue;
+                        difficultyDropDownValue= selectedvalue;
                       });
-                      print(durationDropdownValue);
+                      print(difficultyDropDownValue);
                     },
                   ),
                 ],
               ),
             ),
+
+
             const SizedBox(height: 20,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
