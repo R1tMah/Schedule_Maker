@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question6.dart';
 
+var answer5 = '';
+
 class FifthQuestion extends StatefulWidget {
   @override
   FifthQuestionState createState() => FifthQuestionState();
 }// A State created by StatefulWidget to be displayed on screen.
 
 class FifthQuestionState extends State<FifthQuestion> {
-  double _selectedOption = 0;
   double _currentSliderValue = 5;
 
   @override
@@ -48,7 +49,7 @@ class FifthQuestionState extends State<FifthQuestion> {
                 child: Text('Done'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = _currentSliderValue;
+                    answer5 = _currentSliderValue.toString();
                   });
                   _navigateToSixthPage(context);
                 },

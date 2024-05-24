@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question10.dart';
 
+var answer9 = '';
+
 class NinthQuestion extends StatefulWidget {
   @override
   NinthQuestionState createState() => NinthQuestionState();
 }// A State created by StatefulWidget to be displayed on screen.
 
 class NinthQuestionState extends State<NinthQuestion> {
-  String? _selectedOption;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class NinthQuestionState extends State<NinthQuestion> {
                 child: Text('Very Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Very Frequently';
+                    answer9 = 'Very Frequently';
                   });
                   _navigateToTenthPage(context);
                 },
@@ -49,7 +49,7 @@ class NinthQuestionState extends State<NinthQuestion> {
                 child: Text('Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Frequently';
+                    answer9 = 'Frequently';
                   });
                   _navigateToTenthPage(context);
                 },
@@ -63,7 +63,7 @@ class NinthQuestionState extends State<NinthQuestion> {
                 child: Text('Sometimes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Sometimes';
+                    answer9 = 'Sometimes';
                   });
                   _navigateToTenthPage(context);
                 },
@@ -77,7 +77,7 @@ class NinthQuestionState extends State<NinthQuestion> {
                 child: Text('Not Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Not Frequently';
+                    answer9 = 'Not Frequently';
                   });
                   _navigateToTenthPage(context);
                 },
@@ -91,7 +91,7 @@ class NinthQuestionState extends State<NinthQuestion> {
                 child: Text('Rarely'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Rarely';
+                    answer9 = 'Rarely';
                   });
                   _navigateToTenthPage(context);
                 },

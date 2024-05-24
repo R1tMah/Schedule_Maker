@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/endpage.dart';
 
+var answer10 = '';
+
 class TenthQuestion extends StatefulWidget {
   @override
   TenthQuestionState createState() => TenthQuestionState();
 }// A State created by StatefulWidget to be displayed on screen.
 
 class TenthQuestionState extends State<TenthQuestion> {
-  String? _selectedOption;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class TenthQuestionState extends State<TenthQuestion> {
                 child: Text('Yes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Yes';
+                    answer10 = 'Yes';
                   });
                   _navigateToHomePage(context);
                 },
@@ -49,7 +49,7 @@ class TenthQuestionState extends State<TenthQuestion> {
                 child: Text('No'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'No';
+                    answer10 = 'No';
                   });
                   _navigateToHomePage(context);
                 },

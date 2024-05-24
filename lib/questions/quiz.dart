@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question2.dart';
+
+var answer1 = '';
+
 class QuizApp extends StatefulWidget {
   @override
   _QuizAppState createState() => _QuizAppState();
 }// A State created by StatefulWidget to be displayed on screen.
 
 class _QuizAppState extends State<QuizApp> {
-  String? _selectedOption;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +35,7 @@ class _QuizAppState extends State<QuizApp> {
                 child: Text('Very Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Very Frequently';
+                    answer1 = 'Very Frequently';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -48,7 +49,7 @@ class _QuizAppState extends State<QuizApp> {
                 child: Text('Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Frequently';
+                    answer1 = 'Frequently';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -62,7 +63,7 @@ class _QuizAppState extends State<QuizApp> {
                 child: Text('Sometimes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Sometimes';
+                    answer1 = 'Sometimes';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -76,7 +77,7 @@ class _QuizAppState extends State<QuizApp> {
                 child: Text('Not Frequently'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Not Frequently';
+                    answer1 = 'Not Frequently';
                   });
                   _navigateToSecondPage(context);
                 },
@@ -90,7 +91,7 @@ class _QuizAppState extends State<QuizApp> {
                 child: Text('Rarely'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Rarely';
+                    answer1 = 'Rarely';
                   });
                   _navigateToSecondPage(context);
                 },

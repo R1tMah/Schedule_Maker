@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question9.dart';
 
+var answer8 = '';
+
 class EighthQuestion extends StatefulWidget {
   @override
   EighthQuestionState createState() => EighthQuestionState();
 }// A State created by StatefulWidget to be displayed on screen.
 
 class EighthQuestionState extends State<EighthQuestion> {
-  String? _selectedOption;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class EighthQuestionState extends State<EighthQuestion> {
                 child: Text('Intrinsic Satisfaction'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Intrinsic Satisfaction';
+                    answer8 = 'Intrinsic Satisfaction';
                   });
                   _navigateToNinthPage(context);
                 },
@@ -49,7 +49,7 @@ class EighthQuestionState extends State<EighthQuestion> {
                 child: Text('Extrinsic Rewards'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Extrinsic Rewards';
+                    answer8 = 'Extrinsic Rewards';
                   });
                   _navigateToNinthPage(context);
                 },

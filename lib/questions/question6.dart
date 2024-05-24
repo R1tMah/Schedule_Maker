@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question7.dart';
 
+var answer6 = '';
+
 class SixthQuestion extends StatefulWidget {
   @override
   SixthQuestionState createState() => SixthQuestionState();
 }// A State created by StatefulWidget to be displayed on screen.
 
 class SixthQuestionState extends State<SixthQuestion> {
-  String? _selectedOption;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Very Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Very Often';
+                    answer6 = 'Very Often';
                   });
                   _navigateToSeventhPage(context);
                 },
@@ -49,7 +49,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Often';
+                    answer6 = 'Often';
                   });
                   _navigateToSeventhPage(context);
                 },
@@ -63,7 +63,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Sometimes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Sometimes';
+                    answer6 = 'Sometimes';
                   });
                   _navigateToSeventhPage(context);
                 },
@@ -77,7 +77,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Not Often'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Not Often';
+                    answer6 = 'Not Often';
                   });
                   _navigateToSeventhPage(context);
                 },
@@ -91,7 +91,7 @@ class SixthQuestionState extends State<SixthQuestion> {
                 child: Text('Rarely'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'Rarely';
+                    answer6 = 'Rarely';
                   });
                   _navigateToSeventhPage(context);
                 },

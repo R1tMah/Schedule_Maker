@@ -4,6 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/homepage.dart';
 import 'package:ran_app/keys.dart';
 
+import 'package:ran_app/questions/quiz.dart';
+import 'package:ran_app/questions/question2.dart';
+import 'package:ran_app/questions/question3.dart';
+import 'package:ran_app/questions/question4.dart';
+import 'package:ran_app/questions/question5.dart';
+import 'package:ran_app/questions/question6.dart';
+import 'package:ran_app/questions/question7.dart';
+import 'package:ran_app/questions/question8.dart';
+import 'package:ran_app/questions/question9.dart';
+import 'package:ran_app/questions/question10.dart';
+
 var response = '';
 
 class EndPage extends StatelessWidget {
