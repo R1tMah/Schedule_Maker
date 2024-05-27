@@ -29,11 +29,12 @@ class Task{
     this.label = label;
   }
 
-  Color chooseBackGround(List<Color> colorList){
+  Color chooseBackGround(List<Color> colorList) {
     Color currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-    while(colorList.contains(currentCol) != 0){
-      currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+    if (colorList.contains(currentCol)) {
+      return chooseBackGround(colorList);
     }
+    colorList.add(currentCol);
     return currentCol;
   }
 
