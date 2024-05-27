@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/todoinformationpopup.dart';
+import 'package:ran_app/schedule/StudyTaskSelectionPage.dart';
 
 List<Color> colorList = [];
 List<Task> taskList = [];
@@ -127,7 +128,12 @@ class TaskPageState extends State<TaskPage> {
             child: ElevatedButton(
               child: Text('Done with my tasks'),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StudyTaskSelectionPage(),
+                  ),
+                );
               },
             ),
           ),
