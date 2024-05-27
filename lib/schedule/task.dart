@@ -1,12 +1,12 @@
 //Object class for a task
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'dart:math' as math;
 class Task{
   Task({
     this.area = "", //1 Study, 2
     this.label = "",
     this.background = Colors.red,
-    this.duration = "15",
+    this.duration = "",
     this.preferredTimeOfTask = "",
     this.difficultyOfTask = "",
       });
@@ -22,24 +22,19 @@ class Task{
   void setArea(String area){
     this.area = area;
   }
-
+  String getLabel(){
+    return this.label;
+  }
   void setLabel(String label){
     this.label = label;
   }
 
-  void chooseBackGround(List<Color> colors){
-    if(difficultyOfTask == Null){
-      return;
+  Color chooseBackGround(List<Color> colorList){
+    Color currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+    while(colorList.contains(currentCol) != 0){
+      currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     }
-    if(difficultyOfTask == "Easy"){
-      background = Colors.green;
-    }
-    if(difficultyOfTask == "Medium"){
-      background = Colors.yellow;
-    }
-    if(difficultyOfTask == "Hard"){
-      background = Colors.red;
-    }
+    return currentCol;
   }
 
 

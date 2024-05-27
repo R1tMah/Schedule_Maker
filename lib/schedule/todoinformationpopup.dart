@@ -1,28 +1,23 @@
-
 import 'package:flutter/material.dart';
 
-String areaDropdownValue= 'Study';
+String areaDropdownValue = 'Study';
 String durationDropdownValue = '15';
 String preftimeDropDownValue = 'Morning';
 String difficultyDropDownValue = 'Easy';
 
 class TodoInformationPopup extends StatefulWidget {
-
   final TextEditingController titleController;
 
   const TodoInformationPopup({Key? key, required this.titleController}) : super(key: key);
-
 
   @override
   _TodoInformationPopupState createState() => _TodoInformationPopupState();
 }
 
 class _TodoInformationPopupState extends State<TodoInformationPopup> {
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
-
       backgroundColor: Colors.deepPurpleAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 20,
@@ -45,53 +40,43 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
             ),
             const SizedBox(height: 20,),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
-            children: [
-              Text(
-                "please select the Area of the task: ",
-              ),
-              DropdownButton<String>(
-                value: areaDropdownValue,
-                isExpanded: true,
-                items: <String>[
-                  'Study',
-                  'Food',
-                  'Exercise',
-                ].map<DropdownMenuItem<String>>(
-                        (String value) {
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Please select the Area of the task: "),
+                  DropdownButton<String>(
+                    value: areaDropdownValue,
+                    isExpanded: true,
+                    items: <String>[
+                      'Study',
+                      'Food',
+                      'Exercise',
+                    ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
-                onChanged: (String? selectedvalue) {
-                   areaDropdownValue = selectedvalue!;
-                  this.setState(() {
-                     areaDropdownValue= selectedvalue!;
-                  });
-                  print(areaDropdownValue);
-                },
+                    onChanged: (String? selectedvalue) {
+                      setState(() {
+                        areaDropdownValue = selectedvalue!;
+                      });
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-
+            ),
             const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Please select the Duration of the task in minutes: ",
-                  ),
+                  Text("Please select the Duration of the task in minutes: "),
                   DropdownButton<String>(
                     value: durationDropdownValue,
                     isExpanded: true,
@@ -104,37 +89,29 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       '90',
                       '105',
                       '120',
-                    ].map<DropdownMenuItem<String>>(
-                            (String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                     onChanged: (String? selectedvalue) {
-                      durationDropdownValue= selectedvalue!;
-                      this.setState(() {
-                        durationDropdownValue= selectedvalue!;
+                      setState(() {
+                        durationDropdownValue = selectedvalue!;
                       });
-                      print(durationDropdownValue);
                     },
                   ),
                 ],
               ),
             ),
-
-
             const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Please select the Duration of the task in minutes: ",
-                  ),
+                  Text("Please select the preferred time of the task: "),
                   DropdownButton<String>(
                     value: preftimeDropDownValue,
                     isExpanded: true,
@@ -143,20 +120,17 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       'Afternoon',
                       'Night',
                       'Late Night',
-
-                    ].map<DropdownMenuItem<String>>(
-                            (String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                      'Anytime',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                     onChanged: (String? selectedvalue) {
-                      preftimeDropDownValue = selectedvalue!;
-                      this.setState(() {
-                        preftimeDropDownValue= selectedvalue!;
+                      setState(() {
+                        preftimeDropDownValue = selectedvalue!;
                       });
-                      print(preftimeDropDownValue);
                     },
                   ),
                 ],
@@ -167,12 +141,9 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Please select the Duration of the task in minutes: ",
-                  ),
+                  Text("Please select the Difficulty of the task: "),
                   DropdownButton<String>(
                     value: difficultyDropDownValue,
                     isExpanded: true,
@@ -180,35 +151,29 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       'Easy',
                       'Medium',
                       'Hard',
-                    ].map<DropdownMenuItem<String>>(
-                            (String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                     onChanged: (String? selectedvalue) {
-                      difficultyDropDownValue= selectedvalue!;
-                      this.setState(() {
-                        difficultyDropDownValue= selectedvalue;
-                        difficultyDropDownValue= selectedvalue;
+                      setState(() {
+                        difficultyDropDownValue = selectedvalue!;
                       });
-                      print(difficultyDropDownValue);
                     },
                   ),
                 ],
               ),
             ),
-
-
             const SizedBox(height: 20,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  textStyle: const TextStyle(fontWeight: FontWeight.bold)
+                backgroundColor: Colors.red,
+                textStyle: const TextStyle(fontWeight: FontWeight.bold),
               ),
               child: const Text("ADD"),
-              onPressed:  () => Navigator. pop(context, false),
+              onPressed: () => Navigator.pop(context, false),
             ),
             const SizedBox(height: 10,),
           ],
