@@ -31,7 +31,7 @@ class Task{
 
   Color chooseBackGround(List<Color> colorList){
     Color currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-    while(colorList.contains(currentCol) != 0){
+    while(colorList.contains(currentCol) != true){
       currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     }
     return currentCol;

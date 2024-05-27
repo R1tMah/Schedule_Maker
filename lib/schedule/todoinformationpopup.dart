@@ -173,7 +173,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 textStyle: const TextStyle(fontWeight: FontWeight.bold),
               ),
               child: const Text("ADD"),
-              onPressed: () => Navigator.pop(context, false),
+              onPressed: () =>  Navigator.of(context).pop(),
             ),
             const SizedBox(height: 10,),
           ],
