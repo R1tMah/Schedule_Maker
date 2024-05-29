@@ -42,7 +42,10 @@ class TaskPageState extends State<TaskPage> {
               itemBuilder: (context, index) {
                 if (taskList.isNotEmpty) {
                   final task = taskList[index];
+                  Color taskColor = task.chooseBackGround(colorList);
+                  colorList.add(taskColor);
                   return Card(
+                    color: taskColor, //will change this just wanted to see colors
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: ListTile(
                       title: Text(task.label,
