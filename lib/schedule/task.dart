@@ -52,7 +52,7 @@ class Task{
   void setDifficulty(String diff){
     difficultyOfTask = diff;
   }
-
+  /*
   Map<String, dynamic> toJson() => {
     'title': label,
     'area': area,
@@ -71,5 +71,9 @@ class Task{
 
 
     );
+
+
   }
+
+   */
 }

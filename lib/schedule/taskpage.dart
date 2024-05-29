@@ -6,6 +6,8 @@ import 'package:ran_app/schedule/StudyTaskSelectionPage.dart';
 
 List<Color> colorList = [];
 List<Task> taskList = [];
+enum SampleItem { delete, edit}
+
 
 class TaskPage extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ class TaskPageState extends State<TaskPage> {
   //variables
   TextEditingController titleController = TextEditingController();
   Task currentTask = Task();
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +51,51 @@ class TaskPageState extends State<TaskPage> {
                           task.area +
                           '\nDuration: ' +
                           task.duration + '\nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask),
-                      trailing: IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () => _showEditReminderDialog(index),
-                      ),
+
+                        trailing: PopupMenuButton<String>(
+                          itemBuilder: (BuildContext context) {
+                            return <PopupMenuEntry<String>>[
+                              PopupMenuItem<String>(
+                                value: 'option1',
+                                child: ListTile(
+                                  leading: Icon(Icons.delete),
+                                  title: Text('Delete'),
+                                ),
+                              ),
+                              PopupMenuDivider(),
+                              PopupMenuItem<String>(
+                                value: 'option2',
+                                child: ListTile(
+                                  leading: Icon(Icons.edit),
+                                  title: Text('Edit'),
+                                ),
+                              ),
+                            ];
+                          },
+                          onSelected: (String value) {
+                            // Handle the selected option
+                            switch (value) {
+                              case 'option1':
+                                setState(() {
+                                  taskList.removeAt(index);
+                                });
+
+                                break;
+                              case 'option2':
+
+                                _showEditReminderDialog(index);
+                                break;
+
+                            }
+                          },
+                        )
+
+
+
                     ),
+
                   );
+
                 }
                 else if(taskList.isEmpty){
                   index--;
@@ -66,6 +108,7 @@ class TaskPageState extends State<TaskPage> {
             child: ElevatedButton(
               child: Text('Add Task'),
               onPressed: () {
+
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -132,6 +175,12 @@ class TaskPageState extends State<TaskPage> {
   }
   void _showEditReminderDialog(int index) {
     Task currTask = Task();
+    /*
+    areaDropdownValue = taskList[index].area;
+    durationDropdownValue = taskList[index].duration;
+    preftimeDropDownValue = taskList[index].preferredTimeOfTask;
+    difficultyDropDownValue = taskList[index].difficultyOfTask;
+    */
     showDialog(
       context: context,
       builder: (context) {
@@ -159,7 +208,7 @@ class TaskPageState extends State<TaskPage> {
         },
       );
       AlertDialog alert = AlertDialog(
-        title: Text("Tasks Saved"),
+        title: Text("Tasks Edited"),
         actions: [
           okButton,
         ],
@@ -173,3 +222,4 @@ class TaskPageState extends State<TaskPage> {
     });
   }
 }
+
