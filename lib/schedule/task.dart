@@ -23,7 +23,7 @@ class Task{
     this.area = area;
   }
   String getLabel(){
-    return this.label;
+    return label;
   }
   void setLabel(String label){
     this.label = label;
@@ -37,7 +37,10 @@ class Task{
     colorList.add(currentCol);
     return currentCol;
   }
+  /*
 
+
+   */
 
   void setDuration(String duration){
     this.duration = duration;
@@ -50,4 +53,23 @@ class Task{
     difficultyOfTask = diff;
   }
 
+  Map<String, dynamic> toJson() => {
+    'title': label,
+    'area': area,
+    'duration': duration,
+    'preftime': preferredTimeOfTask,
+    'difficulty': difficultyOfTask,
+  };
+
+  static Task fromJson(Map<String, dynamic> json) {
+    return Task(
+      label: json['title'],
+      area: json['area'],
+      duration: json['duration'],
+      preferredTimeOfTask: json['preftime'],
+      difficultyOfTask: json['difficulty'],
+
+
+    );
+  }
 }
