@@ -54,7 +54,7 @@ class TaskPageState extends State<TaskPage> {
                       subtitle: Text('Area: ' +
                           task.area +
                           '\nDuration: ' +
-                          task.duration + '\nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask),
+                          task.duration + ' minutes \nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask),
 
                         trailing: PopupMenuButton<String>(
                           itemBuilder: (BuildContext context) {

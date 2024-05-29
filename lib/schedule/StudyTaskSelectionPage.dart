@@ -29,13 +29,21 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
   }
 
   void navigateToNextPage() {
-    // Implement the navigation to the next page
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NextPage(selectedTasks: selectedTasks),
-      ),
-    );
+    if(selectedTasks == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NextPage(selectedTasks: selectedTasks),
+        ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NextPage(selectedTasks: selectedTasks),
+        ),
+      );
+    }
   }
 
   @override
@@ -50,7 +58,10 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
             padding: EdgeInsets.all(10.0),
             child: Text(
               "Select the following study tasks which you would like study methods for:",
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.white,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -61,8 +72,18 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
                 final task = studyTasks[index];
                 final isSelected = selectedTasks.contains(task);
                 return ListTile(
-                  title: Text(task.label),
-                  subtitle: Text('Duration: ${task.duration} mins'),
+                  title: Text(
+                    task.label,
+                    style: TextStyle(
+                      color: Colors.white,
+                    )
+                  ),
+                  subtitle: Text(
+                      'Duration: ${task.duration} minutes',
+                    style: TextStyle(
+                      color: Colors.white,
+                    )
+                  ),
                   tileColor: isSelected ? Colors.lightBlueAccent : null,
                   onTap: () => toggleTaskSelection(task),
                 );
@@ -73,7 +94,7 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
             padding: EdgeInsets.all(15.0),
             child: ElevatedButton(
               child: Text('Next'),
-              onPressed: selectedTasks.isEmpty ? null : navigateToNextPage,
+              onPressed: navigateToNextPage,
             ),
           ),
         ],
