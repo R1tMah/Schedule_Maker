@@ -44,6 +44,7 @@ class TaskPageState extends State<TaskPage> {
                   final task = taskList[index];
                   Color taskColor = task.chooseBackGround(colorList);
                   colorList.add(taskColor);
+                  print('hi');
                   return Card(
                     color: taskColor, //will change this just wanted to see colors
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
