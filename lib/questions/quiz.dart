@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ran_app/questions/endpage.dart';
 import 'package:ran_app/questions/question2.dart';
+import 'package:ran_app/schedule/schedulepage.dart';
 
 var answer1 = '';
 
@@ -25,6 +27,20 @@ class _QuizAppState extends State<QuizApp> {
               padding: EdgeInsets.all(10.0),
               child: Center(
                 child: Text("How frequently do you check your phone notifications throughout the day?"),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                child: Text('Skip to end'),
+                onPressed: () {
+                  setState(() {
+
+                  });
+                  _navigateToHomePage(context);
+                },
               ),
             ),
           ),
@@ -103,7 +119,18 @@ class _QuizAppState extends State<QuizApp> {
     );
   }
 
-
+  void _navigateToHomePage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => EndPage(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    });
+  }
 
   void _navigateToSecondPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
