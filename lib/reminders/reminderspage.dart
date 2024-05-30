@@ -43,6 +43,13 @@ class _RemindersPageState extends State<RemindersPage> {
     await _saveReminders();
   }
 
+  void _deleteReminder(int index) async {
+    setState(() {
+      reminders.removeAt(index);
+    });
+    await _saveReminders();
+  }
+
   Future<DateTime?> _selectDateTime(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -173,6 +180,33 @@ class _RemindersPageState extends State<RemindersPage> {
     );
   }
 
+  void _showDeleteReminderDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Reminder'),
+          content: Text('Are you sure you want to delete this reminder?'),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Delete'),
+              onPressed: () {
+                _deleteReminder(index);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,9 +219,18 @@ class _RemindersPageState extends State<RemindersPage> {
             child: ListTile(
               title: Text(reminder.title, style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(DateFormat('yyyy-MM-dd – kk:mm').format(reminder.reminderTime)),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => _showEditReminderDialog(index),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () => _showEditReminderDialog(index),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _showDeleteReminderDialog(index),
+                  ),
+                ],
               ),
             ),
           );
