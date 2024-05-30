@@ -40,6 +40,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   table_calendar: ^3.1.1
   shared_preferences: ^2.2.3
+  flutter_local_notifications: ^14.0.0
 
   #Event Calender
   syncfusion_flutter_calendar: ^25.2.5
