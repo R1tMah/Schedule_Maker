@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+
 
 //File for the schedule class
-
 /*
+Date
+Study Method
+Working Method
+List of Tasks
+Map (Each Task) (Time)
+
+
+need a helper function that finds first easy task, first medium task, and first hard task
+
+need a function that compares with the 4 working methods
+
+need a function that decides what time to start the day
+
+need a function that puts the fixed tasks in their times
+
+need a function that edits the map of tasks
+
+
+
+
 class DataSource extends CalendarDataSource {
   DataSource(List<Task> source) {
     appointments = source;
