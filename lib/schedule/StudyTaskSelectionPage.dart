@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'task.dart';
 import 'package:ran_app/schedule/taskpage.dart';
+import 'package:ran_app/schedule/taskinfo.dart';
 
 class StudyTaskSelectionPage extends StatefulWidget {
   @override
@@ -33,14 +34,14 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NextPage(selectedTasks: selectedTasks),
+          builder: (context) => TaskInfo(selectedTasks: selectedTasks),
         ),
       );
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NextPage(selectedTasks: selectedTasks),
+          builder: (context) => TaskInfo(selectedTasks: selectedTasks),
         ),
       );
     }
@@ -50,7 +51,7 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Study Tasks'),
+        title: Text('Select Study Tasks',),
       ),
       body: Column(
         children: [
@@ -59,8 +60,8 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
             child: Text(
               "Select the following study tasks which you would like study methods for:",
               style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.white,
+                fontSize: 18.0,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
@@ -73,16 +74,16 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
                 final isSelected = selectedTasks.contains(task);
                 return ListTile(
                   title: Text(
-                    task.label,
-                    style: TextStyle(
-                      color: Colors.white,
-                    )
+                      task.label,
+                      style: TextStyle(
+                        color: Colors.white,
+                      )
                   ),
                   subtitle: Text(
                       'Duration: ${task.duration} minutes',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )
+                      style: TextStyle(
+                        color: Colors.white,
+                      )
                   ),
                   tileColor: isSelected ? Colors.lightBlueAccent : null,
                   onTap: () => toggleTaskSelection(task),
@@ -98,24 +99,6 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class NextPage extends StatelessWidget {
-  final List<Task> selectedTasks;
-
-  const NextPage({Key? key, required this.selectedTasks}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Next Page'),
-      ),
-      body: Center(
-        child: Text('Selected Tasks: ${selectedTasks.map((task) => task.label).join(', ')}'),
       ),
     );
   }
