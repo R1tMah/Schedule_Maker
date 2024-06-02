@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'task.dart';
 import 'package:ran_app/homepage/homepage.dart'; // Modify as needed
 import 'package:ran_app/keys.dart';
-import 'package:ran_app/schedule/schedulepage.dart';
+import 'package:ran_app/questions/endpage.dart';
 
 class StudyMethodPage extends StatefulWidget {
   final List<Task> selectedTasks;
@@ -70,7 +70,7 @@ class _StudyMethodPageState extends State<StudyMethodPage> {
   void navigateToFinalPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ScheduleHomePageState()), // Modify as needed
+      MaterialPageRoute(builder: (context) => EndPage()), // Modify as needed
     );
   }
 
