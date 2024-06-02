@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 import 'package:ran_app/schedule/taskpage.dart';
 import 'package:ran_app/schedule/taskinfo.dart';
+import 'package:ran_app/schedule/schedulepage.dart';
 
 class StudyTaskSelectionPage extends StatefulWidget {
   @override
@@ -30,12 +31,10 @@ class _StudyTaskSelectionPageState extends State<StudyTaskSelectionPage> {
   }
 
   void navigateToNextPage() {
-    if(selectedTasks == null) {
+    if(selectedTasks.length == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => TaskInfo(selectedTasks: selectedTasks),
-        ),
+        MaterialPageRoute(builder: (context) => ScheduleHomePageState()), // Modify as needed
       );
     } else {
       Navigator.push(

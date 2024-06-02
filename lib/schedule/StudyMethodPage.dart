@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'task.dart';
 import 'package:ran_app/homepage/homepage.dart'; // Modify as needed
 import 'package:ran_app/keys.dart';
+import 'package:ran_app/schedule/schedulepage.dart';
 
 class StudyMethodPage extends StatefulWidget {
   final List<Task> selectedTasks;
@@ -69,7 +70,7 @@ class _StudyMethodPageState extends State<StudyMethodPage> {
   void navigateToFinalPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => FinalPage()), // Modify as needed
+      MaterialPageRoute(builder: (context) => ScheduleHomePageState()), // Modify as needed
     );
   }
 
@@ -136,20 +137,6 @@ class _StudyMethodPageState extends State<StudyMethodPage> {
             );
           }
         },
-      ),
-    );
-  }
-}
-
-class FinalPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Final Page'),
-      ),
-      body: Center(
-        child: Text('You have completed the process!'),
       ),
     );
   }
