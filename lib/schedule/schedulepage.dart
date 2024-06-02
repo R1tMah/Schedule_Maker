@@ -17,18 +17,11 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     return Scaffold(
       body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget> [
+
           Expanded(
-            flex: 5,
-            child: Padding(
-              padding: EdgeInsets.all(1.0),
-              child: Center(
-                child: Text( 'Hello, ' + name + ', Schedule Page',style: TextStyle(color: Colors.white),)
-              )
-            )
-          ),
-          Expanded(
+            flex: 8,
             child:TimePlanner(
               // time will be start at this hour on table
               startHour: 6,
@@ -38,15 +31,27 @@ class SchedulePage extends  State<ScheduleHomePageState>{
               headers: [
                 TimePlannerTitle(
                   date: "3/10/2021",
-                  title: "sunday",
+                  title: "Sunday",
                 ),
               ],
+              style: TimePlannerStyle(
+                backgroundColor: Colors.white,
+                // default value for height is 80
+                cellHeight: 60,
+                // default value for width is 90
+                cellWidth: 200,
+
+                dividerColor: Colors.black,
+                showScrollBar: true,
+                horizontalTaskPadding: 5,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
               // List of task will be show on the time planner
             ),
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(20.0),
               child: ElevatedButton(
                 child: Text('Enter Tasks'),
                 onPressed: () {
