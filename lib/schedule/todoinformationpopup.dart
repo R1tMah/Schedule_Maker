@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+// Global variable to store the selected fixed time
+DateTime fixedTime = DateTime(DateTime.tuesday);
+String finString = '';
 
 String areaDropdownValue = 'Study';
 String durationDropdownValue = '15';
 String preftimeDropDownValue = 'Morning';
 String difficultyDropDownValue = 'Easy';
-DateTime fixedTime = DateTime(DateTime.august);
 
 class TodoInformationPopup extends StatefulWidget {
   final TextEditingController titleController;
@@ -74,7 +78,20 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
             ),
             CupertinoButton(
               child: const Text('Done'),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                setState(() {
+                  // Update the global fixedTime variable with the selected time
+                  fixedTime = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                    selectedHour,
+                    selectedMinute,
+                  );
+                  finString = DateFormat.Hms().format(fixedTime);
+                });
+                Navigator.of(context).pop();
+              },
             ),
           ],
         ),
@@ -238,13 +255,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                         backgroundColor: Colors.red,
                         textStyle: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      onPressed: (){
-                        _showTimePicker(context);
-                        setState(() {
-                          fixedTime = new DateTime(DateTime.tuesday);
-                        });
-                        },
-
+                      onPressed: () => _showTimePicker(context),
                       child: const Text(
                         "Select Time",
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -265,7 +276,13 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 textStyle: const TextStyle(fontWeight: FontWeight.bold),
               ),
               child: const Text("ADD"),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                // Do something with the global fixedTime variable if needed
+                if (preftimeDropDownValue == 'Fixed Time' && fixedTime != null) {
+                  print("Selected Fixed Time: $fixedTime");
+                }
+                Navigator.of(context).pop();
+              },
             ),
             const SizedBox(height: 10,),
           ],

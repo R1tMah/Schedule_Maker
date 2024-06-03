@@ -9,6 +9,7 @@ class Task{
     this.duration = "",
     this.preferredTimeOfTask = "",
     this.difficultyOfTask = "",
+    this.fixedTime,
       });
 
 
@@ -18,6 +19,7 @@ class Task{
   String duration;
   String preferredTimeOfTask;
   String difficultyOfTask;
+  DateTime? fixedTime;
 
   void setArea(String area){
     this.area = area;

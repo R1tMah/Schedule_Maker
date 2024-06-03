@@ -154,7 +154,7 @@ class _RemindersPageState extends State<RemindersPage> {
                           reminderTime = selectedTime;
                           reminderTimeText = DateFormat('yyyy-MM-dd – kk:mm').format(reminderTime!);
                         });
-                      }
+                        }
                     },
                     child: Text('Select Reminder Time'),
                   ),

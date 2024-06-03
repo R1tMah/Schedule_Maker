@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/todoinformationpopup.dart';
 import 'package:ran_app/schedule/StudyTaskSelectionPage.dart';
-
+import 'package:intl/intl.dart';
 
 List<Color> colorList = [];
 List<Task> taskList = [];
-enum SampleItem { delete, edit}
-
+enum SampleItem { delete, edit }
 
 class TaskPage extends StatefulWidget {
   @override
@@ -15,10 +14,9 @@ class TaskPage extends StatefulWidget {
 }
 
 class TaskPageState extends State<TaskPage> {
-  //variables
+  // Variables
   TextEditingController titleController = TextEditingController();
   Task currentTask = Task();
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,66 +40,62 @@ class TaskPageState extends State<TaskPage> {
               itemBuilder: (context, index) {
                 if (taskList.isNotEmpty) {
                   final task = taskList[index];
+                  String currString = 'Area: ' +
+                      task.area +
+                      '\nDuration: ' +
+                      task.duration + ' minutes \nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask;
+
+                  if (task.preferredTimeOfTask == 'Fixed Time' && task.fixedTime != null) {
+                    currString += ' (' + DateFormat.Hm().format(task.fixedTime!) + ')';
+                  }
+
                   Color taskColor = task.chooseBackGround(colorList);
                   colorList.add(taskColor);
                   print('hi');
                   return Card(
-                    color: taskColor, //will change this just wanted to see colors
+                    color: taskColor, // Will change this, just wanted to see colors
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: ListTile(
                       title: Text(task.label,
                           style: TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text('Area: ' +
-                          task.area +
-                          '\nDuration: ' +
-                          task.duration + ' minutes \nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask),
-
-                        trailing: PopupMenuButton<String>(
-                          itemBuilder: (BuildContext context) {
-                            return <PopupMenuEntry<String>>[
-                              PopupMenuItem<String>(
-                                value: 'option1',
-                                child: ListTile(
-                                  leading: Icon(Icons.delete),
-                                  title: Text('Delete'),
-                                ),
+                      subtitle: Text(currString),
+                      trailing: PopupMenuButton<String>(
+                        itemBuilder: (BuildContext context) {
+                          return <PopupMenuEntry<String>>[
+                            PopupMenuItem<String>(
+                              value: 'option1',
+                              child: ListTile(
+                                leading: Icon(Icons.delete),
+                                title: Text('Delete'),
                               ),
-                              PopupMenuDivider(),
-                              PopupMenuItem<String>(
-                                value: 'option2',
-                                child: ListTile(
-                                  leading: Icon(Icons.edit),
-                                  title: Text('Edit'),
-                                ),
+                            ),
+                            PopupMenuDivider(),
+                            PopupMenuItem<String>(
+                              value: 'option2',
+                              child: ListTile(
+                                leading: Icon(Icons.edit),
+                                title: Text('Edit'),
                               ),
-                            ];
-                          },
-                          onSelected: (String value) {
-                            // Handle the selected option
-                            switch (value) {
-                              case 'option1':
-                                setState(() {
-                                  taskList.removeAt(index);
-                                });
-
-                                break;
-                              case 'option2':
-
-                                _showEditReminderDialog(index);
-                                break;
-
-                            }
-                          },
-                        )
-
-
-
+                            ),
+                          ];
+                        },
+                        onSelected: (String value) {
+                          // Handle the selected option
+                          switch (value) {
+                            case 'option1':
+                              setState(() {
+                                taskList.removeAt(index);
+                              });
+                              break;
+                            case 'option2':
+                              _showEditReminderDialog(index);
+                              break;
+                          }
+                        },
+                      ),
                     ),
-
                   );
-
-                }
-                else if(taskList.isEmpty){
+                } else if (taskList.isEmpty) {
                   index--;
                 }
               },
@@ -112,7 +106,6 @@ class TaskPageState extends State<TaskPage> {
             child: ElevatedButton(
               child: Text('Add Task'),
               onPressed: () {
-
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -126,12 +119,14 @@ class TaskPageState extends State<TaskPage> {
                     duration: durationDropdownValue,
                     preferredTimeOfTask: preftimeDropDownValue,
                     difficultyOfTask: difficultyDropDownValue,
+                    fixedTime: fixedTime,
                     background: currentTask.chooseBackGround(colorList),
                   );
 
                   setState(() {
                     taskList.add(currentTask);
                     titleController.clear();
+                    fixedTime = DateTime.now();
                   });
 
                   Widget okButton = TextButton(
@@ -141,7 +136,7 @@ class TaskPageState extends State<TaskPage> {
                     },
                   );
                   String labelString =
-                      taskList.map((task) => task.getLabel()).join(", ");
+                  taskList.map((task) => task.label).join(", ");
                   AlertDialog alert = AlertDialog(
                     title: Text("Tasks Added"),
                     content: Text(labelString),
@@ -177,14 +172,10 @@ class TaskPageState extends State<TaskPage> {
       ),
     );
   }
+
   void _showEditReminderDialog(int index) {
     Task currTask = Task();
-    /*
-    areaDropdownValue = taskList[index].area;
-    durationDropdownValue = taskList[index].duration;
-    preftimeDropDownValue = taskList[index].preferredTimeOfTask;
-    difficultyDropDownValue = taskList[index].difficultyOfTask;
-    */
+
     showDialog(
       context: context,
       builder: (context) {
@@ -197,12 +188,14 @@ class TaskPageState extends State<TaskPage> {
         duration: durationDropdownValue,
         preferredTimeOfTask: preftimeDropDownValue,
         difficultyOfTask: difficultyDropDownValue,
+        fixedTime: fixedTime,
         background: currentTask.chooseBackGround(colorList),
       );
 
       setState(() {
         taskList[index] = currTask;
         titleController.clear();
+        fixedTime = DateTime.now();
       });
 
       Widget okButton = TextButton(
@@ -226,4 +219,3 @@ class TaskPageState extends State<TaskPage> {
     });
   }
 }
-

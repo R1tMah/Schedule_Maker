@@ -1,5 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
+import 'package:ran_app/schedule/taskpage.dart';
+
+
+
+class Schedule {
+  Schedule({
+    this.scheduleDate,
+    this.studyMethod = '',
+    this.workingMethod = '',
+    this.taskTimeMap,
+  });
+
+  DateTime? scheduleDate;
+  String studyMethod;
+  String workingMethod;
+  List<Task> currTaskList = [];
+
+  Map<Task, DateTimeRange>? taskTimeMap;
+
+  void initializeList(List<Task> taskList) {
+    currTaskList.addAll(taskList);
+  }
+
+  Task? findEasyTask(){
+    for(int i = 0; i < currTaskList.length; i++){
+      if(currTaskList[i].difficultyOfTask == 'Easy'){
+        return currTaskList[i];
+      }
+    }
+    return null;
+  }
+  Task? findMediumTask(){
+    for(int i = 0; i < currTaskList.length; i++){
+      if(currTaskList[i].difficultyOfTask == 'Medium'){
+        return currTaskList[i];
+      }
+    }
+    return null;
+  }
+  Task? findHardTask(){
+    for(int i = 0; i < currTaskList.length; i++){
+      if(currTaskList[i].difficultyOfTask == 'Hard'){
+        return currTaskList[i];
+      }
+    }
+    return null;
+  }
+
+  void setFixedTasks(){
+    for(int i = 0; i < currTaskList.length; i++){
+      if(currTaskList[i].preferredTimeOfTask == 'Fixed Time'){
+        //taskTimeMap[currTaskList[i]] = new DateTimeRange()
+      }
+    }
+
+  }
+
+}
+
 
 
 
