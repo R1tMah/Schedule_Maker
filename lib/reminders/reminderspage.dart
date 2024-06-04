@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'reminder.dart';
@@ -51,22 +52,40 @@ class _RemindersPageState extends State<RemindersPage> {
   }
 
   Future<DateTime?> _selectDateTime(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
+    DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
     if (pickedDate != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
+      DateTime? pickedTime = await showCupertinoTimePicker(context);
       if (pickedTime != null) {
         return DateTime(pickedDate.year, pickedDate.month, pickedDate.day, pickedTime.hour, pickedTime.minute);
       }
     }
     return null;
+  }
+
+  Future<DateTime?> showCupertinoTimePicker(BuildContext context) async {
+    DateTime? selectedDateTime;
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext builder) {
+        return Container(
+          height: 250,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.time,
+            initialDateTime: DateTime.now(),
+            use24hFormat: false,
+            onDateTimeChanged: (DateTime newDateTime) {
+              selectedDateTime = newDateTime;
+            },
+          ),
+        );
+      },
+    );
+    return selectedDateTime;
   }
 
   void _showAddReminderDialog() {
@@ -96,7 +115,7 @@ class _RemindersPageState extends State<RemindersPage> {
                       if (selectedTime != null) {
                         setState(() {
                           reminderTime = selectedTime;
-                          reminderTimeText = DateFormat('yyyy-MM-dd – kk:mm').format(reminderTime!);
+                          reminderTimeText = DateFormat('yyyy-MM-dd – hh:mm a').format(reminderTime!);
                         });
                       }
                     },
@@ -127,7 +146,7 @@ class _RemindersPageState extends State<RemindersPage> {
   void _showEditReminderDialog(int index) {
     String title = reminders[index].title;
     DateTime? reminderTime = reminders[index].reminderTime;
-    String reminderTimeText = DateFormat('yyyy-MM-dd – kk:mm').format(reminderTime);
+    String reminderTimeText = DateFormat('yyyy-MM-dd – hh:mm a').format(reminderTime);
 
     showDialog(
       context: context,
@@ -152,9 +171,9 @@ class _RemindersPageState extends State<RemindersPage> {
                       if (selectedTime != null) {
                         setState(() {
                           reminderTime = selectedTime;
-                          reminderTimeText = DateFormat('yyyy-MM-dd – kk:mm').format(reminderTime!);
+                          reminderTimeText = DateFormat('yyyy-MM-dd – hh:mm a').format(reminderTime!);
                         });
-                        }
+                      }
                     },
                     child: Text('Select Reminder Time'),
                   ),
@@ -218,7 +237,7 @@ class _RemindersPageState extends State<RemindersPage> {
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: ListTile(
               title: Text(reminder.title, style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(DateFormat('yyyy-MM-dd – kk:mm').format(reminder.reminderTime)),
+              subtitle: Text(DateFormat('yyyy-MM-dd – hh:mm a').format(reminder.reminderTime)),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
