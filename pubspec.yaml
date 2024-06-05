@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   http: ^0.13.3
   intl: any
+  notification_permissions: ^0.6.1
 
 
 

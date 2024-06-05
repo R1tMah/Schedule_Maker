@@ -124,11 +124,13 @@ class _OurMissionState extends State<OurMission> with SingleTickerProviderStateM
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _controller.forward(); // Start the animation
   }
+
   @override
   void dispose() {
     _controller.dispose(); // Dispose the animation controller
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,12 +155,16 @@ class _OurMissionState extends State<OurMission> with SingleTickerProviderStateM
                 ),
               ),
               SizedBox(height: 20.0),
-              FadeTransition(
-                opacity: _animation, // Apply the animation to the opacity property
-                child: Text(
-                  'At Schedule Maker, we aim to...',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: FadeTransition(
+                    opacity: _animation, // Apply the animation to the opacity property
+                    child: Text(
+                      'As college students, we frequently encountered the frustration of setting out to accomplish a list of tasks each day, only to fall short of our goals. We soon realized that this is a common struggle shared by many, especially among students like us. Recognizing this widespread challenge inspired us to create an app that could help people manage their tasks more effectively.\n\nFrom the inception of this idea, we were filled with excitement and determination. Developing the app, however, was no easy feat. We faced numerous obstacles along the way, from technical difficulties to balancing our academic responsibilities. Yet, our passion for solving this problem and our commitment to helping others kept us driven and focused.\n\nThroughout the development process, we learned a great deal and grew both as individuals and as a team. We pushed through the tough times, fueled by the vision of creating a tool that could make a real difference in people’s lives.\n\nNow that the app is complete and available to the public, we feel an immense sense of pride and accomplishment. Seeing our hard work come to fruition and knowing it has the potential to help others is incredibly rewarding.\n\nWe sincerely hope that this app reaches a wide audience and provides the support that many need to organize their tasks and achieve their goals. Our ultimate aim is to make a positive impact and improve lives around the world through this app.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
             ],
