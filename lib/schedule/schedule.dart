@@ -73,6 +73,8 @@ Map (Each Task) (Time)
 
 need a helper function that finds first easy task, first medium task, and first hard task
 
+need a function that checks to see if a time works
+
 need a function that compares with the 4 working methods
 
 need a function that decides what time to start the day
