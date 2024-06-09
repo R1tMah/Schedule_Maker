@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/taskpage.dart';
+import 'package:time_range/time_range.dart';
 
 
 
@@ -17,7 +18,7 @@ class Schedule {
   String workingMethod;
   List<Task> currTaskList = [];
 
-  Map<Task, DateTimeRange>? taskTimeMap;
+  Map<Task, TimeRange>? taskTimeMap;
 
   void initializeList(List<Task> taskList) {
     currTaskList.addAll(taskList);
@@ -47,11 +48,23 @@ class Schedule {
     }
     return null;
   }
-
+  int StringToInt(String time){
+    int newTime = int.parse(time);
+    return newTime;
+  }
   void setFixedTasks(){
     for(int i = 0; i < currTaskList.length; i++){
       if(currTaskList[i].preferredTimeOfTask == 'Fixed Time'){
-        //taskTimeMap[currTaskList[i]] = new DateTimeRange()
+        taskTimeMap?[currTaskList[i]] = new TimeRange(
+          titlePadding: 20,
+          textStyle: TextStyle(fontWeight: FontWeight.normal, color: Colors.black87),
+          activeTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          backgroundColor: Colors.transparent,
+          firstTime: TimeOfDay(hour: 14, minute: 30),
+          lastTime: TimeOfDay(hour: 20, minute: 00),
+          timeStep: 10,
+          timeBlock: 30, onRangeCompleted: (range) => print(range),
+        );
       }
     }
 
