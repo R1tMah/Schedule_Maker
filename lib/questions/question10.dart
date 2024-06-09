@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ran_app/questions/endpage.dart';
+import 'package:ran_app/questions/question11.dart';
+
 
 var answer10 = '';
 
@@ -68,7 +69,7 @@ class TenthQuestionState extends State<TenthQuestion> {
       Navigator.push(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => EndPage(),
+          pageBuilder: (context, animation1, animation2) => EleventhQuestion(),
           transitionDuration: Duration.zero,
           reverseTransitionDuration: Duration.zero,
         ),

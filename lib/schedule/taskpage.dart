@@ -46,7 +46,7 @@ class TaskPageState extends State<TaskPage> {
                       task.duration + ' minutes \nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask;
 
                   if (task.preferredTimeOfTask == 'Fixed Time' && task.fixedTime != null) {
-                    currString += ' (' + DateFormat.Hm().format(task.fixedTime!) + ')';
+                    currString += ' (' + finString + ')';
                   }
 
                   Color taskColor = task.chooseBackGround(colorList);

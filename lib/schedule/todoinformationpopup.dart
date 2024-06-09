@@ -10,6 +10,7 @@ String areaDropdownValue = 'Study';
 String durationDropdownValue = '15';
 String preftimeDropDownValue = 'Morning';
 String difficultyDropDownValue = 'Easy';
+DateTime currTime = DateTime.now();
 
 class TodoInformationPopup extends StatefulWidget {
   final TextEditingController titleController;
@@ -35,68 +36,27 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
     );
   }
 
-  void _showTimePicker(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (_) => Container(
+  Future<DateTime?> _showTimePicker(BuildContext context) async{
+    DateTime? selectedDateTime;
+    await showModalBottomSheet(
+    context: context,
+    builder: (BuildContext builder) {
+      return Container(
         height: 250,
-        color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-              height: 180,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: CupertinoPicker(
-                      itemExtent: 32.0,
-                      onSelectedItemChanged: (int index) {
-                        setState(() {
-                          selectedHour = index;
-                        });
-                      },
-                      children: _buildPickerItems(24),
-                      scrollController: FixedExtentScrollController(initialItem: selectedHour),
-                    ),
-                  ),
-                  Text(':'),
-                  Expanded(
-                    child: CupertinoPicker(
-                      itemExtent: 32.0,
-                      onSelectedItemChanged: (int index) {
-                        setState(() {
-                          selectedMinute = index;
-                        });
-                      },
-                      children: _buildPickerItems(60),
-                      scrollController: FixedExtentScrollController(initialItem: selectedMinute),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            CupertinoButton(
-              child: const Text('Done'),
-              onPressed: () {
-                setState(() {
-                  // Update the global fixedTime variable with the selected time
-                  fixedTime = DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day,
-                    selectedHour,
-                    selectedMinute,
-                  );
-                  finString = DateFormat.Hms().format(fixedTime);
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.time,
+          initialDateTime: currTime,
+          use24hFormat: false,
+          onDateTimeChanged: (DateTime newDateTime) {
+
+            selectedDateTime = newDateTime;
+            currTime = newDateTime;
+          },
         ),
-      ),
+      );
+    },
     );
+    return selectedDateTime;
   }
 
   @override
@@ -138,6 +98,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       'Study',
                       'Food',
                       'Exercise',
+                      'Other',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -255,14 +216,21 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                         backgroundColor: Colors.red,
                         textStyle: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () => _showTimePicker(context),
+                      onPressed: () async{
+                        final DateTime? selectedTime = await _showTimePicker(context);
+                        if (selectedTime != null) {
+                          setState(() {
+                            finString = DateFormat('hh:mm a').format(selectedTime);
+                          });
+                        }
+                      },
                       child: const Text(
                         "Select Time",
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(
-                      "Selected Time: ${selectedHour.toString().padLeft(2, '0')}:${selectedMinute.toString().padLeft(2, '0')}",
+                      "Selected Time: ${finString}",
                       style: const TextStyle(color: Colors.white),
                     ),
                   ],
