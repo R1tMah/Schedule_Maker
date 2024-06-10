@@ -10,7 +10,6 @@ class Schedule {
     this.scheduleDate,
     this.studyMethod = '',
     this.workingMethod = '',
-    this.taskTimeMap,
   });
 
   DateTime? scheduleDate;
@@ -18,58 +17,51 @@ class Schedule {
   String workingMethod;
   List<Task> currTaskList = [];
 
-  Map<Task, TimeRange>? taskTimeMap;
+  Map<Task, DateTimeRange> taskTimeMap = {};
 
   void initializeList(List<Task> taskList) {
     currTaskList.addAll(taskList);
   }
 
-  Task? findEasyTask(){
-    for(int i = 0; i < currTaskList.length; i++){
-      if(currTaskList[i].difficultyOfTask == 'Easy'){
+  Task? findEasyTask() {
+    for (int i = 0; i < currTaskList.length; i++) {
+      if (currTaskList[i].difficultyOfTask == 'Easy') {
         return currTaskList[i];
       }
     }
     return null;
   }
-  Task? findMediumTask(){
-    for(int i = 0; i < currTaskList.length; i++){
-      if(currTaskList[i].difficultyOfTask == 'Medium'){
+
+  Task? findMediumTask() {
+    for (int i = 0; i < currTaskList.length; i++) {
+      if (currTaskList[i].difficultyOfTask == 'Medium') {
         return currTaskList[i];
       }
     }
     return null;
   }
-  Task? findHardTask(){
-    for(int i = 0; i < currTaskList.length; i++){
-      if(currTaskList[i].difficultyOfTask == 'Hard'){
+
+  Task? findHardTask() {
+    for (int i = 0; i < currTaskList.length; i++) {
+      if (currTaskList[i].difficultyOfTask == 'Hard') {
         return currTaskList[i];
       }
     }
     return null;
   }
-  int StringToInt(String time){
+
+  int stringToInt(String time) {
     int newTime = int.parse(time);
     return newTime;
   }
-  void setFixedTasks(){
-    for(int i = 0; i < currTaskList.length; i++){
-      if(currTaskList[i].preferredTimeOfTask == 'Fixed Time'){
-        taskTimeMap?[currTaskList[i]] = new TimeRange(
-          titlePadding: 20,
-          textStyle: TextStyle(fontWeight: FontWeight.normal, color: Colors.black87),
-          activeTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          backgroundColor: Colors.transparent,
-          firstTime: TimeOfDay(hour: 14, minute: 30),
-          lastTime: TimeOfDay(hour: 20, minute: 00),
-          timeStep: 10,
-          timeBlock: 30, onRangeCompleted: (range) => print(range),
-        );
+
+  void setFixedTasks() {
+    for (var task in currTaskList) {
+      if (task.preferredTimeOfTask == 'Fixed Time') {
+        taskTimeMap[task] = DateTimeRange(start: task.fixedTime!, end: task.fixedTime!.add(Duration(minutes: stringToInt(task.duration))));
       }
     }
-
   }
-
 }
 
 
