@@ -62,6 +62,13 @@ class Schedule {
       }
     }
   }
+  DateTimeRange chooseTime(Task task){ //schedule function
+    return DateTimeRange(start: DateTime.now(), end: DateTime.now());
+  }
+  void addTaskToMap(Task task){
+    DateTimeRange time = chooseTime(task); // finds the range of the task
+    taskTimeMap[task] = time;
+  }
 }
 
 
