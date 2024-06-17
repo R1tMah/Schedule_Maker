@@ -10,6 +10,7 @@ class Task{
     this.preferredTimeOfTask = "",
     this.difficultyOfTask = "",
     this.fixedTime,
+    this.importanceLevel = 1,
       });
 
 
@@ -20,6 +21,7 @@ class Task{
   String preferredTimeOfTask;
   String difficultyOfTask;
   DateTime? fixedTime;
+  int importanceLevel;
 
   void setArea(String area){
     this.area = area;
