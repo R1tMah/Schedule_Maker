@@ -10,6 +10,7 @@ String areaDropdownValue = 'Study';
 String durationDropdownValue = '15';
 String preftimeDropDownValue = 'Morning';
 String difficultyDropDownValue = 'Easy';
+double importanceLevel = 1.0; // New variable for importance level
 DateTime currTime = DateTime.now();
 
 class TodoInformationPopup extends StatefulWidget {
@@ -39,22 +40,22 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
   Future<DateTime?> _showTimePicker(BuildContext context) async{
     DateTime? selectedDateTime;
     await showModalBottomSheet(
-    context: context,
-    builder: (BuildContext builder) {
-      return Container(
-        height: 250,
-        child: CupertinoDatePicker(
-          mode: CupertinoDatePickerMode.time,
-          initialDateTime: currTime,
-          use24hFormat: false,
-          onDateTimeChanged: (DateTime newDateTime) {
+      context: context,
+      builder: (BuildContext builder) {
+        return Container(
+          height: 250,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.time,
+            initialDateTime: currTime,
+            use24hFormat: false,
+            onDateTimeChanged: (DateTime newDateTime) {
 
-            selectedDateTime = newDateTime;
-            currTime = newDateTime;
-          },
-        ),
-      );
-    },
+              selectedDateTime = newDateTime;
+              currTime = newDateTime;
+            },
+          ),
+        );
+      },
     );
     return selectedDateTime;
   }
@@ -238,6 +239,29 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
             ),
             const SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Please select the Importance level of the task (1 is most important, 5 is least important): "),
+                  Slider(
+                    value: importanceLevel,
+                    min: 1,
+                    max: 5,
+                    divisions: 4,
+                    label: importanceLevel.round().toString(),
+                    onChanged: (double value) {
+                      setState(() {
+                        importanceLevel = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -249,6 +273,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 if (preftimeDropDownValue == 'Fixed Time' && fixedTime != null) {
                   print("Selected Fixed Time: $fixedTime");
                 }
+                print("Selected Importance Level: $importanceLevel"); // Print the importance level
                 Navigator.of(context).pop();
               },
             ),

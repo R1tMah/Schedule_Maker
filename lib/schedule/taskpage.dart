@@ -43,7 +43,13 @@ class TaskPageState extends State<TaskPage> {
                   String currString = 'Area: ' +
                       task.area +
                       '\nDuration: ' +
-                      task.duration + ' minutes \nDifficulty: ' + task.difficultyOfTask + '\nPreferred Time: ' + task.preferredTimeOfTask;
+                      task.duration +
+                      ' minutes \nDifficulty: ' +
+                      task.difficultyOfTask +
+                      '\nPreferred Time: ' +
+                      task.preferredTimeOfTask +
+                      '\nImportance Level: ' +
+                      task.importanceLevel.toString();
 
                   if (task.preferredTimeOfTask == 'Fixed Time' && task.fixedTime != null) {
                     currString += ' (' + finString + ')';
@@ -121,6 +127,7 @@ class TaskPageState extends State<TaskPage> {
                     difficultyOfTask: difficultyDropDownValue,
                     fixedTime: fixedTime,
                     background: currentTask.chooseBackGround(colorList),
+                    importanceLevel: importanceLevel.round(),
                   );
 
                   setState(() {
@@ -190,6 +197,7 @@ class TaskPageState extends State<TaskPage> {
         difficultyOfTask: difficultyDropDownValue,
         fixedTime: fixedTime,
         background: currentTask.chooseBackGround(colorList),
+        importanceLevel: importanceLevel.round(),
       );
 
       setState(() {
