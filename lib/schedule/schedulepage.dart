@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/name_input.dart';
 import 'package:ran_app/schedule/taskpage.dart';
 import 'package:time_planner/time_planner.dart';
-
+import 'package:intl/intl.dart';
 
 
 class ScheduleHomePageState extends StatefulWidget {
@@ -12,6 +12,7 @@ class ScheduleHomePageState extends StatefulWidget {
 
 
 class SchedulePage extends  State<ScheduleHomePageState>{
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +25,14 @@ class SchedulePage extends  State<ScheduleHomePageState>{
             flex: 8,
             child:TimePlanner(
               // time will be start at this hour on table
-              startHour: 6,
+              startHour: 0,
               // time will be end at this hour on table
               endHour: 23,
               // each header is a column and a day
               headers: [
                 TimePlannerTitle(
-                  date: "3/10/2021",
-                  title: "Sunday",
+                  date: DateFormat('MM-dd-yyyy').format(DateTime.now()),
+                  title: DateFormat('EEEE').format(DateTime.now()), /// e.g Thursday,
                 ),
               ],
               style: TimePlannerStyle(

@@ -69,6 +69,19 @@ class Schedule {
     DateTimeRange time = chooseTime(task); // finds the range of the task
     taskTimeMap[task] = time;
   }
+  int _checkIfTimeFits(DateTimeRange newRange){
+    for(DateTimeRange time in taskTimeMap.values){
+      DateTime start = newRange.start;
+      if (start.isAfter(time.start) && start.isBefore(time.end)) {
+        return 1;
+      }
+      DateTime end = newRange.end;
+      if (end.isBefore(time.end) && end.isAfter(time.start)) {
+        return 1;
+      }
+    }
+    return 0;
+  }
 }
 
 
