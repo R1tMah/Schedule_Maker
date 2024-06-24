@@ -6,7 +6,7 @@ var answer6 = '';
 class SixthQuestion extends StatefulWidget {
   @override
   SixthQuestionState createState() => SixthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class SixthQuestionState extends State<SixthQuestion> {
   @override
@@ -24,7 +24,15 @@ class SixthQuestionState extends State<SixthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Are you often preoccupied with 'what-if' scenarios or potential negative outcomes?"),
+                child: Text(
+                  "Are you often preoccupied with 'what-if' scenarios or potential negative outcomes?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -102,8 +110,6 @@ class SixthQuestionState extends State<SixthQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToSeventhPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {

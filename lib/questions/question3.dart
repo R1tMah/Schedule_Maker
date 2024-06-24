@@ -6,7 +6,7 @@ var answer3 = '';
 class ThirdQuestion extends StatefulWidget {
   @override
   ThirdQuestionState createState() => ThirdQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class ThirdQuestionState extends State<ThirdQuestion> {
   @override
@@ -24,7 +24,15 @@ class ThirdQuestionState extends State<ThirdQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("How often do you find yourself procrastinating"),
+                child: Text(
+                  "How often do you find yourself procrastinating",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -102,8 +110,6 @@ class ThirdQuestionState extends State<ThirdQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToFourthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {

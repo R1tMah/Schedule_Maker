@@ -4,7 +4,7 @@ import 'package:ran_app/homepage/homepage.dart';
 class TwelfthQuestion extends StatefulWidget {
   @override
   TwelfthQuestionState createState() => TwelfthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class TwelfthQuestionState extends State<TwelfthQuestion> {
   String? _selectedOption;
@@ -35,7 +35,7 @@ class TwelfthQuestionState extends State<TwelfthQuestion> {
                 child: Text('Yes'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'Yes';
                   });
                   _navigateToHomePage(context);
                 },
@@ -49,7 +49,7 @@ class TwelfthQuestionState extends State<TwelfthQuestion> {
                 child: Text('No'),
                 onPressed: () {
                   setState(() {
-                    _selectedOption = 'College Student';
+                    _selectedOption = 'No';
                   });
                   _navigateToHomePage(context);
                 },
@@ -60,8 +60,6 @@ class TwelfthQuestionState extends State<TwelfthQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToHomePage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {

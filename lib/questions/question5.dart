@@ -6,7 +6,7 @@ var answer5 = '';
 class FifthQuestion extends StatefulWidget {
   @override
   FifthQuestionState createState() => FifthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class FifthQuestionState extends State<FifthQuestion> {
   double _currentSliderValue = 5;
@@ -26,7 +26,15 @@ class FifthQuestionState extends State<FifthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("How easily on a scale of 1-10 do you get bored when engaging in repetitive or monotonous activities?"),
+                child: Text(
+                  "How easily on a scale of 1-10 do you get bored when engaging in repetitive or monotonous activities?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -34,7 +42,7 @@ class FifthQuestionState extends State<FifthQuestion> {
             value: _currentSliderValue,
             min: 1,
             max: 10,
-            divisions: 9, // One less than the range (1-10)
+            divisions: 9,
             label: _currentSliderValue.round().toString(),
             onChanged: (double value) {
               setState(() {
@@ -60,8 +68,6 @@ class FifthQuestionState extends State<FifthQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToSixthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/question11.dart';
 
-
 var answer10 = '';
 
 class TenthQuestion extends StatefulWidget {
   @override
   TenthQuestionState createState() => TenthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class TenthQuestionState extends State<TenthQuestion> {
   @override
@@ -25,7 +24,15 @@ class TenthQuestionState extends State<TenthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Are you easily distracted by external stimuli, such as noise or movement?"),
+                child: Text(
+                  "Are you easily distracted by external stimuli, such as noise or movement?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -38,7 +45,7 @@ class TenthQuestionState extends State<TenthQuestion> {
                   setState(() {
                     answer10 = 'Yes';
                   });
-                  _navigateToHomePage(context);
+                  _navigateToEleventhPage(context);
                 },
               ),
             ),
@@ -52,7 +59,7 @@ class TenthQuestionState extends State<TenthQuestion> {
                   setState(() {
                     answer10 = 'No';
                   });
-                  _navigateToHomePage(context);
+                  _navigateToEleventhPage(context);
                 },
               ),
             ),
@@ -62,9 +69,7 @@ class TenthQuestionState extends State<TenthQuestion> {
     );
   }
 
-
-
-  void _navigateToHomePage(BuildContext context) {
+  void _navigateToEleventhPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
       Navigator.push(
         context,

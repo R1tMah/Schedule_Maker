@@ -6,7 +6,7 @@ var answer8 = '';
 class EighthQuestion extends StatefulWidget {
   @override
   EighthQuestionState createState() => EighthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class EighthQuestionState extends State<EighthQuestion> {
   @override
@@ -24,7 +24,15 @@ class EighthQuestionState extends State<EighthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Do you find that you are more motivated by external rewards or intrinsic satisfaction?"),
+                child: Text(
+                  "Do you find that you are more motivated by external rewards or intrinsic satisfaction?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -56,13 +64,10 @@ class EighthQuestionState extends State<EighthQuestion> {
               ),
             ),
           ),
-
         ],
       ),
     );
   }
-
-
 
   void _navigateToNinthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {

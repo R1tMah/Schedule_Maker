@@ -6,7 +6,7 @@ var answer7 = '';
 class SeventhQuestion extends StatefulWidget {
   @override
   SeventhQuestionState createState() => SeventhQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class SeventhQuestionState extends State<SeventhQuestion> {
   @override
@@ -24,7 +24,15 @@ class SeventhQuestionState extends State<SeventhQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("How frequently do you experience mind wandering or daydreaming during daily activities"),
+                child: Text(
+                  "How frequently do you experience mind wandering or daydreaming during daily activities",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -102,8 +110,6 @@ class SeventhQuestionState extends State<SeventhQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToEighthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
