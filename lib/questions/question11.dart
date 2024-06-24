@@ -3,7 +3,9 @@ import 'package:ran_app/questions/endpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
+
 var answer11 = '';
+DateTime? selectedWakeUp = DateTime.now();
 
 class EleventhQuestion extends StatefulWidget {
   @override
@@ -28,7 +30,7 @@ class EleventhQuestionState extends State<EleventhQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("When do you want to start your day?"),
+                child: Text("When do you want to start your first task?"),
               ),
             ),
           ),
@@ -37,10 +39,11 @@ class EleventhQuestionState extends State<EleventhQuestion> {
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  final DateTime? selectedTime = await showCupertinoTimePicker(context);
-                  if (selectedTime != null) {
+                  //final DateTime? selectedTime = await showCupertinoTimePicker(context);
+                  selectedWakeUp = await showCupertinoTimePicker(context);
+                  if (selectedWakeUp != null) {
                     setState(() {
-                      answer11 = DateFormat('hh:mm a').format(selectedTime);
+                      answer11 = DateFormat('hh:mm a').format(selectedWakeUp!);
                     });
                   }
                 },

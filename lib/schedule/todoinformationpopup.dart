@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ran_app/questions/question11.dart';
 
 // Global variable to store the selected fixed time
 DateTime fixedTime = DateTime(DateTime.tuesday);
@@ -46,7 +47,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
           height: 250,
           child: CupertinoDatePicker(
             mode: CupertinoDatePickerMode.time,
-            initialDateTime: currTime,
+            initialDateTime: selectedWakeUp,
             use24hFormat: false,
             onDateTimeChanged: (DateTime newDateTime) {
 
