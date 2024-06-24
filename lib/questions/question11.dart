@@ -4,14 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 var answer11 = '';
-var firstTime = 1;
-DateTime curr = DateTime.now();
+
 class EleventhQuestion extends StatefulWidget {
   @override
   EleventhQuestionState createState() => EleventhQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class EleventhQuestionState extends State<EleventhQuestion> {
+  DateTime curr = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +35,7 @@ class EleventhQuestionState extends State<EleventhQuestion> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
-              child:  ElevatedButton(
+              child: ElevatedButton(
                 onPressed: () async {
                   final DateTime? selectedTime = await showCupertinoTimePicker(context);
                   if (selectedTime != null) {
@@ -50,14 +51,16 @@ class EleventhQuestionState extends State<EleventhQuestion> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
-              child: Text("" + answer11),
+              child: Text(answer11),
             ),
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
-              child:  ElevatedButton(
-                onPressed: (){_navigateToHomePage(context);},
+              child: ElevatedButton(
+                onPressed: () {
+                  _navigateToHomePage(context);
+                },
                 child: Text('Next'),
               ),
             ),
@@ -66,9 +69,6 @@ class EleventhQuestionState extends State<EleventhQuestion> {
       ),
     );
   }
-
-
-
 
   Future<DateTime?> showCupertinoTimePicker(BuildContext context) async {
     DateTime? selectedDateTime;
@@ -82,9 +82,10 @@ class EleventhQuestionState extends State<EleventhQuestion> {
             initialDateTime: curr,
             use24hFormat: false,
             onDateTimeChanged: (DateTime newDateTime) {
-
+              setState(() {
+                curr = newDateTime;
+              });
               selectedDateTime = newDateTime;
-              curr = newDateTime;
             },
           ),
         );
@@ -92,6 +93,7 @@ class EleventhQuestionState extends State<EleventhQuestion> {
     );
     return selectedDateTime;
   }
+
   void _navigateToHomePage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
       Navigator.push(

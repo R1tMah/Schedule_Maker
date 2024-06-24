@@ -8,7 +8,7 @@ var answer1 = '';
 class QuizApp extends StatefulWidget {
   @override
   _QuizAppState createState() => _QuizAppState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class _QuizAppState extends State<QuizApp> {
   @override
@@ -26,7 +26,15 @@ class _QuizAppState extends State<QuizApp> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("How frequently do you check your phone notifications throughout the day?"),
+                child: Text(
+                  "How frequently do you check your phone notifications throughout the day?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -145,4 +153,3 @@ class _QuizAppState extends State<QuizApp> {
     });
   }
 }
-

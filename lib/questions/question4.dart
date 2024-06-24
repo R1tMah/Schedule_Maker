@@ -6,7 +6,7 @@ var answer4 = '';
 class FourthQuestion extends StatefulWidget {
   @override
   FourthQuestionState createState() => FourthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class FourthQuestionState extends State<FourthQuestion> {
   @override
@@ -24,7 +24,15 @@ class FourthQuestionState extends State<FourthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Do you find that your motivation varies depending on the type or nature of the task"),
+                child: Text(
+                  "Do you find that your motivation varies depending on the type or nature of the task",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -60,8 +68,6 @@ class FourthQuestionState extends State<FourthQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToFifthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {

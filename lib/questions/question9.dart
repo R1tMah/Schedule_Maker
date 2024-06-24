@@ -6,7 +6,7 @@ var answer9 = '';
 class NinthQuestion extends StatefulWidget {
   @override
   NinthQuestionState createState() => NinthQuestionState();
-}// A State created by StatefulWidget to be displayed on screen.
+}
 
 class NinthQuestionState extends State<NinthQuestion> {
   @override
@@ -24,7 +24,15 @@ class NinthQuestionState extends State<NinthQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("Do you often find it difficult to quiet your mind or relax?"),
+                child: Text(
+                  "Do you often find it difficult to quiet your mind or relax?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -102,8 +110,6 @@ class NinthQuestionState extends State<NinthQuestion> {
       ),
     );
   }
-
-
 
   void _navigateToTenthPage(BuildContext context) {
     Future.delayed(Duration(milliseconds: 500), () {
