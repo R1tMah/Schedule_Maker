@@ -50,7 +50,6 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
             initialDateTime: selectedWakeUp,
             use24hFormat: false,
             onDateTimeChanged: (DateTime newDateTime) {
-
               selectedDateTime = newDateTime;
               currTime = newDateTime;
             },
