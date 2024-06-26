@@ -37,7 +37,7 @@ var prompt = 'Questions and options: 1) How frequently do you check your phone '
     '3) ${answer3} 4) ${answer4} 5) ${answer5} 6) ${answer6} 7) ${answer7} '
     '8) ${answer8} 9) ${answer9} 10) ${answer10}          Using these answers'
     ' to the questions, choose one of the following that best fits the person:'
-    ' Animedoro Technique, 50-20 rule, 90-30 rule          And choose one of '
+    ' Pomodoro Technique, 50-20 rule, 90-30 rule          And choose one of '
     'the following that best fits the person: Interleaved Practice, Eat That '
     'Frog Technique, ABCDE method, Premack          When giving the answer, '
     'only give the answers to the two questions separated by a comma';
