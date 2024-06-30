@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ran_app/questions/question11.dart';
 
+List<String> taskNames = []; // Global list to store task names
+
 // Global variable to store the selected fixed time
 DateTime fixedTime = DateTime(DateTime.tuesday);
 String finString = '';
@@ -92,6 +94,25 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
     return selectedDateTime;
   }
 
+  void _showDuplicateTaskDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Duplicate Task Name"),
+          content: Text("The task name already exists. Please enter a different name."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +271,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                         backgroundColor: Colors.red,
                         textStyle: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () async{
+                      onPressed: () async {
                         final DateTime? selectedTime = await _showTimePicker(context);
                         if (selectedTime != null) {
                           setState(() {
@@ -302,12 +323,17 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
               child: const Text("ADD"),
               onPressed: () {
-                // Do something with the global fixedTime variable if needed
-                if (preftimeDropDownValue == 'Fixed Time' && fixedTime != null) {
-                  print("Selected Fixed Time: $fixedTime");
+                String taskName = widget.titleController.text.trim().toLowerCase();
+                if (taskNames.contains(taskName)) {
+                  _showDuplicateTaskDialog();
+                } else {
+                  taskNames.add(taskName);
+                  if (preftimeDropDownValue == 'Fixed Time' && fixedTime != null) {
+                    print("Selected Fixed Time: $fixedTime");
+                  }
+                  print("Selected Importance Level: $importanceLevel"); // Print the importance level
+                  Navigator.of(context).pop();
                 }
-                print("Selected Importance Level: $importanceLevel"); // Print the importance level
-                Navigator.of(context).pop();
               },
             ),
             const SizedBox(height: 10,),
