@@ -46,10 +46,11 @@ class TaskPageState extends State<TaskPage> {
                       task.duration +
                       ' minutes \nDifficulty: ' +
                       task.difficultyOfTask +
-                      '\nPreferred Time: ' +
-                      task.preferredTimeOfTask +
+
                       '\nImportance Level: ' +
-                      task.importanceLevel.toString();
+                      task.importanceLevel.toString() +
+                      '\nPreferred Time: ' +
+                      task.preferredTimeOfTask;
 
                   if (task.preferredTimeOfTask == 'Fixed Time' && task.fixedTime != null) {
                     currString += ' (' + finString + ')';
@@ -57,7 +58,6 @@ class TaskPageState extends State<TaskPage> {
 
                   Color taskColor = task.chooseBackGround(colorList);
                   colorList.add(taskColor);
-                  print('hi');
                   return Card(
                     color: taskColor, // Will change this, just wanted to see colors
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),

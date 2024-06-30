@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/questions/endpage.dart';
 import 'package:ran_app/questions/question2.dart';
 import 'package:ran_app/schedule/schedulepage.dart';
+import 'package:ran_app/questions/question11.dart';
 
 var answer1 = '';
 
@@ -45,7 +46,7 @@ class _QuizAppState extends State<QuizApp> {
                 child: Text('Skip to end'),
                 onPressed: () {
                   setState(() {
-
+                      selectedWakeUp = DateTime.now();
                   });
                   _navigateToHomePage(context);
                 },

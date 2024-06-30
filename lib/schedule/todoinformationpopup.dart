@@ -38,27 +38,60 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
     );
   }
 
-  Future<DateTime?> _showTimePicker(BuildContext context) async{
-    DateTime? selectedDateTime;
+  Future<DateTime?> _showTimePicker(BuildContext context) async {
+    DateTime? selectedDateTime = selectedWakeUp;
+
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext builder) {
-        return Container(
-          height: 250,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.time,
-            initialDateTime: selectedWakeUp,
-            use24hFormat: false,
-            onDateTimeChanged: (DateTime newDateTime) {
-              selectedDateTime = newDateTime;
-              currTime = newDateTime;
-            },
-          ),
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              height: 250,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                initialDateTime: selectedWakeUp,
+                use24hFormat: false,
+                onDateTimeChanged: (DateTime newDateTime) {
+                  // Only update selectedDateTime if newDateTime is after selectedWakeUp
+                  if (newDateTime.isAfter(selectedWakeUp!) || newDateTime.isAtSameMomentAs(selectedWakeUp!)) {
+                    selectedDateTime = newDateTime;
+                  } else {
+                    // Close the bottom sheet
+                    Navigator.pop(context);
+
+                    // Show an alert dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Invalid Time"),
+                          content: Text("Please select a time after ${selectedWakeUp!.hour}:${selectedWakeUp!.minute}"),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                // Reopen the time picker with the correct time
+                                _showTimePicker(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            );
+          },
         );
       },
     );
+
     return selectedDateTime;
   }
+
 
   @override
   Widget build(BuildContext context) {

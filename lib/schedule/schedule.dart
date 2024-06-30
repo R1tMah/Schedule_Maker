@@ -108,33 +108,40 @@ need a function that puts the fixed tasks in their times
 
 need a function that edits the map of tasks
 
+Pseudocode for Interleaved Practice
 
-class DataSource extends CalendarDataSource {
-  DataSource(List<Task> source) {
-    appointments = source;
-  }
+Variables:
 
+Iterate through all of the study tasks, choose 3 tasks
+Variable for working method (25/50/90)
+Make a list of the 3 tasks (miniList)
+Map (task -> int) fullMapMap for if task is done
+Map (task → int) listMap for if task is done within 3 tasks in list
+Int variable called subtasktime
+if(working method is 25)... (choose the time for each one)
+Variable currtime // for the current time
+Variable breaktime for the length of the break
 
-  @override
-  String getSubject(int index) => appointments[index].label;
+Helper Functions:
+checkIfAllTasksAreDone(Map) → returns 0/1 depending if theyre all done
+checkIfAnyTasksAreDone(Map) → returns the task thats done
 
-  @override
-  String getStartTimeZone(int index) => appointments[index].startTimeZone;
+While(checkIfAllTasksAreDone != 0) {
+	for(i < working method/subtasktime) {
+		Task doneTask = checkIfAnyTasksAreDone(
+		if(checkIfAnyTasksAreDone != null){
 
-  @override
-  String getNotes(int index) => appointments[index].description;
-
-  @override
-  String getEndTimeZone(int index) => appointments[index].endTimeZone;
-
-  @override
-  Color getColor(int index) => appointments[index].background;
-
-  @override
-  DateTime getStartTime(int index) => appointments[index].from;
-
-  @override
-  DateTime getEndTime(int index) => appointments[index].to;
 }
+	if(checkiftimefits(DateTimeRange(currtime, currtime + subtasktime)) {
+	Add a new task to the map at currtime that is subtasktime minutes long
+	This task is named
+Update currtime
+	} //if statement
+} //for loop
+
+}
+
+Add a break
+
 
  */
