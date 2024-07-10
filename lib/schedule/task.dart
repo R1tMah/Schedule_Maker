@@ -84,6 +84,7 @@ else{
 #checkIfAllTasksAreDone(Map) → returns True/False depending if theyre all done
 #findNextAvailableTime(DateTime) → finds the next time
 #scheduleTasks based on difficulty(difficulty)  -> Function for the whole loop
+#initializeVariables working time, breaktime, max based on study techniquies
 
 def scheduleTime(){
     scheduleFixedTimes()
