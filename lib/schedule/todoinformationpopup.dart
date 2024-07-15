@@ -10,7 +10,7 @@ DateTime fixedTime = DateTime(DateTime.tuesday);
 String finString = '';
 
 String areaDropdownValue = 'Study';
-String durationDropdownValue = '15';
+int durationDropdownValue = 15;
 String preftimeDropDownValue = 'Morning';
 String difficultyDropDownValue = 'Easy';
 double importanceLevel = 1.0; // New variable for importance level
@@ -163,6 +163,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                     onChanged: (String? selectedvalue) {
                       setState(() {
                         areaDropdownValue = selectedvalue!;
+
                       });
                     },
                   ),
@@ -177,25 +178,25 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Please select the Duration of the task in minutes: "),
-                  DropdownButton<String>(
+                  DropdownButton<int>(
                     value: durationDropdownValue,
                     isExpanded: true,
-                    items: <String>[
-                      '15',
-                      '30',
-                      '45',
-                      '60',
-                      '75',
-                      '90',
-                      '105',
-                      '120',
+                    items: <int>[
+                      15,
+                      30,
+                      45,
+                      60,
+                      75,
+                      90,
+                      105,
+                      120,
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
-                    onChanged: (String? selectedvalue) {
+                    onChanged: (int? selectedvalue) {
                       setState(() {
                         durationDropdownValue = selectedvalue!;
                       });
