@@ -127,7 +127,7 @@ class Schedule {
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isEmpty() == false){
       currTask = taskList[0];
-      if(sessioncounter = max){
+      if(sessioncounter == max){
         currTask = othertasks[0];
         count = 0;
         newTask = Task(
