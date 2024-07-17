@@ -190,10 +190,10 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       90,
                       105,
                       120,
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
+                    ].map<DropdownMenuItem<int>>((int value) {
+                      return DropdownMenuItem<int>(
                         value: value,
-                        child: Text(value),
+                        child: Text("${value}"),
                       );
                     }).toList(),
                     onChanged: (int? selectedvalue) {

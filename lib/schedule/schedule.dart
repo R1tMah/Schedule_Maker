@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/taskpage.dart';
 import 'package:time_range/time_range.dart';
-
+import 'package:ran_app/questions/question11.dart';
 
 
 class Schedule {
@@ -16,44 +16,40 @@ class Schedule {
   String studyMethod;
   String workingMethod;
   List<Task> currTaskList = [];
+
   List<Task> currStudyTaskList = [];
 
-  List easyTasks;
-  List mediumTasks;
-  List hardTasks;
-  List otherTasks = [];
-  var workingtime;
-  var breaktime;
-  var currtime = startTime;
+  List<Task> easyTasks = [];
+  List<Task> mediumTasks = [];
+  List<Task> hardTasks = [];
+  List<Task> othertasks = [];
+  var workingtime = 50;
+  var breaktime = 20;
+  DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
-  Task currTask = null;
+  Task currTask = Task();
   var max = 0;
 
+  void initializeTasks(){
 
-  while(findEasyTask() != null){
-    easyTasks.add(findEasyTask());
-  }
-  while(findMediumTask() != null){
-    mediumTasks.add(findMediumTask());
-  }
-  while(findHardTask() != null){
-    hardTasks.add(findHardTask());
-  }
-
-  for(int i = 0; i < currTaskList.length; i++){
-    if(currTaskList[i].area == 'Study'){
+    for(int i = 0; i < currTaskList.length; i++){
+      if(currTaskList[i].area == 'Study'){
       currStudyTaskList.add(currTaskList[i]);
+      }
+      else{
+      othertasks.add(currTaskList[i]);
+      }
     }
-    else{
-      otherTasks.add(currTaskList[i]);
+    for(int i = 0; i < currStudyTaskList.length; i++){
+      sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/stringToInt(workingMethod);
     }
   }
+
+
 
   Map<Task, DateTimeRange> taskTimeMap = {};
   Map<Task, double> sessionsNeededMap = {};
-  for(int i = 0; i < studyTasks.length; i++){
-    sessionsNeeded[studyTasks[i]] = studyTasks[i].duration/workingtime);
-  }
+
 
   void initializeList(List<Task> taskList) {
     currTaskList.addAll(taskList);
@@ -61,7 +57,7 @@ class Schedule {
 
 
   List<Task> findEasyTasks() {
-    List<Task> easyTask = {};
+    List<Task> easyTask = [];
     for (int i = 0; i < currStudyTaskList.length; i++) {
       if (currStudyTaskList[i].difficultyOfTask == 'Easy') {
         easyTask.add(currStudyTaskList[i]);
@@ -96,15 +92,12 @@ class Schedule {
   void setFixedTasks() {
     for (var task in currTaskList) {
       if (task.preferredTimeOfTask == 'Fixed Time') {
-        taskTimeMap[task] = DateTimeRange(start: task.fixedTime!, end: task.fixedTime!.add(Duration(minutes: stringToInt(task.duration))));
+        taskTimeMap[task] = DateTimeRange(start: task.fixedTime!, end: task.fixedTime!.add(Duration(minutes: task.duration)));
       }
     }
   }
 
-  void addTaskToMap(Task task){
-    DateTimeRange time = chooseTime(task); // finds the range of the task
-    taskTimeMap[task] = time;
-  }
+
   int _checkIfTimeFits(DateTimeRange newRange){
     for(DateTimeRange time in taskTimeMap.values){
       DateTime start = newRange.start;
@@ -119,83 +112,79 @@ class Schedule {
     return 0;
   }
   void findNextAvailableTime(){
-    while(checkIfTimeFits(new DateTimeRange(currTime, currTime)) == 1){
-      currTime.add(const Duration(minutes: 5);
+    while(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime)) == 1){
+      currTime.add(const Duration(minutes: 5));
     }
   }
 
+  void addToTaskTimeMap(int duration){
+    Task newTask =  Task(
+    area: currTask.area,
+    label: currTask.label,
+    duration: currTask.duration,
+    preferredTimeOfTask: currTask.preferredTimeOfTask,
+    difficultyOfTask:  currTask.difficultyOfTask,
+    fixedTime: currTask.fixedTime,
+    importanceLevel: currTask.importanceLevel,
+    );
+    taskTimeMap[newTask] = DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: duration)));
+  }
+
+  var sessioncounter = 0;
   void scheduleTimesBasedOnList(List<Task> taskList){
-    while(taskList.isEmpty() == false){
+    while(currTaskList.isNotEmpty){
       currTask = taskList[0];
       if(sessioncounter == max){
-        currTask = othertasks[0];
-        count = 0;
-        newTask = Task(
-          area: currTask.area,
-          label: currTask.label,
-          duration: currTask.duration,
-          preferredTimeOfTask: currTask.preferredTimeOfTask,
-          difficultyOfTask:  currTask.difficultyOfTask,
-          fixedTime: currTask.fixedTime,
-          importanceLevel: currTask.importanceLevel,
-        );
-        othertasks.remove(0);
-        sessioncounter = 0;
+        if(othertasks.isEmpty){
+          currTime.add(Duration(minutes: workingtime));
+        }
+        else {
+          currTask = othertasks[0];
+          addToTaskTimeMap(currTask.duration);
+          othertasks.removeAt(0);
+          sessioncounter = 0;
+        }
       }
-      else if(checkiftimerangefits(currtime, currtime + workingtime + breaktime){
-        if(sessionsneededmap(currTask) < 1){
-          remainingtime = workingtime;
-          while(currTask.duration <= remainingtime){                                                                                                                    z                                         workingtime
+      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:currTask.duration)))) != 0){
+        if(sessionsNeededMap[currTask]! < 1){
+          var remainingTime = workingtime;
+          while(currTask.duration <= remainingTime){
+
             sessionsNeededMap.remove(currTask);
-            addToTaskTimeMap(currtime, currtime + currTask.duration);
-            taskList.remove(0);
-            currtime = currtime + currTask.duration;
-            remainingtime -= sessionsneededmap[currentTask] * 60;
-            currTask = easyTask[0];
+
+            addToTaskTimeMap(currTask.duration);
+            taskList.removeAt(0);
+            currTime.add(Duration(minutes: currTask.duration));
+            remainingTime -= sessionsNeededMap[currTask]!.toInt() * 60;
+            currTask = easyTasks[0];
           }
-          if(remainingtime != 0){
-            addtoTaskTimeMap(currtime, currtime + remainingTime);
-            addtoTaskTimeMap(currtime + remainingTime, currtime + remainingTime +breaktime);
-            currtime = currtime + remainingTime + breaktime;
-            sessionsneededMap[currentTask] -= remainingTime/workingtime;
+          if(remainingTime != 0){
+            addToTaskTimeMap(currTask.duration + remainingTime);
+            currTime.add(Duration(minutes: remainingTime));
+            addToTaskTimeMap(remainingTime +breaktime);
+            currTime.add(Duration(minutes: breaktime));
+            sessionsNeededMap.update(currTask, (value) => value - remainingTime/workingtime);
           }
           else{
-            newTask = Task(
-            area: currTask.area,
-            label: currTask.label,
-            duration: currTask.duration,
-            preferredTimeOfTask: currTask.preferredTimeOfTask,
-            difficultyOfTask:  currTask.difficultyOfTask,
-            fixedTime: currTask.fixedTime,
-            importanceLevel: currTask.importanceLevel,
-            );
-            taskTimeMap[newTask] = new DateTimeRange(currTime, currTime + newTask.duration);
+            addToTaskTimeMap(breaktime);
           }
         }
         else {
-          sessionsNeededMap[currTask] -= 1;
-          newTask = Task(
-            area: currTask.area,
-            label: currTask.label,
-            duration: currTask.duration,
-            preferredTimeOfTask: currTask.preferredTimeOfTask,
-            difficultyOfTask:  currTask.difficultyOfTask,
-            fixedTime: currTask.fixedTime,
-            importanceLevel: currTask.importanceLevel,
-          );
+          sessionsNeededMap.update(currTask, (value) => value + 1);
+          addToTaskTimeMap(currTask.duration);
         }
         sessioncounter+=1;
       }
       else {
+        currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
     }
   }
-}
   void scheduleTime(){
-    scheduleFixedTimes();
+    setFixedTasks();
     if(studyMethod == "Premack"){
-      while(checkIfAllTaskAreDone){
+      while(sessionsNeededMap.isNotEmpty){
         scheduleTimesBasedOnList(easyTasks);
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);

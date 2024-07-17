@@ -42,8 +42,8 @@ class TaskPageState extends State<TaskPage> {
                   final task = taskList[index];
                   String currString = 'Area: ' +
                       task.area +
-                      '\nDuration: ' +
-                      task.duration +
+                      '\nDuration:'
+                      + "${task.duration}" +
                       ' minutes \nDifficulty: ' +
                       task.difficultyOfTask +
 

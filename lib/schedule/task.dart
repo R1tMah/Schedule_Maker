@@ -17,7 +17,7 @@ class Task{
   String label;
   String area;
   Color background;
-  String duration;
+  int duration;
   String preferredTimeOfTask;
   String difficultyOfTask;
   DateTime? fixedTime;
