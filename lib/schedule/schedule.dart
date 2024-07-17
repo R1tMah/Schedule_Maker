@@ -31,13 +31,13 @@ class Schedule {
   var max = 0;
 
   void initializeTasks(){
-
+    easyTasks = findEasyTasks();
     for(int i = 0; i < currTaskList.length; i++){
       if(currTaskList[i].area == 'Study'){
-      currStudyTaskList.add(currTaskList[i]);
+        currStudyTaskList.add(currTaskList[i]);
       }
       else{
-      othertasks.add(currTaskList[i]);
+        othertasks.add(currTaskList[i]);
       }
     }
     for(int i = 0; i < currStudyTaskList.length; i++){
