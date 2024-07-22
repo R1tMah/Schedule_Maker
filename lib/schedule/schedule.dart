@@ -349,4 +349,91 @@ Update currtime
 Add a break
 
 
+
+ */
+
+/*
+
+Interleaved Psudeocode
+
+List<Task> currStudyTaskList = []; //initialize with study tasks
+List<Task> othertasks = []; //initialize with other tasks
+var workingtime = 50;
+var breaktime = 20;
+DateTime currTime = selectedWakeUp!;
+var sessionCounter = 0;
+Task currTask = Task();
+Task newTask = Task();
+var max = 0;
+Map<Task, DateTimeRange> taskTimeMap = {};
+Map<Task, double> subSessionsNeededMap = {};
+var sessioncounter = 0;
+
+var subtasktime;
+if(workingtime == 30){
+    subtasktime = 15;
+}
+else if(workingtime == 60){
+    subtasktime = 15;
+}
+else if(workingtime == 90){
+    subtasktime = 30;
+}
+
+
+List<Task> rotationList; //length of the list is workingtime/subtask
+void initializeList(){
+    int k = 0;
+    while(k < workingtime/subtaskTime){
+        rotationList.add(currStudyTaskList[k]);
+        k++;
+    }
+}
+
+
+void interleavedPractice(){
+    while(currStudyTaskList.isNotEmpty){
+        currTask = currStudyTaskList[0];
+        if(sessioncounter == max){
+            if(othertasks.isEmpty){
+                currTime.add(Duration(minutes: workingtime));
+            }
+            else {
+              currTask = othertasks[0];
+              addToTaskTimeMap(currTask.duration);
+              othertasks.removeAt(0);
+              sessioncounter = 0;
+            }
+        }
+        else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
+            //this part keeps adding in tasks if there is extra time
+            for(int i = 0; i < rotationList.length; i++){
+                if(subSessionsNeededMap[rotationList[i]] > 1){
+                    addToTaskTimeMap(rotationList[i].duration);
+                    subSessionsNeededMap[rotationList[i]] -= 1;
+                    currTime.add(Duration(minutes: subTaskTime));
+                }
+                else if(subSessionsNeededMap[rotationList[i]] < 1){
+                    rotationList.remove(rotationList.get(i));
+                    rotationList.add(currStudyTaskList[0], i);
+                    subSessionsNeededMap[rotationList.get(i)] -= .5;
+                    currTask = rotationList.get(i);
+                    addToTaskTimeMap(15);
+                    currTime.add(Duration(minutes: 15));
+                }
+                else{
+                    addToTaskTimeMap(rotationList[i].duration);
+                    subSessionsNeededMap.remove(rotationList.get(i))
+                    rotationList.remove(rotationList.get(i));
+                }
+            }
+            addToTaskTimeMap(breaktime);
+            sessioncounter++;
+        }
+        else{
+            currTime.add(const Duration(minutes:5));
+            findNextAvailableTime();
+        }
+    }
+}
  */
