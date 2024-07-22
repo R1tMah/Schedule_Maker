@@ -99,6 +99,9 @@ class Schedule {
 
 
   int _checkIfTimeFits(DateTimeRange newRange){
+    if(currTime.hour > 23){
+      return 2;
+    }
     for(DateTimeRange time in taskTimeMap.values){
       DateTime start = newRange.start;
       if (start.isAfter(time.start) && start.isBefore(time.end)) {
