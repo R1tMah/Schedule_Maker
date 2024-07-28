@@ -30,9 +30,18 @@ class Schedule {
   Task currTask = Task();
   var max = 0;
 
+  //adds tasks to currTaskList
+  void setTasks(List<Task> taskList){
+    for(int i = 0; i < taskList.length; i++){
+      currTaskList.add(taskList[i]);
+      print(currTaskList[i].getLabel());
+    }
+  }
+
   void initializeTasks(){
-    easyTasks = findEasyTasks();
+    //adds the study and other tasks
     for(int i = 0; i < currTaskList.length; i++){
+      print("This is the area of the" + (i+1).toString() + "th task: " + currTaskList[i].area);
       if(currTaskList[i].area == 'Study'){
         currStudyTaskList.add(currTaskList[i]);
       }
@@ -40,6 +49,23 @@ class Schedule {
         othertasks.add(currTaskList[i]);
       }
     }
+    // adding tasks to their respective difficulties
+    for (int i = 0; i < currStudyTaskList.length; i++) {
+      if (currStudyTaskList[i].difficultyOfTask == 'Easy') {
+        easyTasks.add(currStudyTaskList[i]);
+        print("This is the last easy task: " + easyTasks[easyTasks.length - 1].getLabel());
+      }
+      else if(currStudyTaskList[i].difficultyOfTask == 'Medium'){
+        mediumTasks.add(currStudyTaskList[i]);
+      }
+      else{
+        hardTasks.add(currStudyTaskList[i]);
+      }
+    }
+    for(int i = 0; i < easyTasks.length; i++){
+      print("This is the " + (i+1).toString() + "easy task: " + easyTasks[i].getLabel());
+    }
+
     for(int i = 0; i < currStudyTaskList.length; i++){
       sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/stringToInt(workingMethod);
     }
@@ -50,30 +76,6 @@ class Schedule {
   Map<Task, DateTimeRange> taskTimeMap = {};
   Map<Task, double> sessionsNeededMap = {};
 
-
-  void initializeList(List<Task> taskList) {
-    currTaskList.addAll(taskList);
-  }
-
-
-  List<Task> findEasyTasks() {
-    List<Task> easyTask = [];
-    for (int i = 0; i < currStudyTaskList.length; i++) {
-      if (currStudyTaskList[i].difficultyOfTask == 'Easy') {
-        easyTask.add(currStudyTaskList[i]);
-      }
-    }
-    return easyTask;
-  }
-
-  Task? findMediumTask() {
-    for (int i = 0; i < currStudyTaskList.length; i++) {
-      if (currStudyTaskList[i].difficultyOfTask == 'Medium') {
-        return currStudyTaskList[i];
-      }
-    }
-    return null;
-  }
 
   Task? findHardTask() {
     for (int i = 0; i < currStudyTaskList.length; i++) {
@@ -133,10 +135,24 @@ class Schedule {
     taskTimeMap[newTask] = DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: duration)));
   }
 
+  void printTaskList(){
+    for(int i = 0; i < currTaskList.length; i++){
+      print(currTaskList[i].getLabel());
+    }
+  }
+
   var sessioncounter = 0;
   void scheduleTimesBasedOnList(List<Task> taskList){
-    while(currTaskList.isNotEmpty){
+    while(taskList.isNotEmpty){
+      for(int i = 0; i < taskList.length; i++){
+        print(taskList[i].getLabel());
+      }
+      printTaskList();
       currTask = taskList[0];
+      if(true){
+        taskList.removeRange(0, taskList.length-1);
+        break;
+      }
       if(sessioncounter == max){
         if(othertasks.isEmpty){
           currTime.add(Duration(minutes: workingtime));
@@ -183,6 +199,7 @@ class Schedule {
         findNextAvailableTime();
       }
     }
+
   }
   void scheduleTime(){
     setFixedTasks();
@@ -192,10 +209,23 @@ class Schedule {
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);
       }
+
     }
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  sessioncounter = 0
 List otherTasks
