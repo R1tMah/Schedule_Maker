@@ -3,7 +3,11 @@ import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/taskpage.dart';
 import 'package:time_range/time_range.dart';
 import 'package:ran_app/questions/question11.dart';
+import 'package:ran_app/questions/endpage.dart';
 
+var work = (((response.split(', '))[0]).split('-'))[0];
+var rest = (((((response.split(', '))[0]).split('-'))[1]).split(' '))[0];
+var workingMethod = (response.split(', '))[1];
 
 class Schedule {
   Schedule({
@@ -29,6 +33,11 @@ class Schedule {
   var sessionCounter = 0;
   Task currTask = Task();
   var max = 0;
+
+  Task newTask = Task();
+  Map<Task, double> subSessionsNeededMap = {};
+  List<Task> rotationList = []; //length of the list is workingtime/subtask
+  var subtasktime;
 
   //adds tasks to currTaskList
   void setTasks(List<Task> taskList){
@@ -68,6 +77,23 @@ class Schedule {
 
     for(int i = 0; i < currStudyTaskList.length; i++){
       sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/stringToInt(workingMethod);
+    }
+
+    //for interleaved practice
+    if(workingtime == 30){
+      subtasktime = 15;
+    }
+    else if(workingtime == 60){
+      subtasktime = 15;
+    }
+    else if(workingtime == 90){
+      subtasktime = 30;
+    }
+
+    int k = 0;
+    while(k < workingtime/subtasktime){
+      rotationList.add(currStudyTaskList[k]);
+      k++;
     }
   }
 
@@ -141,7 +167,6 @@ class Schedule {
     }
   }
 
-  var sessioncounter = 0;
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isNotEmpty){
       for(int i = 0; i < taskList.length; i++){
@@ -153,7 +178,7 @@ class Schedule {
         taskList.removeRange(0, taskList.length-1);
         break;
       }
-      if(sessioncounter == max){
+      if(sessionCounter == max){
         if(othertasks.isEmpty){
           currTime.add(Duration(minutes: workingtime));
         }
@@ -161,7 +186,7 @@ class Schedule {
           currTask = othertasks[0];
           addToTaskTimeMap(currTask.duration);
           othertasks.removeAt(0);
-          sessioncounter = 0;
+          sessionCounter = 0;
         }
       }
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:currTask.duration)))) != 0){
@@ -192,15 +217,61 @@ class Schedule {
           sessionsNeededMap.update(currTask, (value) => value + 1);
           addToTaskTimeMap(currTask.duration);
         }
-        sessioncounter+=1;
+        sessionCounter+=1;
       }
       else {
         currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
     }
-
   }
+
+  void interleavedPractice(){
+    while(currStudyTaskList.isNotEmpty){
+      currTask = currStudyTaskList[0];
+      if(sessionCounter == max){
+        if(othertasks.isEmpty){
+          currTime.add(Duration(minutes: workingtime));
+        }
+        else {
+          currTask = othertasks[0];
+          addToTaskTimeMap(currTask.duration);
+          othertasks.removeAt(0);
+          sessionCounter = 0;
+        }
+      }
+      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
+        //this part keeps adding in tasks if there is extra time
+        for(int i = 0; i < rotationList.length; i++){
+          if(subSessionsNeededMap[rotationList[i]]! > 1){
+            addToTaskTimeMap(rotationList[i].duration);
+            subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
+            currTime.add(Duration(minutes: subtasktime));
+          }
+          else if(subSessionsNeededMap[rotationList[i]]! < 1){
+            rotationList.remove(rotationList[i]);
+            rotationList.insert(i, currStudyTaskList[0]);
+            subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
+            currTask = rotationList[i];
+            addToTaskTimeMap(15);
+            currTime.add(Duration(minutes: 15));
+          }
+          else{
+            addToTaskTimeMap(rotationList[i].duration);
+            subSessionsNeededMap.remove(rotationList[i]);
+            rotationList.remove(rotationList[i]);
+          }
+        }
+        addToTaskTimeMap(breaktime);
+        sessionCounter++;
+      }
+      else{
+        currTime.add(const Duration(minutes:5));
+        findNextAvailableTime();
+      }
+    }
+  }
+
   void scheduleTime(){
     setFixedTasks();
     if(studyMethod == "Premack"){
@@ -209,10 +280,10 @@ class Schedule {
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);
       }
-
+    } else if(studyMethod == "Interleaved Practice") {
+      interleavedPractice();
     }
   }
-
 }
 
 
