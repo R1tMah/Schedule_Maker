@@ -275,11 +275,10 @@ class Schedule {
   void scheduleTime(){
     setFixedTasks();
     if(studyMethod == "Premack"){
-      while(sessionsNeededMap.isNotEmpty){
         scheduleTimesBasedOnList(easyTasks);
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);
-      }
+
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
     }
