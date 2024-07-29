@@ -124,13 +124,13 @@ class Schedule {
 
   void addToTaskTimeMap(int duration){
     Task newTask =  Task(
-    area: currTask.area,
-    label: currTask.label,
-    duration: currTask.duration,
-    preferredTimeOfTask: currTask.preferredTimeOfTask,
-    difficultyOfTask:  currTask.difficultyOfTask,
-    fixedTime: currTask.fixedTime,
-    importanceLevel: currTask.importanceLevel,
+      area: currTask.area,
+      label: currTask.label,
+      duration: currTask.duration,
+      preferredTimeOfTask: currTask.preferredTimeOfTask,
+      difficultyOfTask:  currTask.difficultyOfTask,
+      fixedTime: currTask.fixedTime,
+      importanceLevel: currTask.importanceLevel,
     );
     taskTimeMap[newTask] = DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: duration)));
   }
