@@ -140,12 +140,13 @@ class Schedule {
 
 
   int _checkIfTimeFits(DateTimeRange newRange){
-    if(currTime.hour > 23){
-      return 2;
-    }
+    //if(currTime.hour > 23){
+      //return 2;
+    //}
     for(DateTimeRange time in taskTimeMap.values){
       DateTime start = newRange.start;
       if (start.isAfter(time.start) && start.isBefore(time.end)) {
+        print("Too Early");
         return 1;
       }
       DateTime end = newRange.end;
@@ -188,7 +189,7 @@ class Schedule {
       print("Max: ${max}");
       print("Session Counter ${sessionCounter}");
       print("The current time is \n ${currTime}");
-      taskList.remove(0);
+
       print("___________________________________________");
       if(sessionCounter == max){
         if(othertasks.isEmpty){
@@ -234,7 +235,9 @@ class Schedule {
         currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
+      taskList.removeAt(0);
     }
+
 
   }
 
