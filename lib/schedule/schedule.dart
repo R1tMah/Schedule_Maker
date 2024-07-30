@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/taskpage.dart';
 import 'package:time_range/time_range.dart';
@@ -27,7 +28,7 @@ class Schedule {
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
   List<Task> othertasks = [];
-  var workingtime = 50;
+  var workingtime = 60;
   var breaktime = 20;
   DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
@@ -48,6 +49,7 @@ class Schedule {
   }
 
   void initializeTasks(){
+
     //adds the study and other tasks
     for(int i = 0; i < currTaskList.length; i++){
       print("This is the area of the" + (i+1).toString() + "th task: " + currTaskList[i].area);
@@ -64,37 +66,48 @@ class Schedule {
         easyTasks.add(currStudyTaskList[i]);
         print("This is the last easy task: " + easyTasks[easyTasks.length - 1].getLabel());
       }
+
       else if(currStudyTaskList[i].difficultyOfTask == 'Medium'){
         mediumTasks.add(currStudyTaskList[i]);
+        print("This is the last medium task: " + mediumTasks[mediumTasks.length - 1].getLabel());
+
       }
       else{
         hardTasks.add(currStudyTaskList[i]);
+        print("This is the last hard task: " + hardTasks[hardTasks.length - 1].getLabel());
       }
+      print("_____________________________________________________");
     }
-    for(int i = 0; i < easyTasks.length; i++){
-      print("This is the " + (i+1).toString() + "easy task: " + easyTasks[i].getLabel());
-    }
+
 
     for(int i = 0; i < currStudyTaskList.length; i++){
       sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/stringToInt(workingMethod);
     }
 
-    //for interleaved practice
+    //for subtasktime and breaktime
     if(workingtime == 30){
+      breaktime = 10;
       subtasktime = 15;
+      max = 3;
     }
     else if(workingtime == 60){
+      breaktime = 20;
       subtasktime = 15;
+      max = 3;
     }
     else if(workingtime == 90){
+      breaktime = 30;
       subtasktime = 30;
+      max = 2;
     }
 
     int k = 0;
-    while(k < workingtime/subtasktime){
+    while(k < workingtime/subtasktime - 1){
       rotationList.add(currStudyTaskList[k]);
       k++;
     }
+
+
   }
 
 
@@ -161,23 +174,22 @@ class Schedule {
     taskTimeMap[newTask] = DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: duration)));
   }
 
-  void printTaskList(){
-    for(int i = 0; i < currTaskList.length; i++){
-      print(currTaskList[i].getLabel());
+  void printTaskList(List<Task> taskList){
+    for(int i = 0; i < taskList.length; i++){
+      print(taskList[i].getLabel());
     }
   }
 
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isNotEmpty){
-      for(int i = 0; i < taskList.length; i++){
-        print(taskList[i].getLabel());
-      }
-      printTaskList();
+
+      printTaskList(taskList);
       currTask = taskList[0];
-      if(true){
-        taskList.removeRange(0, taskList.length-1);
-        break;
-      }
+      print("Max: ${max}");
+      print("Session Counter ${sessionCounter}");
+      print("The current time is \n ${currTime}");
+      taskList.remove(0);
+      print("___________________________________________");
       if(sessionCounter == max){
         if(othertasks.isEmpty){
           currTime.add(Duration(minutes: workingtime));
@@ -193,28 +205,27 @@ class Schedule {
         if(sessionsNeededMap[currTask]! < 1){
           var remainingTime = workingtime;
           while(currTask.duration <= remainingTime){
-
+            remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
             sessionsNeededMap.remove(currTask);
-
             addToTaskTimeMap(currTask.duration);
             taskList.removeAt(0);
             currTime.add(Duration(minutes: currTask.duration));
-            remainingTime -= sessionsNeededMap[currTask]!.toInt() * 60;
-            currTask = easyTasks[0];
+            if(taskList.isEmpty){
+              break;
+            }
+            else {
+              currTask = taskList[0];
+            }
           }
-          if(remainingTime != 0){
-            addToTaskTimeMap(currTask.duration + remainingTime);
-            currTime.add(Duration(minutes: remainingTime));
-            addToTaskTimeMap(remainingTime +breaktime);
-            currTime.add(Duration(minutes: breaktime));
-            sessionsNeededMap.update(currTask, (value) => value - remainingTime/workingtime);
+          if(currTask.duration > remainingTime){
+              addToTaskTimeMap(remainingTime);
+              currTime.add(Duration(minutes: remainingTime));
           }
-          else{
-            addToTaskTimeMap(breaktime);
-          }
+          currTask = Task(label: "Break");
+          addToTaskTimeMap(breaktime);
         }
         else {
-          sessionsNeededMap.update(currTask, (value) => value + 1);
+          sessionsNeededMap.update(currTask, (value) => value - 1);
           addToTaskTimeMap(currTask.duration);
         }
         sessionCounter+=1;
@@ -224,6 +235,7 @@ class Schedule {
         findNextAvailableTime();
       }
     }
+
   }
 
   void interleavedPractice(){
@@ -278,7 +290,11 @@ class Schedule {
         scheduleTimesBasedOnList(easyTasks);
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);
+        while(othertasks.isNotEmpty){
+          addToTaskTimeMap(othertasks[0].duration);
+          othertasks.removeAt(0);
 
+        }
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
     }

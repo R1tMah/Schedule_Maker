@@ -24,7 +24,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
   Schedule schedule = Schedule(
     scheduleDate: DateTime.now(),
     studyMethod: 'Premack',
-    workingMethod: '50',
+    workingMethod: '60',
   );
 
   @override
@@ -58,14 +58,14 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
         importanceLevel: 2,
       ),
       Task(
-        area: 'Work',
+        area: 'Study',
         label: 'Email',
         duration: 30,
         difficultyOfTask: 'Easy',
         importanceLevel: 1,
       ),
       Task(
-        area: 'Work',
+        area: 'Study',
         label: 'Project',
         duration: 180,
         difficultyOfTask: 'Hard',
