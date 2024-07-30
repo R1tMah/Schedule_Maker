@@ -195,7 +195,7 @@ class Schedule {
       print("___________________________________________");
       if(sessionCounter == max){
         if(othertasks.isEmpty){
-          currTime.add(Duration(minutes: workingtime));
+          currTime = currTime.add(Duration(minutes: workingtime));
         }
         else {
           currTask = othertasks[0];
@@ -212,7 +212,7 @@ class Schedule {
             sessionsNeededMap.remove(currTask);
             addToTaskTimeMap(currTask.duration);
             taskList.removeAt(0);
-            currTime.add(Duration(minutes: currTask.duration));
+            currTime = currTime.add(Duration(minutes: currTask.duration));
             if(taskList.isEmpty){
               break;
             }
@@ -222,19 +222,20 @@ class Schedule {
           }
           if(currTask.duration > remainingTime){
               addToTaskTimeMap(remainingTime);
-              currTime.add(Duration(minutes: remainingTime));
+              currTime = currTime.add(Duration(minutes: remainingTime));
           }
           currTask = Task(label: "Break");
           addToTaskTimeMap(breaktime);
         }
         else {
           sessionsNeededMap.update(currTask, (value) => value - 1);
-          addToTaskTimeMap(currTask.duration);
+          addToTaskTimeMap(workingtime);
+          currTime = currTime.add(Duration(minutes: workingtime));
         }
         sessionCounter+=1;
       }
       else {
-        currTime.add(const Duration(minutes:5));
+        currTime = currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
       taskList.removeAt(0);
@@ -248,7 +249,7 @@ class Schedule {
       currTask = currStudyTaskList[0];
       if(sessionCounter == max){
         if(othertasks.isEmpty){
-          currTime.add(Duration(minutes: workingtime));
+          currTime = currTime.add(Duration(minutes: workingtime));
         }
         else {
           currTask = othertasks[0];
@@ -257,13 +258,13 @@ class Schedule {
           sessionCounter = 0;
         }
       }
-      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
+      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime = currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
         //this part keeps adding in tasks if there is extra time
         for(int i = 0; i < rotationList.length; i++){
           if(subSessionsNeededMap[rotationList[i]]! > 1){
             addToTaskTimeMap(rotationList[i].duration);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
-            currTime.add(Duration(minutes: subtasktime));
+            currTime = currTime.add(Duration(minutes: subtasktime));
           }
           else if(subSessionsNeededMap[rotationList[i]]! < 1){
             rotationList.remove(rotationList[i]);
@@ -271,7 +272,7 @@ class Schedule {
             subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
             currTask = rotationList[i];
             addToTaskTimeMap(15);
-            currTime.add(Duration(minutes: 15));
+            currTime = currTime.add(Duration(minutes: 15));
           }
           else{
             addToTaskTimeMap(rotationList[i].duration);
@@ -283,7 +284,7 @@ class Schedule {
         sessionCounter++;
       }
       else{
-        currTime.add(const Duration(minutes:5));
+        currTime = currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
     }
