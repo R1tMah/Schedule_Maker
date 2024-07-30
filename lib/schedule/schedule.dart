@@ -30,6 +30,7 @@ class Schedule {
   List<Task> othertasks = [];
   var workingtime = 60;
   var breaktime = 20;
+  var remainingTime = 0;
   DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
   Task currTask = Task();
@@ -49,7 +50,8 @@ class Schedule {
   }
 
   void initializeTasks(){
-
+    //instantiate workingtime
+    remainingTime = workingtime;
     //adds the study and other tasks
     for(int i = 0; i < currTaskList.length; i++){
       print("This is the area of the" + (i+1).toString() + "th task: " + currTaskList[i].area);
@@ -204,7 +206,7 @@ class Schedule {
       }
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:currTask.duration)))) != 0){
         if(sessionsNeededMap[currTask]! < 1){
-          var remainingTime = workingtime;
+          remainingTime = workingtime;
           while(currTask.duration <= remainingTime){
             remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
             sessionsNeededMap.remove(currTask);
