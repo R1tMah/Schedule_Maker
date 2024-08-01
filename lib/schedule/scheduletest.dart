@@ -110,7 +110,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
         area: 'Study',
         label: 'Meeting',
         duration: 75,
-        fixedTime: DateTime.now().add(const Duration(minutes: 250)),
+        fixedTime: DateTime.now().add(const Duration(minutes: 240)),
         difficultyOfTask: 'Hard',
         importanceLevel: 3,
       ),

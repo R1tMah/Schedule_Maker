@@ -149,17 +149,10 @@ class Schedule {
 
     for(DateTimeRange time in taskTimeMap.values){
       DateTime start = newRange.start;
-      if (start.isAfter(time.start) && start.isBefore(time.end)) {
-        print("Too Early");
-        return 1;
-      }
+
       DateTime end = newRange.end;
-      print("This is the start time and the end time for the current task $start - ${end}");
-      print("This is the time the start time for the task in the map ${time.start} and this is the end time for the task in the map ${time.end}");
-      if (end.isBefore(time.end) && end.isAfter(time.start)) {
-        print("Too Late");
-        return 1;
-      }
+
+
       if (start.isBefore(time.end) && end.isAfter(time.start)) {
         print("Overlap detected");
         return 1;
