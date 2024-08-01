@@ -153,6 +153,7 @@ class Schedule {
       }
       DateTime end = newRange.end;
       if (end.isBefore(time.end) && end.isAfter(time.start)) {
+        print("Too Late");
         return 1;
       }
     }
@@ -182,20 +183,36 @@ class Schedule {
       print(taskList[i].getLabel());
     }
   }
+
+  void printSessionsMap(){
+    print("This is what is in the map right now. \n");
+    for(Task t in sessionsNeededMap.keys){
+      print("Task " + t.getLabel() + " has ${sessionsNeededMap[t]} sessions left. \n" );
+
+    }
+    print("_________________________________________________________________________\n");
+  }
   //add
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isNotEmpty){
+      int breakValue = 0;
 
+      printSessionsMap();
       printTaskList(taskList);
       currTask = taskList[0];
       print("Max: ${max}");
       print("Session Counter ${sessionCounter}");
       print("The current time is \n ${currTime}");
-
+      print("The current task I am looking at is ${currTask.label}");
+      print("This value is less than 1: ${sessionsNeededMap[currTask]! <  1.0}");
+      print("The amount of time left in the current session is ${remainingTime}");
+      print("The amount of sessions that ${currTask.label} has left is ${sessionsNeededMap[currTask]}");
       print("___________________________________________");
       if(sessionCounter == max){
         if(othertasks.isEmpty){
+          print("The other tasks are empty");
           currTime = currTime.add(Duration(minutes: workingtime));
+          sessionCounter = 0;
         }
         else {
           currTask = othertasks[0];
@@ -204,33 +221,56 @@ class Schedule {
           sessionCounter = 0;
         }
       }
-      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:currTask.duration)))) != 0){
-        if(sessionsNeededMap[currTask]! < 1){
-          remainingTime = workingtime;
-          while(currTask.duration <= remainingTime){
+      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:currTask.duration)))) == 0){
+        if(sessionsNeededMap[currTask]! <  1.0 || remainingTime != workingtime){
+          print("Hey the session amount for the current task (${currTask.getLabel()}) is less than 1 or we're in the middle of a session right now.");
+
+          while((sessionsNeededMap[currTask]! * workingtime) <= remainingTime){
+
             remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
-            sessionsNeededMap.remove(currTask);
-            addToTaskTimeMap(currTask.duration);
+            print("This is the time remaining in the session:  $remainingTime");
+            addToTaskTimeMap((sessionsNeededMap[currTask]! * workingtime).toInt());
             taskList.removeAt(0);
-            currTime = currTime.add(Duration(minutes: currTask.duration));
+            currTime = currTime.add(Duration(minutes: (sessionsNeededMap[currTask]! * workingtime).toInt()));
+            sessionsNeededMap.remove(currTask);
+            print("\nThe task list contains ${taskList.length} values now\n");
+            print("The task list is empty: ${taskList.isEmpty}");
             if(taskList.isEmpty){
+              breakValue = 1;
               break;
             }
             else {
               currTask = taskList[0];
+              print("The new current task is " + currTask.getLabel());
             }
           }
-          if(currTask.duration > remainingTime){
+          if(breakValue == 1){
+            break;
+          }
+          if(remainingTime <= 0){
+            remainingTime = workingtime;
+            print("I changed the remaining time back to the workingtime");
+          }
+          else if((sessionsNeededMap[currTask]! * workingtime) > remainingTime){
+              print("The current task ${currTask.getLabel()} has more than $remainingTime minutes left.");
               addToTaskTimeMap(remainingTime);
               currTime = currTime.add(Duration(minutes: remainingTime));
+              sessionsNeededMap.update(currTask, (value) => value - remainingTime/workingtime);
+              remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
+              remainingTime = workingtime;
           }
+          print("Added the break");
           currTask = Task(label: "Break");
           addToTaskTimeMap(breaktime);
+          currTime = currTime.add(Duration(minutes: breaktime));
         }
         else {
           sessionsNeededMap.update(currTask, (value) => value - 1);
           addToTaskTimeMap(workingtime);
           currTime = currTime.add(Duration(minutes: workingtime));
+          currTask = Task(label: "Break");
+          addToTaskTimeMap(breaktime);
+          currTime = currTime.add(Duration(minutes: breaktime));
         }
         sessionCounter+=1;
       }
@@ -238,7 +278,7 @@ class Schedule {
         currTime = currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
-      taskList.removeAt(0);
+
     }
 
 
@@ -258,7 +298,7 @@ class Schedule {
           sessionCounter = 0;
         }
       }
-      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime = currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
+      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
         //this part keeps adding in tasks if there is extra time
         for(int i = 0; i < rotationList.length; i++){
           if(subSessionsNeededMap[rotationList[i]]! > 1){
@@ -294,6 +334,7 @@ class Schedule {
     setFixedTasks();
     if(studyMethod == "Premack"){
         scheduleTimesBasedOnList(easyTasks);
+        print("I FINISHED SCHEDULING THE EASY TASKS \n\n\n\n\n");
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);
         while(othertasks.isNotEmpty){
