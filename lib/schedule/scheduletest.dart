@@ -37,6 +37,34 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
   void _initializeSchedule() {
     List<Task> tasks = [
       Task(
+        area: 'Other',
+        label: 'Go to the Gym',
+        duration: 120,
+        difficultyOfTask: 'Easy',
+        importanceLevel: 3,
+      ),
+      Task(
+        area: 'Other',
+        label: 'Get Groceries',
+        duration: 120,
+        difficultyOfTask: 'Easy',
+        importanceLevel: 3,
+      ),
+      Task(
+        area: 'Other',
+        label: 'Do drugs',
+        duration: 120,
+        difficultyOfTask: 'Easy',
+        importanceLevel: 3,
+      ),
+      Task(
+        area: 'Other',
+        label: 'Go for a run',
+        duration: 30,
+        difficultyOfTask: 'Easy',
+        importanceLevel: 3,
+      ),
+      Task(
         area: 'Study',
         label: 'Math',
         duration: 90,
@@ -66,11 +94,27 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
       ),
       Task(
         area: 'Study',
+        label: 'King',
+        duration: 15,
+        difficultyOfTask: 'Easy',
+        importanceLevel: 1,
+      ),
+      Task(
+        area: 'Study',
         label: 'Project',
         duration: 180,
         difficultyOfTask: 'Hard',
         importanceLevel: 3,
       ),
+      Task(
+        area: 'Study',
+        label: 'Meeting',
+        duration: 75,
+        fixedTime: DateTime.now().add(const Duration(minutes: 250)),
+        difficultyOfTask: 'Hard',
+        importanceLevel: 3,
+      ),
+
     ];
     schedule.setTasks(tasks);
     schedule.initializeTasks();

@@ -25,7 +25,13 @@ class Task{
 
 
 
-
+  bool isFixedTime(){
+    if(fixedTime == null){
+      return false;
+    }else{
+      return true;
+    }
+  }
   void setArea(String area){
     this.area = area;
   }
@@ -63,8 +69,6 @@ class Task{
     difficultyOfTask = diff;
   }
 
-  void setSchedule(List<Task> taskList){
 
-  }
 
 }

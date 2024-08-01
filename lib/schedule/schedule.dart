@@ -53,13 +53,16 @@ class Schedule {
     //instantiate workingtime
     remainingTime = workingtime;
     //adds the study and other tasks
-    for(int i = 0; i < currTaskList.length; i++){
-      print("This is the area of the" + (i+1).toString() + "th task: " + currTaskList[i].area);
-      if(currTaskList[i].area == 'Study'){
-        currStudyTaskList.add(currTaskList[i]);
-      }
-      else{
-        othertasks.add(currTaskList[i]);
+    for(int i = 0; i < currTaskList.length; i++) {
+      print("This is the area of the" + (i + 1).toString() + "th task: " +
+          currTaskList[i].area);
+      if (currTaskList[i].isFixedTime() == false){
+        if (currTaskList[i].area == 'Study') {
+          currStudyTaskList.add(currTaskList[i]);
+        }
+        else {
+          othertasks.add(currTaskList[i]);
+        }
       }
     }
     // adding tasks to their respective difficulties
@@ -134,7 +137,8 @@ class Schedule {
 
   void setFixedTasks() {
     for (var task in currTaskList) {
-      if (task.preferredTimeOfTask == 'Fixed Time') {
+      print("task ${task.getLabel()} is fixed: ${task.isFixedTime()}");
+      if (task.isFixedTime()) {
         taskTimeMap[task] = DateTimeRange(start: task.fixedTime!, end: task.fixedTime!.add(Duration(minutes: task.duration)));
       }
     }
@@ -142,9 +146,7 @@ class Schedule {
 
 
   int _checkIfTimeFits(DateTimeRange newRange){
-    //if(currTime.hour > 23){
-      //return 2;
-    //}
+
     for(DateTimeRange time in taskTimeMap.values){
       DateTime start = newRange.start;
       if (start.isAfter(time.start) && start.isBefore(time.end)) {
@@ -152,8 +154,14 @@ class Schedule {
         return 1;
       }
       DateTime end = newRange.end;
+      print("This is the start time and the end time for the current task $start - ${end}");
+      print("This is the time the start time for the task in the map ${time.start} and this is the end time for the task in the map ${time.end}");
       if (end.isBefore(time.end) && end.isAfter(time.start)) {
         print("Too Late");
+        return 1;
+      }
+      if (start.isBefore(time.end) && end.isAfter(time.start)) {
+        print("Overlap detected");
         return 1;
       }
     }
@@ -195,6 +203,10 @@ class Schedule {
   //add
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isNotEmpty){
+      if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
+        print("There are way too many tasks right now");
+        break;
+      }
       int breakValue = 0;
 
       printSessionsMap();
@@ -214,14 +226,18 @@ class Schedule {
           currTime = currTime.add(Duration(minutes: workingtime));
           sessionCounter = 0;
         }
-        else {
+        else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: othertasks[0].duration)))) == 0 ) {
           currTask = othertasks[0];
+          print("Changed the current task to ${currTask.getLabel()} for now because we have hit the session counter and this tasks fits into the schedule : ${currTime.add(Duration(minutes: othertasks[0].duration)).isAfter(DateTime(2024, 8, 1, 7, 45))}");
           addToTaskTimeMap(currTask.duration);
+          currTime = currTime.add(Duration(minutes: currTask.duration));
           othertasks.removeAt(0);
           sessionCounter = 0;
+        }else{
+          currTime = currTime.add(Duration(minutes: 15));
         }
       }
-      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:currTask.duration)))) == 0){
+      else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:remainingTime + breaktime)))) == 0){
         if(sessionsNeededMap[currTask]! <  1.0 || remainingTime != workingtime){
           print("Hey the session amount for the current task (${currTask.getLabel()}) is less than 1 or we're in the middle of a session right now.");
 
@@ -285,6 +301,7 @@ class Schedule {
   }
 
   void interleavedPractice(){
+
     while(currStudyTaskList.isNotEmpty){
       currTask = currStudyTaskList[0];
       if(sessionCounter == max){
@@ -338,9 +355,10 @@ class Schedule {
         scheduleTimesBasedOnList(mediumTasks);
         scheduleTimesBasedOnList(hardTasks);
         while(othertasks.isNotEmpty){
+          currTask = othertasks[0];
+          currTime.add(Duration(minutes:  currTask.duration));
           addToTaskTimeMap(othertasks[0].duration);
           othertasks.removeAt(0);
-
         }
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
