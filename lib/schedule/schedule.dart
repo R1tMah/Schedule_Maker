@@ -196,10 +196,7 @@ class Schedule {
   //add
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isNotEmpty){
-      if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
-        print("There are way too many tasks right now");
-        break;
-      }
+
       int breakValue = 0;
 
       printSessionsMap();
@@ -334,7 +331,7 @@ class Schedule {
         sessionCounter++;
       }
       else{
-        currTime = currTime.add(const Duration(minutes:5));
+        currTime = currTime.add(const Duration(minutes: 5));
         findNextAvailableTime();
       }
     }
@@ -349,9 +346,12 @@ class Schedule {
         scheduleTimesBasedOnList(hardTasks);
         while(othertasks.isNotEmpty){
           currTask = othertasks[0];
-          currTime.add(Duration(minutes:  currTask.duration));
           addToTaskTimeMap(othertasks[0].duration);
           othertasks.removeAt(0);
+          currTime = currTime.add(Duration(minutes: currTask.duration));
+        }
+        if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
+          print("There are way too many tasks right now");
         }
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
