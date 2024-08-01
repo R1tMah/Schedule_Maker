@@ -189,7 +189,6 @@ class Schedule {
     print("This is what is in the map right now. \n");
     for(Task t in sessionsNeededMap.keys){
       print("Task " + t.getLabel() + " has ${sessionsNeededMap[t]} sessions left. \n" );
-
     }
     print("_________________________________________________________________________\n");
   }
