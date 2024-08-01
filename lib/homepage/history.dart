@@ -25,64 +25,84 @@ class _HistoryPageState extends State<HistoryPage> {
             ],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TableCalendar(
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay; // update `_focusedDay` here as well
-              });
-            },
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            calendarStyle: CalendarStyle(
-              defaultTextStyle: TextStyle(color: Colors.black87), // Default day text color
-              weekendTextStyle: TextStyle(color: Colors.black87), // Weekend day text color
-              selectedTextStyle: TextStyle(color: Colors.black), // Selected day text color
-              todayTextStyle: TextStyle(color: Colors.black), // Today's day text color
-              todayDecoration: BoxDecoration(
-                color: Colors.white, // Background color for today
-                shape: BoxShape.circle,
-              ),
-              selectedDecoration: BoxDecoration(
-                color: Colors.blue, // Background color for selected day
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.blue, width: 2),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton<CalendarFormat>(
+                value: _calendarFormat,
+                items: [
+                  DropdownMenuItem(
+                    child: Text('Month'),
+                    value: CalendarFormat.month,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Two Weeks'),
+                    value: CalendarFormat.twoWeeks,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Week'),
+                    value: CalendarFormat.week,
+                  ),
+                ],
+                onChanged: (format) {
+                  setState(() {
+                    _calendarFormat = format!;
+                  });
+                },
               ),
             ),
-            headerStyle: HeaderStyle(
-              titleTextStyle: TextStyle(color: Colors.black, fontSize: 16),
-              formatButtonTextStyle: TextStyle(color: Colors.black),
-              formatButtonDecoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              leftChevronIcon: Icon(
-                Icons.chevron_left,
-                color: Colors.black,
-              ),
-              rightChevronIcon: Icon(
-                Icons.chevron_right,
-                color: Colors.black,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TableCalendar(
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: _focusedDay,
+                  calendarFormat: _calendarFormat,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay; // update `_focusedDay` here as well
+                    });
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                  },
+                  calendarStyle: CalendarStyle(
+                    defaultTextStyle: TextStyle(color: Colors.black87), // Default day text color
+                    weekendTextStyle: TextStyle(color: Colors.black87), // Weekend day text color
+                    selectedTextStyle: TextStyle(color: Colors.black), // Selected day text color
+                    todayTextStyle: TextStyle(color: Colors.black), // Today's day text color
+                    todayDecoration: BoxDecoration(
+                      color: Colors.white, // Background color for today
+                      shape: BoxShape.circle,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                      color: Colors.blue, // Background color for selected day
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.blue, width: 2),
+                    ),
+                  ),
+                  headerStyle: HeaderStyle(
+                    titleTextStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    leftChevronIcon: Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.chevron_right,
+                      color: Colors.black,
+                    ),
+                    formatButtonVisible: false, // Hide the default format button
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
