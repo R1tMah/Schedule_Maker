@@ -10,11 +10,11 @@ class DatabaseService {
 
   Future<Database> get database async {
     if(_db != null) return _db!;
-    _db = await getDatabse();
+    _db = await getDatabase();
     return _db!;
   }
 
-  Future<Database> getDatabse() async {
+  Future<Database> getDatabase() async {
     final databaseDirPath = await getDatabasesPath();
     final databasePath = join(databaseDirPath, "master.db");
     final database = await openDatabase(

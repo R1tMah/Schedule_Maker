@@ -354,6 +354,19 @@ class Schedule {
         }
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
+    } else if(studyMethod == "Eat That Frog Technique") {
+      scheduleTimesBasedOnList(hardTasks);
+      scheduleTimesBasedOnList(mediumTasks);
+      scheduleTimesBasedOnList(easyTasks);
+      while(othertasks.isNotEmpty){
+        currTask = othertasks[0];
+        addToTaskTimeMap(othertasks[0].duration);
+        othertasks.removeAt(0);
+        currTime = currTime.add(Duration(minutes: currTask.duration));
+      }
+      if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
+        print("There are way too many tasks right now");
+      }
     }
   }
 }
