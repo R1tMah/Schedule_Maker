@@ -64,8 +64,8 @@ class EndPage extends StatelessWidget {
         },
       ),
     );
-    print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status code: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
       return responseBody['choices'][0]['message']['content'];

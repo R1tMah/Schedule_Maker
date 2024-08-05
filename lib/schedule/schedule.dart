@@ -106,6 +106,10 @@ class Schedule {
       max = 2;
     }
 
+    for(int i = 0; i < currStudyTaskList.length; i++){
+      subSessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/subtasktime;
+    }
+
     int k = 0;
     while(k < workingtime/subtasktime - 1){
       rotationList.add(currStudyTaskList[k]);
@@ -188,9 +192,25 @@ class Schedule {
   }
 
   void printSessionsMap(){
-    print("This is what is in the map right now. \n");
+    print("This is what is in the sessions map right now. \n");
     for(Task t in sessionsNeededMap.keys){
       print("Task " + t.getLabel() + " has ${sessionsNeededMap[t]} sessions left. \n" );
+    }
+    print("_________________________________________________________________________\n");
+  }
+
+  void printSubSessionsMap(){
+    print("This is what is in the sub sessions map right now. \n");
+    for(Task t in subSessionsNeededMap.keys){
+      print("Task " + t.getLabel() + " has ${subSessionsNeededMap[t]} sessions left. \n" );
+    }
+    print("_________________________________________________________________________\n");
+  }
+
+  void printTaskTimeMap(){
+    print("This is what is in the task tim map right now. \n");
+    for(Task t in taskTimeMap.keys){
+      print("Task " + t.getLabel() + " is scheduled for ${taskTimeMap[t]}\n" );
     }
     print("_________________________________________________________________________\n");
   }
@@ -293,27 +313,52 @@ class Schedule {
   void interleavedPractice(){
 
     while(currStudyTaskList.isNotEmpty){
+      printTaskTimeMap();
+      printSessionsMap();
+      printTaskList(taskList);
+
       currTask = currStudyTaskList[0];
+
+      print("Max: ${max}");
+      print("Session Counter ${sessionCounter}");
+      print("The current time is \n ${currTime}");
+      print("The current task I am looking at is ${currTask.label}");
+      print("This value is less than 1: ${sessionsNeededMap[currTask]! <  1.0}");
+      print("The amount of time left in the current session is ${remainingTime}");
+      print("The amount of sessions that ${currTask.label} has left is ${sessionsNeededMap[currTask]}");
+      print("___________________________________________");
       if(sessionCounter == max){
         if(othertasks.isEmpty){
+          print("The other tasks are empty");
           currTime = currTime.add(Duration(minutes: workingtime));
+          sessionCounter = 0;
         }
-        else {
+        else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: othertasks[0].duration)))) == 0 ) {
           currTask = othertasks[0];
+          print("Changed the current task to ${currTask.getLabel()} for now because we have hit the session counter and this tasks fits into the schedule : ${currTime.add(Duration(minutes: othertasks[0].duration)).isAfter(DateTime(2024, 8, 1, 7, 45))}");
           addToTaskTimeMap(currTask.duration);
+          currTime = currTime.add(Duration(minutes: currTask.duration));
           othertasks.removeAt(0);
           sessionCounter = 0;
+        }else{
+          currTime = currTime.add(Duration(minutes: 15));
         }
       }
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
         //this part keeps adding in tasks if there is extra time
         for(int i = 0; i < rotationList.length; i++){
+          print(rotationList[i].label);
+          printSubSessionsMap();
+          print(subSessionsNeededMap[rotationList[i]]);
+          print("inside for loop");
           if(subSessionsNeededMap[rotationList[i]]! > 1){
+            print("inside if");
             addToTaskTimeMap(rotationList[i].duration);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
           else if(subSessionsNeededMap[rotationList[i]]! < 1){
+            print("inside else if");
             rotationList.remove(rotationList[i]);
             rotationList.insert(i, currStudyTaskList[0]);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
@@ -322,6 +367,7 @@ class Schedule {
             currTime = currTime.add(Duration(minutes: 15));
           }
           else{
+            print("inside else");
             addToTaskTimeMap(rotationList[i].duration);
             subSessionsNeededMap.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
