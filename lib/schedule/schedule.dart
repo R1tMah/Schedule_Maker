@@ -317,6 +317,11 @@ class Schedule {
       printSessionsMap();
       printTaskList(taskList);
 
+      print("Here is the rotation list:");
+      for(int i = 0; i < rotationList.length; i++) {
+        print(rotationList[i].label);
+      }
+
       currTask = currStudyTaskList[0];
 
       print("Max: ${max}");
@@ -351,15 +356,16 @@ class Schedule {
           printSubSessionsMap();
           print(subSessionsNeededMap[rotationList[i]]);
           print("inside for loop");
-          if(subSessionsNeededMap[rotationList[i]]! > 1){
+          if((subSessionsNeededMap[rotationList[i]]! * subtasktime) > 1){
             print("inside if");
             addToTaskTimeMap(rotationList[i].duration);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
-          else if(subSessionsNeededMap[rotationList[i]]! < 1){
+          else if((subSessionsNeededMap[rotationList[i]]! * subtasktime) < 1){
             print("inside else if");
             rotationList.remove(rotationList[i]);
+            currStudyTaskList.removeAt(0);
             rotationList.insert(i, currStudyTaskList[0]);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
             currTask = rotationList[i];
@@ -371,6 +377,9 @@ class Schedule {
             addToTaskTimeMap(rotationList[i].duration);
             subSessionsNeededMap.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
+            currStudyTaskList.removeAt(0);
+            rotationList.insert(i, currStudyTaskList[0]);
+            currTime = currTime.add(Duration(minutes: subtasktime));
           }
         }
         addToTaskTimeMap(breaktime);
