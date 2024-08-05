@@ -146,23 +146,25 @@ class Schedule {
 
 
   int _checkIfTimeFits(DateTimeRange newRange){
+      for (DateTimeRange time in taskTimeMap.values) {
+        DateTime start = newRange.start;
+        DateTime end = newRange.end;
 
-    for(DateTimeRange time in taskTimeMap.values){
-      DateTime start = newRange.start;
-
-      DateTime end = newRange.end;
-
-
-      if (start.isBefore(time.end) && end.isAfter(time.start)) {
-        print("Overlap detected");
-        return 1;
+        // Check if newRange overlaps with an existing range in any way
+        if ((start.isBefore(time.end) && end.isAfter(time.start)) ||
+            (start.isBefore(time.end) && start.isAfter(time.start)) ||
+            (end.isBefore(time.end) && end.isAfter(time.start)) ||
+            (start.isAtSameMomentAs(time.start) ||
+                end.isAtSameMomentAs(time.end))) {
+          print("Overlap detected");
+          return 1;
+        }
       }
-    }
-    return 0;
+      return 0;
   }
   void findNextAvailableTime(){
-    while(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime)) == 1){
-      currTime.add(const Duration(minutes: 5));
+    while(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: (workingtime + breaktime))))) == 1){
+      currTime = currTime.add(const Duration(minutes: 15));
     }
   }
 
@@ -280,7 +282,6 @@ class Schedule {
         sessionCounter+=1;
       }
       else {
-        currTime = currTime.add(const Duration(minutes:5));
         findNextAvailableTime();
       }
 
@@ -348,10 +349,12 @@ class Schedule {
           addToTaskTimeMap(othertasks[0].duration);
           othertasks.removeAt(0);
           currTime = currTime.add(Duration(minutes: currTask.duration));
+
         }
         if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
           print("There are way too many tasks right now");
         }
+
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
     } else if(studyMethod == "Eat That Frog Technique") {
@@ -369,7 +372,9 @@ class Schedule {
       }
     }
   }
+
 }
+
 
 
 

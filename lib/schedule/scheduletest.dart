@@ -34,6 +34,8 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     schedule.scheduleTime();
   }
 
+
+
   void _initializeSchedule() {
     List<Task> tasks = [
       Task(
@@ -102,7 +104,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
       Task(
         area: 'Study',
         label: 'Project',
-        duration: 180,
+        duration: 240,
         difficultyOfTask: 'Hard',
         importanceLevel: 3,
       ),
@@ -131,6 +133,9 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
         itemBuilder: (context, index) {
           Task task = schedule.taskTimeMap.keys.elementAt(index);
           DateTimeRange timeRange = schedule.taskTimeMap[task]!;
+
+
+
           return ListTile(
             title: Text(task.getLabel()),
             subtitle: Text('${timeRange.start} - ${timeRange.end}'),
