@@ -352,33 +352,39 @@ class Schedule {
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
         //this part keeps adding in tasks if there is extra time
         for(int i = 0; i < rotationList.length; i++){
+          currTask = rotationList[i];
           print(rotationList[i].label);
           printSubSessionsMap();
           print(subSessionsNeededMap[rotationList[i]]);
           print("inside for loop");
           if((subSessionsNeededMap[rotationList[i]]! * subtasktime) > 1){
             print("inside if");
-            addToTaskTimeMap(rotationList[i].duration);
+            addToTaskTimeMap(subtasktime);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
           else if((subSessionsNeededMap[rotationList[i]]! * subtasktime) < 1){
             print("inside else if");
+            addToTaskTimeMap(15);
+            subSessionsNeededMap.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
             currStudyTaskList.removeAt(0);
-            rotationList.insert(i, currStudyTaskList[0]);
-            subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
-            currTask = rotationList[i];
-            addToTaskTimeMap(15);
+            if(currStudyTaskList[0] != null) {
+              rotationList.insert(i, currStudyTaskList[0]);
+              subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
+              addToTaskTimeMap(15);
+            }
             currTime = currTime.add(Duration(minutes: 15));
           }
           else{
             print("inside else");
-            addToTaskTimeMap(rotationList[i].duration);
+            addToTaskTimeMap(subtasktime);
             subSessionsNeededMap.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
             currStudyTaskList.removeAt(0);
-            rotationList.insert(i, currStudyTaskList[0]);
+            if(currStudyTaskList[0] != null) {
+              rotationList.insert(i, currStudyTaskList[0]);
+            }
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
         }
