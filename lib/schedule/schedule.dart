@@ -111,8 +111,9 @@ class Schedule {
     }
 
     int k = 0;
-    while(k < workingtime/subtasktime - 1){
+    while(k < workingtime/subtasktime){
       rotationList.add(currStudyTaskList[k]);
+
       k++;
     }
 
@@ -314,8 +315,8 @@ class Schedule {
 
     while(currStudyTaskList.isNotEmpty){
       printTaskTimeMap();
-      printSessionsMap();
-      printTaskList(taskList);
+      printSubSessionsMap();
+      printTaskList(currStudyTaskList);
 
       print("Here is the rotation list:");
       for(int i = 0; i < rotationList.length; i++) {
@@ -354,25 +355,27 @@ class Schedule {
         for(int i = 0; i < rotationList.length; i++){
           currTask = rotationList[i];
           print(rotationList[i].label);
-          printSubSessionsMap();
           print(subSessionsNeededMap[rotationList[i]]);
           print("inside for loop");
-          if((subSessionsNeededMap[rotationList[i]]! * subtasktime) > 1){
+          if((subSessionsNeededMap[rotationList[i]]!) > 1){
             print("inside if");
             addToTaskTimeMap(subtasktime);
             subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
-          else if((subSessionsNeededMap[rotationList[i]]! * subtasktime) < 1){
+          else if((subSessionsNeededMap[rotationList[i]]!) < 1){
             print("inside else if");
             addToTaskTimeMap(15);
             subSessionsNeededMap.remove(rotationList[i]);
+            currStudyTaskList.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
-            currStudyTaskList.removeAt(0);
-            if(currStudyTaskList[0] != null) {
-              rotationList.insert(i, currStudyTaskList[0]);
-              subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
-              addToTaskTimeMap(15);
+            for(int j = 0; j < currStudyTaskList.length; j++) {
+              if(!(rotationList.contains(currStudyTaskList[j]))) {
+                rotationList.insert(i, currStudyTaskList[j]);
+                subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
+                addToTaskTimeMap(15);
+                break;
+              }
             }
             currTime = currTime.add(Duration(minutes: 15));
           }
@@ -380,15 +383,75 @@ class Schedule {
             print("inside else");
             addToTaskTimeMap(subtasktime);
             subSessionsNeededMap.remove(rotationList[i]);
+            currStudyTaskList.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
-            currStudyTaskList.removeAt(0);
-            if(currStudyTaskList[0] != null) {
-              rotationList.insert(i, currStudyTaskList[0]);
+            for(int j = 0; j < currStudyTaskList.length; j++) {
+              if(!(rotationList.contains(currStudyTaskList[j]))) {
+                rotationList.insert(i, currStudyTaskList[j]);
+                break;
+              }
             }
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
         }
+
+        if(rotationList.length < workingtime/subtasktime) {
+          int diff = (workingtime/subtasktime).toInt() - rotationList.length;
+          while(diff != 0) {
+            for(int i = 0; i < rotationList.length; i++) {
+              currTask = rotationList[i];
+              print(rotationList[i].label);
+              print(subSessionsNeededMap[rotationList[i]]);
+              print("inside for loop");
+              if((subSessionsNeededMap[rotationList[i]]!) > 1){
+                print("inside if");
+                addToTaskTimeMap(subtasktime);
+                subSessionsNeededMap.update(rotationList[i], (value) => value - 1);
+                currTime = currTime.add(Duration(minutes: subtasktime));
+              }
+              else if((subSessionsNeededMap[rotationList[i]]!) < 1){
+                print("inside else if");
+                addToTaskTimeMap(15);
+                subSessionsNeededMap.remove(rotationList[i]);
+                currStudyTaskList.remove(rotationList[i]);
+                rotationList.remove(rotationList[i]);
+                for(int j = 0; j < currStudyTaskList.length; j++) {
+                  if(!(rotationList.contains(currStudyTaskList[j]))) {
+                    rotationList.insert(i, currStudyTaskList[j]);
+                    subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
+                    addToTaskTimeMap(15);
+                    break;
+                  }
+                }
+                currTime = currTime.add(Duration(minutes: 15));
+              }
+              else{
+                print("inside else");
+                addToTaskTimeMap(subtasktime);
+                subSessionsNeededMap.remove(rotationList[i]);
+                currStudyTaskList.remove(rotationList[i]);
+                rotationList.remove(rotationList[i]);
+                for(int j = 0; j < currStudyTaskList.length; j++) {
+                  if(!(rotationList.contains(currStudyTaskList[j]))) {
+                    rotationList.insert(i, currStudyTaskList[j]);
+                    break;
+                  }
+                }
+                currTime = currTime.add(Duration(minutes: subtasktime));
+              }
+
+
+              diff--;
+              if(diff == 0) {
+                break;
+              }
+            }
+          }
+        }
+
+        currTask = Task(label: "Break");
         addToTaskTimeMap(breaktime);
+        currTime = currTime.add(Duration(minutes: breaktime));
         sessionCounter++;
       }
       else{
