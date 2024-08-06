@@ -28,8 +28,8 @@ class Schedule {
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
   List<Task> othertasks = [];
-  var workingtime = 60;
-  var breaktime = 20;
+  var workingtime = 90;
+  var breaktime = 30;
   var remainingTime = 0;
   DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
@@ -314,6 +314,7 @@ class Schedule {
   void interleavedPractice(){
 
     while(currStudyTaskList.isNotEmpty){
+      int breakvalue = 0;
       printTaskTimeMap();
       printSubSessionsMap();
       printTaskList(currStudyTaskList);
@@ -351,6 +352,7 @@ class Schedule {
         }
       }
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
+        int count = 0;
         //this part keeps adding in tasks if there is extra time
         for(int i = 0; i < rotationList.length; i++){
           currTask = rotationList[i];
@@ -369,13 +371,17 @@ class Schedule {
             subSessionsNeededMap.remove(rotationList[i]);
             currStudyTaskList.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
+            count++;
+            print("Incremented Count");
             for(int j = 0; j < currStudyTaskList.length; j++) {
               if(!(rotationList.contains(currStudyTaskList[j]))) {
                 rotationList.insert(i, currStudyTaskList[j]);
                 subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
                 addToTaskTimeMap(15);
+                count--;
                 break;
               }
+              //account for if there are no more tasks.
             }
             currTime = currTime.add(Duration(minutes: 15));
           }
@@ -385,19 +391,30 @@ class Schedule {
             subSessionsNeededMap.remove(rotationList[i]);
             currStudyTaskList.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
+            count++;
+            print("Incremented Count");
             for(int j = 0; j < currStudyTaskList.length; j++) {
               if(!(rotationList.contains(currStudyTaskList[j]))) {
                 rotationList.insert(i, currStudyTaskList[j]);
+                count--;
                 break;
               }
             }
             currTime = currTime.add(Duration(minutes: subtasktime));
           }
         }
-
         if(rotationList.length < workingtime/subtasktime) {
-          int diff = (workingtime/subtasktime).toInt() - rotationList.length;
+          print(count);
+          int diff = (workingtime/subtasktime).toInt() - rotationList.length - count;
+          print("Here is the rotation list:");
+          for(int i = 0; i < rotationList.length; i++) {
+            print(rotationList[i].label);
+          }
+          print("Diff ${diff}");
           while(diff != 0) {
+            if(rotationList.isEmpty){
+              break;
+            }
             for(int i = 0; i < rotationList.length; i++) {
               currTask = rotationList[i];
               print(rotationList[i].label);
@@ -459,6 +476,8 @@ class Schedule {
         findNextAvailableTime();
       }
     }
+
+    printTaskTimeMap();
   }
 
   void scheduleTime(){
