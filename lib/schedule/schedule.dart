@@ -150,21 +150,21 @@ class Schedule {
 
 
   int _checkIfTimeFits(DateTimeRange newRange){
-      for (DateTimeRange time in taskTimeMap.values) {
-        DateTime start = newRange.start;
-        DateTime end = newRange.end;
+    for (DateTimeRange time in taskTimeMap.values) {
+      DateTime start = newRange.start;
+      DateTime end = newRange.end;
 
-        // Check if newRange overlaps with an existing range in any way
-        if ((start.isBefore(time.end) && end.isAfter(time.start)) ||
-            (start.isBefore(time.end) && start.isAfter(time.start)) ||
-            (end.isBefore(time.end) && end.isAfter(time.start)) ||
-            (start.isAtSameMomentAs(time.start) ||
-                end.isAtSameMomentAs(time.end))) {
-          print("Overlap detected");
-          return 1;
-        }
+      // Check if newRange overlaps with an existing range in any way
+      if ((start.isBefore(time.end) && end.isAfter(time.start)) ||
+          (start.isBefore(time.end) && start.isAfter(time.start)) ||
+          (end.isBefore(time.end) && end.isAfter(time.start)) ||
+          (start.isAtSameMomentAs(time.start) ||
+              end.isAtSameMomentAs(time.end))) {
+        print("Overlap detected");
+        return 1;
       }
-      return 0;
+    }
+    return 0;
   }
   void findNextAvailableTime(){
     while(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: (workingtime + breaktime))))) == 1){
@@ -279,12 +279,12 @@ class Schedule {
             print("I changed the remaining time back to the workingtime");
           }
           else if((sessionsNeededMap[currTask]! * workingtime) > remainingTime){
-              print("The current task ${currTask.getLabel()} has more than $remainingTime minutes left.");
-              addToTaskTimeMap(remainingTime);
-              currTime = currTime.add(Duration(minutes: remainingTime));
-              sessionsNeededMap.update(currTask, (value) => value - remainingTime/workingtime);
-              remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
-              remainingTime = workingtime;
+            print("The current task ${currTask.getLabel()} has more than $remainingTime minutes left.");
+            addToTaskTimeMap(remainingTime);
+            currTime = currTime.add(Duration(minutes: remainingTime));
+            sessionsNeededMap.update(currTask, (value) => value - remainingTime/workingtime);
+            remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
+            remainingTime = workingtime;
           }
           print("Added the break");
           currTask = Task(label: "Break");
@@ -395,20 +395,20 @@ class Schedule {
   void scheduleTime(){
     setFixedTasks();
     if(studyMethod == "Premack"){
-        scheduleTimesBasedOnList(easyTasks);
-        print("I FINISHED SCHEDULING THE EASY TASKS \n\n\n\n\n");
-        scheduleTimesBasedOnList(mediumTasks);
-        scheduleTimesBasedOnList(hardTasks);
-        while(othertasks.isNotEmpty){
-          currTask = othertasks[0];
-          addToTaskTimeMap(othertasks[0].duration);
-          othertasks.removeAt(0);
-          currTime = currTime.add(Duration(minutes: currTask.duration));
+      scheduleTimesBasedOnList(easyTasks);
+      print("I FINISHED SCHEDULING THE EASY TASKS \n\n\n\n\n");
+      scheduleTimesBasedOnList(mediumTasks);
+      scheduleTimesBasedOnList(hardTasks);
+      while(othertasks.isNotEmpty){
+        currTask = othertasks[0];
+        addToTaskTimeMap(othertasks[0].duration);
+        othertasks.removeAt(0);
+        currTime = currTime.add(Duration(minutes: currTask.duration));
 
-        }
-        if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
-          print("There are way too many tasks right now");
-        }
+      }
+      if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
+        print("There are way too many tasks right now");
+      }
 
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
