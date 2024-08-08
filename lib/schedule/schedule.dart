@@ -28,8 +28,8 @@ class Schedule {
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
   List<Task> othertasks = [];
-  var workingtime = 90;
-  var breaktime = 30;
+  var workingtime = 30;
+  var breaktime = 10;
   var remainingTime = 0;
   DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
@@ -104,7 +104,7 @@ class Schedule {
       max = 2;
     }
     for(int i = 0; i < currStudyTaskList.length; i++){
-      sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/workingtime;
+      sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration).toDouble();
     }
     for(int i = 0; i < currStudyTaskList.length; i++){
       subSessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/subtasktime;
@@ -251,16 +251,17 @@ class Schedule {
         }
       }
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes:remainingTime + breaktime)))) == 0){
-        if(sessionsNeededMap[currTask]! <  1.0 || remainingTime != workingtime){
+        if(sessionsNeededMap[currTask]! <=  workingtime || remainingTime != workingtime){
           print("Hey the session amount for the current task (${currTask.getLabel()}) is less than 1 or we're in the middle of a session right now.");
 
-          while((sessionsNeededMap[currTask]! * workingtime) <= remainingTime){
+          while((sessionsNeededMap[currTask]!) <= remainingTime){
 
-            remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
+            remainingTime -= (sessionsNeededMap[currTask]!).toInt();
             print("This is the time remaining in the session:  $remainingTime");
-            addToTaskTimeMap((sessionsNeededMap[currTask]! * workingtime).toInt());
+
+            addToTaskTimeMap((sessionsNeededMap[currTask]!).toInt());
             taskList.removeAt(0);
-            currTime = currTime.add(Duration(minutes: (sessionsNeededMap[currTask]! * workingtime).toInt()));
+            currTime = currTime.add(Duration(minutes: (sessionsNeededMap[currTask]!).toInt()));
             sessionsNeededMap.remove(currTask);
             print("\nThe task list contains ${taskList.length} values now\n");
             print("The task list is empty: ${taskList.isEmpty}");
@@ -280,12 +281,12 @@ class Schedule {
             remainingTime = workingtime;
             print("I changed the remaining time back to the workingtime");
           }
-          else if((sessionsNeededMap[currTask]! * workingtime) > remainingTime){
+          else if((sessionsNeededMap[currTask]!) > remainingTime){
             print("The current task ${currTask.getLabel()} has more than $remainingTime minutes left.");
             addToTaskTimeMap(remainingTime);
             currTime = currTime.add(Duration(minutes: remainingTime));
-            sessionsNeededMap.update(currTask, (value) => value - remainingTime/workingtime);
-            remainingTime -= (sessionsNeededMap[currTask]! * workingtime).toInt();
+            sessionsNeededMap.update(currTask, (value) => value - remainingTime);
+            remainingTime -= (sessionsNeededMap[currTask]!).toInt();
             remainingTime = workingtime;
           }
           print("Added the break");
@@ -294,7 +295,7 @@ class Schedule {
           currTime = currTime.add(Duration(minutes: breaktime));
         }
         else {
-          sessionsNeededMap.update(currTask, (value) => value - 1);
+          sessionsNeededMap.update(currTask, (value) => value - workingtime);
           addToTaskTimeMap(workingtime);
           currTime = currTime.add(Duration(minutes: workingtime));
           currTask = Task(label: "Break");
@@ -315,7 +316,7 @@ class Schedule {
   void interleavedPractice(){
 
     while(currStudyTaskList.isNotEmpty){
-      int breakvalue = 0;
+
       printTaskTimeMap();
       printSubSessionsMap();
       printTaskList(currStudyTaskList);

@@ -23,7 +23,7 @@ class ScheduleTestPage extends StatefulWidget {
 class _ScheduleTestPageState extends State<ScheduleTestPage> {
   Schedule schedule = Schedule(
     scheduleDate: DateTime.now(),
-    studyMethod: 'Premack',
+    studyMethod: 'Interleaved Practice',
     workingMethod: '60',
   );
 
@@ -78,35 +78,35 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
         label: 'stuff',
         duration: 30,
         difficultyOfTask: 'Easy',
-        importanceLevel: 1,
+        importanceLevel: 2,
       ),
       Task(
         area: 'Study',
         label: 'Science',
         duration: 120,
         difficultyOfTask: 'Medium',
-        importanceLevel: 2,
+        importanceLevel: 3,
       ),
       Task(
         area: 'Study',
         label: 'Email',
         duration: 30,
         difficultyOfTask: 'Easy',
-        importanceLevel: 1,
+        importanceLevel: 4,
       ),
       Task(
         area: 'Study',
         label: 'King',
         duration: 15,
         difficultyOfTask: 'Easy',
-        importanceLevel: 1,
+        importanceLevel: 5,
       ),
       Task(
         area: 'Study',
         label: 'Project',
         duration: 240,
         difficultyOfTask: 'Hard',
-        importanceLevel: 3,
+        importanceLevel: 2,
       ),
       Task(
         area: 'Study',
