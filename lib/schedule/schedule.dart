@@ -28,8 +28,8 @@ class Schedule {
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
   List<Task> othertasks = [];
-  var workingtime = 30;
-  var breaktime = 10;
+  var workingtime = 60;
+  var breaktime = 20;
   var remainingTime = 0;
   DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
