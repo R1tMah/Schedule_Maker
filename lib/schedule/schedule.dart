@@ -28,8 +28,8 @@ class Schedule {
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
   List<Task> othertasks = [];
-  var workingtime = 60;
-  var breaktime = 20;
+  var workingtime = 30;
+  var breaktime = 10;
   var remainingTime = 0;
   DateTime currTime = selectedWakeUp!;
   var sessionCounter = 0;
@@ -368,6 +368,7 @@ class Schedule {
           }
           else if((subSessionsNeededMap[rotationList[i]]!) < 1){
             print("inside else if");
+
             addToTaskTimeMap(15);
             subSessionsNeededMap.remove(rotationList[i]);
             currStudyTaskList.remove(rotationList[i]);
@@ -377,10 +378,12 @@ class Schedule {
             print("Incremented Count");
             for(int j = 0; j < currStudyTaskList.length; j++) {
               if(!(rotationList.contains(currStudyTaskList[j]))) {
+
                 rotationList.insert(i, currStudyTaskList[j]);
                 subSessionsNeededMap.update(rotationList[i], (value) => value - 0.5);
                 addToTaskTimeMap(15);
                 count--;
+                i++;
                 break;
               }
               //account for if there are no more tasks.
@@ -398,8 +401,10 @@ class Schedule {
             print("Incremented Count");
             for(int j = 0; j < currStudyTaskList.length; j++) {
               if(!(rotationList.contains(currStudyTaskList[j]))) {
+                i++;
                 rotationList.insert(i, currStudyTaskList[j]);
                 count--;
+
                 break;
               }
             }
