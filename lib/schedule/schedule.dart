@@ -355,11 +355,10 @@ class Schedule {
       }
       else if(_checkIfTimeFits(DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: workingtime + breaktime)))) == 0){
         int count = 0;
-        //this part keeps adding in tasks if there is extra time
+
         for(int i = 0; i < rotationList.length; i++){
           currTask = rotationList[i];
-          print(rotationList[i].label);
-          print(subSessionsNeededMap[rotationList[i]]);
+          print(rotationList[i].label + "needs ${subSessionsNeededMap[rotationList[i]]} subsessions left. ");
           print("inside for loop");
           if((subSessionsNeededMap[rotationList[i]]!) > 1){
             print("inside if");
@@ -373,6 +372,7 @@ class Schedule {
             subSessionsNeededMap.remove(rotationList[i]);
             currStudyTaskList.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
+            i--;
             count++;
             print("Incremented Count");
             for(int j = 0; j < currStudyTaskList.length; j++) {
@@ -393,6 +393,7 @@ class Schedule {
             subSessionsNeededMap.remove(rotationList[i]);
             currStudyTaskList.remove(rotationList[i]);
             rotationList.remove(rotationList[i]);
+            i--;
             count++;
             print("Incremented Count");
             for(int j = 0; j < currStudyTaskList.length; j++) {
