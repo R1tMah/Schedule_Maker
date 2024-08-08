@@ -23,7 +23,7 @@ class ScheduleTestPage extends StatefulWidget {
 class _ScheduleTestPageState extends State<ScheduleTestPage> {
   Schedule schedule = Schedule(
     scheduleDate: DateTime.now(),
-    studyMethod: 'Interleaved Practice',
+    studyMethod: 'Premack',
     workingMethod: '60',
   );
 

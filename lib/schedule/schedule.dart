@@ -85,9 +85,7 @@ class Schedule {
     }
 
 
-    for(int i = 0; i < currStudyTaskList.length; i++){
-      sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/stringToInt(workingMethod);
-    }
+
 
     //for subtasktime and breaktime
     if(workingtime == 30){
@@ -105,7 +103,9 @@ class Schedule {
       subtasktime = 30;
       max = 2;
     }
-
+    for(int i = 0; i < currStudyTaskList.length; i++){
+      sessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/workingtime;
+    }
     for(int i = 0; i < currStudyTaskList.length; i++){
       subSessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/subtasktime;
     }
@@ -113,9 +113,10 @@ class Schedule {
     int k = 0;
     while(k < workingtime/subtasktime){
       rotationList.add(currStudyTaskList[k]);
-
       k++;
     }
+
+
 
 
   }
@@ -500,6 +501,12 @@ class Schedule {
 
     } else if(studyMethod == "Interleaved Practice") {
       interleavedPractice();
+      while(othertasks.isNotEmpty){
+        currTask = othertasks[0];
+        addToTaskTimeMap(othertasks[0].duration);
+        othertasks.removeAt(0);
+        currTime = currTime.add(Duration(minutes: currTask.duration));
+      }
     } else if(studyMethod == "Eat That Frog Technique") {
       scheduleTimesBasedOnList(hardTasks);
       scheduleTimesBasedOnList(mediumTasks);
@@ -512,6 +519,15 @@ class Schedule {
       }
       if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
         print("There are way too many tasks right now");
+      }
+    }else if(studyMethod == "ABCDE method"){
+      currStudyTaskList.sort((a, b) => a.importanceLevel.compareTo(b.importanceLevel));
+      scheduleTimesBasedOnList(currStudyTaskList);
+      while(othertasks.isNotEmpty){
+        currTask = othertasks[0];
+        addToTaskTimeMap(othertasks[0].duration);
+        othertasks.removeAt(0);
+        currTime = currTime.add(Duration(minutes: currTask.duration));
       }
     }
   }
