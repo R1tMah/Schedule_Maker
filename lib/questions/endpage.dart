@@ -74,6 +74,36 @@ class EndPage extends StatelessWidget {
     }
   }
 
+  String fetchDisplay(String split, String work) {
+    String result = "Based on your answers, we've analyzed your responses and determined the best techniques to help you maximize your productivity and focus. Here's what we recommend:\n\n\n";
+
+    if(split == '30-10 rule'){
+      result += "The 30-10 rule is a time management technique where you work for 30 minutes followed by a 10-minute break. This method helps maintain focus and productivity by giving your brain regular intervals of rest.\n\n";
+    } else if(split == '60-20 rule') {
+      result += "The 60-20 rule suggests working for 60 minutes and then taking a 20-minute break. This approach allows for deep focus while also ensuring you have time to recharge, which can enhance long-term productivity.\n\n";
+    } else if(split == '90-30 rule') {
+      result += "The 90-30 rule involves working for 90 minutes followed by a 30-minute break. This technique is ideal for tackling large tasks that require sustained attention, providing ample time for rest afterward.\n\n";
+    } else {
+      result += "No split technique selected.\n\n";
+    }
+
+    if(work == 'Interleaved Practice') {
+      result += "Interleaved Practice is a learning technique where you mix different topics or forms of practice in one session. This method improves learning by encouraging the brain to distinguish between different concepts.\n\n\n";
+    } else if(work == 'Eat That Frog Technique') {
+      result += "The Eat That Frog Technique involves tackling tasks from hardest to easiest throughout the day. By getting the most challenging tasks out of the way first, you build momentum and reduce stress for the rest of the day.\n\n\n";
+    } else if(work == 'ABCDE method') {
+      result += "The ABCDE method is a prioritization technique where you work on tasks from most important to least important throughout the day. This approach ensures that you focus on your highest priorities first, making sure the critical tasks are completed.\n\n\n";
+    } else if(work == 'Premack') {
+      result += "The Premack Principle suggests tackling tasks from easiest to hardest. By starting with simpler tasks, you build confidence and momentum to take on more difficult tasks as the day progresses.\n\n";
+    } else {
+      result += "No working technique selected.\n\n\n";
+    }
+
+    result += "With these strategies in place, your schedules will be customized to help you work smarter and stay on track. Every plan you create here will be tailored to fit these techniques, so you can focus on what matters and make steady progress throughout your day. If you'd like to adjust your techniques later on, you can always do that manually in the settings. Let’s get started!";
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +127,17 @@ class EndPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Center(
+                      /*
                       child: Text('Split: ${(response.split(', '))[0]}\nWork: '
-                          '${(response.split(', '))[1]}'),
-                      //child: Text("Quiz Complete"),
+                          '${(response.split(', '))[1]}',
+                        style: TextStyle(color: Colors.white)),
+                       */
+
+                      child: Text(fetchDisplay((response.split(', '))[0], (response.split(', '))[1]),
+                          style: TextStyle(color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,),
+                          textAlign: TextAlign.center,),
                     ),
                   ),
                 ),
