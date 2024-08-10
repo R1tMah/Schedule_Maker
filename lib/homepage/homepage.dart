@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ran_app/settings/settings.dart';
+import 'package:ran_app/settings/settingspage.dart';
 import 'package:ran_app/homepage/history.dart';
 import 'package:ran_app/reminders/reminderspage.dart';
 import 'package:ran_app/schedule/schedulepage.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/questions/quiz.dart';
+import 'package:ran_app/questions/endpage.dart';
+import 'package:ran_app/settings/change_split_page.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -17,7 +19,17 @@ class SettingsPage extends StatelessWidget {
             },
             child: Text('Retake personalized quiz'),
           ),
-          SizedBox(height: 50),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChangeSplitPage()),
+              );
+            },
+            child: Text('Change Split'),
+          ),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -26,7 +38,7 @@ class SettingsPage extends StatelessWidget {
               );
               // Action for Notifications
             },
-            child: Text('Notification'),
+            child: Text('Notifications'),
           ),
           SizedBox(height: 50),
           ElevatedButton(
@@ -46,7 +58,7 @@ class SettingsPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => OurMission()),
               );
-              // Action for Help
+              // Action for Our Mission
             },
             child: Text('Our Mission'),
           ),
@@ -75,6 +87,8 @@ class RetakePersonalizedQuizPage extends StatelessWidget {
     );
   }
 }
+
+
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});

@@ -15,6 +15,8 @@ import 'package:ran_app/questions/question8.dart';
 import 'package:ran_app/questions/question9.dart';
 import 'package:ran_app/questions/question10.dart';
 
+import '../settings/change_split_page.dart';
+
 var response = '';
 var prompt = 'Questions and options: 1) How frequently do you check your phone '
     'notifications throughout the day? [Very frequently, Frequently, Sometimes'
@@ -42,8 +44,23 @@ var prompt = 'Questions and options: 1) How frequently do you check your phone '
     'Frog Technique, ABCDE method, Premack          When giving the answer, '
     'only give the answers to the two questions separated by a comma';
 
-class EndPage extends StatelessWidget {
-  const EndPage({super.key});
+class EndPage extends StatefulWidget {
+  final String initialSplit;
+
+  const EndPage({Key? key, this.initialSplit = '30-10 rule'}) : super(key: key);
+
+  @override
+  _EndPageState createState() => _EndPageState();
+}
+
+class _EndPageState extends State<EndPage> {
+  late String _currentSplit;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentSplit = widget.initialSplit;
+  }
   Future<String> fetchResponse() async {
     final response = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
@@ -103,6 +120,20 @@ class EndPage extends StatelessWidget {
 
     return result;
   }
+  void _changeSplit() async {
+    final updatedSplit = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeSplitPage(initialSplit: _currentSplit),
+      ),
+    );
+
+    if (updatedSplit != null) {
+      setState(() {
+        _currentSplit = updatedSplit;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +150,9 @@ class EndPage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             String responseText = snapshot.data.toString();
-            response = responseText;
+            String split = _currentSplit; // Use the updated split
+            String work = (responseText.split(', '))[1];
+
             return Column(
               children: [
                 Expanded(
@@ -127,19 +160,21 @@ class EndPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Center(
-                      /*
-                      child: Text('Split: ${(response.split(', '))[0]}\nWork: '
-                          '${(response.split(', '))[1]}',
-                        style: TextStyle(color: Colors.white)),
-                       */
-
-                      child: Text(fetchDisplay((response.split(', '))[0], (response.split(', '))[1]),
-                          style: TextStyle(color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,),
-                          textAlign: TextAlign.center,),
+                      child: Text(
+                        fetchDisplay(split, work),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: _changeSplit,
+                  child: const Text('Change Split'),
                 ),
                 ElevatedButton(
                   onPressed: () {

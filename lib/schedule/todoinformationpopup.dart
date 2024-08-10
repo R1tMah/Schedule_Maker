@@ -116,6 +116,8 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
 
   @override
   Widget build(BuildContext context) {
+    bool showDifficultyAndImportance = areaDropdownValue == 'Study' && preftimeDropDownValue != 'Fixed Time';
+
     return Dialog(
       backgroundColor: Colors.deepPurpleAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -163,7 +165,6 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                     onChanged: (String? selectedvalue) {
                       setState(() {
                         areaDropdownValue = selectedvalue!;
-
                       });
                     },
                   ),
@@ -206,36 +207,61 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
             ),
             const SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Please select the Difficulty of the task: "),
-                  DropdownButton<String>(
-                    value: difficultyDropDownValue,
-                    isExpanded: true,
-                    items: <String>[
-                      'Easy',
-                      'Medium',
-                      'Hard',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? selectedvalue) {
-                      setState(() {
-                        difficultyDropDownValue = selectedvalue!;
-                      });
-                    },
-                  ),
-                ],
+            if (showDifficultyAndImportance) ...[
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Please select the Difficulty of the task: "),
+                    DropdownButton<String>(
+                      value: difficultyDropDownValue,
+                      isExpanded: true,
+                      items: <String>[
+                        'Easy',
+                        'Medium',
+                        'Hard',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? selectedvalue) {
+                        setState(() {
+                          difficultyDropDownValue = selectedvalue!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20,),
+              const SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Please select the Importance level of the task (1 is most important, 5 is least important): "),
+                    Slider(
+                      value: importanceLevel,
+                      min: 1,
+                      max: 5,
+                      divisions: 4,
+                      label: importanceLevel.round().toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          importanceLevel = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20,),
+            ],
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
@@ -294,29 +320,6 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
             ),
             const SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Please select the Importance level of the task (1 is most important, 5 is least important): "),
-                  Slider(
-                    value: importanceLevel,
-                    min: 1,
-                    max: 5,
-                    divisions: 4,
-                    label: importanceLevel.round().toString(),
-                    onChanged: (double value) {
-                      setState(() {
-                        importanceLevel = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -344,4 +347,3 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
     );
   }
 }
-
