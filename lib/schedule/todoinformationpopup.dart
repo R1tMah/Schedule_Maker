@@ -11,7 +11,7 @@ String finString = '';
 
 String areaDropdownValue = 'Study';
 int durationDropdownValue = 15;
-String preftimeDropDownValue = 'Morning';
+String preftimeDropDownValue = 'Not Fixed Time';
 String difficultyDropDownValue = 'Easy';
 double importanceLevel = 1.0; // New variable for importance level
 DateTime currTime = DateTime.now();
@@ -268,17 +268,13 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Please select the preferred time of the task: "),
+                  const Text("Is the task fixed (does it need to be done at a certain time?) "),
                   DropdownButton<String>(
                     value: preftimeDropDownValue,
                     isExpanded: true,
                     items: <String>[
-                      'Morning',
-                      'Afternoon',
-                      'Night',
-                      'Late Night',
-                      'Anytime',
                       'Fixed Time',
+                      'Not Fixed Time',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,

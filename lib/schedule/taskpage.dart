@@ -49,7 +49,7 @@ class TaskPageState extends State<TaskPage> {
 
                       '\nImportance Level: ' +
                       task.importanceLevel.toString() +
-                      '\nPreferred Time: ' +
+                      '\nFixed Time: ' +
                       task.preferredTimeOfTask;
 
                   if (task.preferredTimeOfTask == 'Fixed Time' && task.fixedTime != null) {
