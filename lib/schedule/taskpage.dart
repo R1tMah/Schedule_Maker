@@ -203,7 +203,7 @@ class TaskPageState extends State<TaskPage> {
       setState(() {
         taskList[index] = currTask;
         titleController.clear();
-        fixedTime = DateTime.now();
+        fixedTime = DateTime(0);
       });
 
       Widget okButton = TextButton(

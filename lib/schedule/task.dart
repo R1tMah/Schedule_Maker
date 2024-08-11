@@ -26,7 +26,7 @@ class Task{
 
 
   bool isFixedTime(){
-    if(fixedTime == null){
+    if(fixedTime == DateTime(0) || fixedTime == null){
       return false;
     }else{
       return true;

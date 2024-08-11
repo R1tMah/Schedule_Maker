@@ -3,6 +3,8 @@ import 'package:ran_app/homepage/name_input.dart';
 import 'package:ran_app/schedule/taskpage.dart';
 import 'package:time_planner/time_planner.dart';
 import 'package:intl/intl.dart';
+import 'package:ran_app/schedule/schedule.dart';
+import 'package:ran_app/schedule/task.dart';
 
 
 class ScheduleHomePageState extends StatefulWidget {
@@ -12,6 +14,55 @@ class ScheduleHomePageState extends StatefulWidget {
 
 
 class SchedulePage extends  State<ScheduleHomePageState>{
+  List<TimePlannerTask> finaltasks = [];
+
+  Schedule schedule = new Schedule(
+      scheduleDate: DateTime.now(),
+      studyMethod: 'Interleaved Practice',
+      workingMethod: '60',
+  );
+  @override
+  void initState() {
+    super.initState();
+    _initializeSchedule();
+    schedule.scheduleTime();
+    schedule.taskTimeMap.forEach((task, timeSlot) {
+      print("adding " + "${task.getLabel()} to the final tasks right now");
+      _addTaskTimeObject(context, task);
+    });
+  }
+  void _addTaskTimeObject(BuildContext context, Task currTask) {
+
+    setState(() {
+      int? hour = schedule.taskTimeMap[currTask]?.start.hour;
+      int? minutes = schedule.taskTimeMap[currTask]?.start.minute;
+      finaltasks.add(
+        TimePlannerTask(
+          color: Colors.red,
+          dateTime: TimePlannerDateTime(
+            day: 0,
+            hour: hour!,
+            minutes: minutes!,),
+          minutesDuration:  currTask.duration,
+          daysDuration: 1,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('You click on time planner object')));
+          },
+          child: Text(
+            '${currTask.getLabel()}',
+            style: TextStyle(color: Colors.grey[350], fontSize: 12),
+          ),
+        ),
+      );
+    });
+  }
+  void _initializeSchedule() {
+    if(taskList.isNotEmpty) {
+      schedule.setTasks(taskList);
+      schedule.initializeTasks();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

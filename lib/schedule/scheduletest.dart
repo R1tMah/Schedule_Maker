@@ -24,6 +24,8 @@ class ScheduleTestPage extends StatefulWidget {
 
 class _ScheduleTestPageState extends State<ScheduleTestPage> {
   List<TimePlannerTask> finaltasks = [];
+
+
   Schedule schedule = Schedule(
     scheduleDate: DateTime.now(),
     studyMethod: 'Interleaved Practice',
@@ -36,37 +38,38 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     _initializeSchedule();
     schedule.scheduleTime();
     schedule.taskTimeMap.forEach((task, timeSlot) {
-      print('${task.label}: ${timeSlot.start}');
+      print("adding " + "${task.getLabel()} to the final tasks right now");
+      _addTaskTimeObject(context, task);
     });
-    for(Task currTask in schedule.taskTimeMap.keys){
-      if(schedule.taskTimeMap[currTask] != null){
-        int? hour = schedule.taskTimeMap[currTask]?.start.hour;
-        int? minutes = schedule.taskTimeMap[currTask]?.start.minute;
-        finaltasks.add(
-          TimePlannerTask(
-            dateTime: TimePlannerDateTime(
-                day: DateTime.now().day,
-                hour: hour!,
-                minutes: minutes!,),
-            minutesDuration:  currTask.duration,
-            daysDuration: 0,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('You click on time planner object')));
-            },
-            child: Text(
-              'this is a demo',
-              style: TextStyle(color: Colors.grey[350], fontSize: 12),
-            ),
-          ),
-        );
-      }
-
-    }
   }
 
 
+  void _addTaskTimeObject(BuildContext context, Task currTask) {
 
+    setState(() {
+      int? hour = schedule.taskTimeMap[currTask]?.start.hour;
+      int? minutes = schedule.taskTimeMap[currTask]?.start.minute;
+      finaltasks.add(
+        TimePlannerTask(
+          color: Colors.red,
+          dateTime: TimePlannerDateTime(
+            day: 0,
+            hour: hour!,
+            minutes: minutes!,),
+          minutesDuration:  currTask.duration,
+          daysDuration: 1,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('You click on time planner object')));
+          },
+          child: Text(
+            '${currTask.getLabel()}',
+            style: TextStyle(color: Colors.grey[350], fontSize: 12),
+          ),
+        ),
+      );
+    });
+  }
   void _initializeSchedule() {
     List<Task> tasks = [
       Task(
