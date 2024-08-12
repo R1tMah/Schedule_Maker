@@ -55,6 +55,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 initialDateTime: selectedWakeUp,
                 use24hFormat: false,
                 onDateTimeChanged: (DateTime newDateTime) {
+                  fixedTime = newDateTime;
                   // Only update selectedDateTime if newDateTime is after selectedWakeUp
                   if (newDateTime.isAfter(selectedWakeUp!) || newDateTime.isAtSameMomentAs(selectedWakeUp!)) {
                     selectedDateTime = newDateTime;
@@ -299,6 +300,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                         if (selectedTime != null) {
                           setState(() {
                             finString = DateFormat('hh:mm a').format(selectedTime);
+
                           });
                         }
                       },
@@ -328,8 +330,9 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                   _showDuplicateTaskDialog();
                 } else {
                   taskNames.add(taskName);
-                  if (preftimeDropDownValue == 'Fixed Time' && fixedTime != null) {
+                  if (preftimeDropDownValue == 'Fixed Time' ) {
                     print("Selected Fixed Time: $fixedTime");
+
                   }
                   print("Selected Importance Level: $importanceLevel"); // Print the importance level
                   Navigator.of(context).pop();

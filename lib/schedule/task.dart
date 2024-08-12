@@ -26,7 +26,7 @@ class Task{
 
 
   bool isFixedTime(){
-    if(fixedTime == DateTime(0) || fixedTime == null){
+    if(preferredTimeOfTask == "Not Fixed Time" || fixedTime == null){
       return false;
     }else{
       return true;
@@ -44,7 +44,9 @@ class Task{
   void setLabel(String label){
     this.label = label;
   }
-
+  void setBackGround(Color color){
+    this.background = color;
+  }
   Color chooseBackGround(List<Color> colorList) {
     Color currentCol = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     if (colorList.contains(currentCol)) {

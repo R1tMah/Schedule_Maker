@@ -8,6 +8,9 @@ import 'package:ran_app/schedule/task.dart';
 
 
 class ScheduleHomePageState extends StatefulWidget {
+  final List<Task> tasks; // Receive the list of tasks from previous page
+
+  ScheduleHomePageState({required this.tasks});
   @override
   SchedulePage createState() => SchedulePage();
 }// A State created by StatefulWidget to be displayed on screen.
@@ -16,29 +19,46 @@ class ScheduleHomePageState extends StatefulWidget {
 class SchedulePage extends  State<ScheduleHomePageState>{
   List<TimePlannerTask> finaltasks = [];
 
-  Schedule schedule = new Schedule(
-      scheduleDate: DateTime.now(),
-      studyMethod: 'Interleaved Practice',
-      workingMethod: '60',
-  );
+  late Schedule schedule;
+
   @override
   void initState() {
     super.initState();
+    schedule = Schedule(
+      scheduleDate: DateTime.now(),
+      studyMethod: 'Interleaved Practice',
+      workingMethod: '60',
+    );
     _initializeSchedule();
-    schedule.scheduleTime();
-    schedule.taskTimeMap.forEach((task, timeSlot) {
-      print("adding " + "${task.getLabel()} to the final tasks right now");
-      _addTaskTimeObject(context, task);
-    });
+    _populateTimePlannerTasks();
+
+  }
+  String printInfo(Task task){
+    DateTime? start = schedule.taskTimeMap[task]?.start;
+    DateTime? end = schedule.taskTimeMap[task]?.end;
+    if(task.getLabel() != "Break") {
+      return "Task " + task.getLabel() + ": " +
+          DateFormat('HH:mm').format(start!) + "-" +
+          DateFormat('HH:mm').format(end!);
+    }else{
+      return  "Break from" + ": " +
+          DateFormat('HH:mm').format(start!) + "-" +
+          DateFormat('HH:mm').format(end!);
+    }
   }
   void _addTaskTimeObject(BuildContext context, Task currTask) {
-
+    Color color;
+    if(currTask.getLabel() == "Break"){
+        color = Colors.blue;
+    }else{
+      color = Colors.red;
+    }
     setState(() {
       int? hour = schedule.taskTimeMap[currTask]?.start.hour;
       int? minutes = schedule.taskTimeMap[currTask]?.start.minute;
       finaltasks.add(
         TimePlannerTask(
-          color: Colors.red,
+          color: color,
           dateTime: TimePlannerDateTime(
             day: 0,
             hour: hour!,
@@ -46,8 +66,8 @@ class SchedulePage extends  State<ScheduleHomePageState>{
           minutesDuration:  currTask.duration,
           daysDuration: 1,
           onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('You click on time planner object')));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(printInfo(currTask))));
           },
           child: Text(
             '${currTask.getLabel()}',
@@ -57,11 +77,18 @@ class SchedulePage extends  State<ScheduleHomePageState>{
       );
     });
   }
+
+  void _populateTimePlannerTasks() {
+    schedule.scheduleTime();
+    schedule.taskTimeMap.forEach((task, timeSlot) {
+      print("Adding ${task.getLabel()} to the final tasks.");
+      _addTaskTimeObject(context, task);
+    });
+  }
+
   void _initializeSchedule() {
-    if(taskList.isNotEmpty) {
-      schedule.setTasks(taskList);
-      schedule.initializeTasks();
-    }
+    schedule.setTasks(taskList);
+    schedule.initializeTasks();
   }
 
   @override
@@ -89,7 +116,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
               style: TimePlannerStyle(
                 backgroundColor: Colors.white,
                 // default value for height is 80
-                cellHeight: 60,
+                cellHeight: 100,
                 // default value for width is 90
                 cellWidth: 200,
 
@@ -99,6 +126,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               // List of task will be show on the time planner
+              tasks: finaltasks,
             ),
           ),
           Expanded(

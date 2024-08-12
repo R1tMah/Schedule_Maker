@@ -4,7 +4,7 @@ import 'package:ran_app/homepage/history.dart';
 import 'package:ran_app/reminders/reminderspage.dart';
 import 'package:ran_app/schedule/schedulepage.dart';
 import 'package:ran_app/schedule/scheduletest.dart';
-
+import 'package:ran_app/schedule/taskpage.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -15,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = <Widget>[
-    ScheduleHomePageState(),
+    ScheduleHomePageState(tasks: taskList,),
     RemindersPage(),
     HistoryPage(),
     SettingsPage(),

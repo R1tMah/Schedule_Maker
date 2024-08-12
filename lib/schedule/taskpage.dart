@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:ran_app/schedule/todoinformationpopup.dart';
 import 'package:ran_app/schedule/StudyTaskSelectionPage.dart';
+import 'package:ran_app/questions/endpage.dart';
 import 'package:intl/intl.dart';
 
 List<Color> colorList = [];
@@ -56,7 +57,7 @@ class TaskPageState extends State<TaskPage> {
                     currString += ' (' + finString + ')';
                   }
 
-                  Color taskColor = task.chooseBackGround(colorList);
+                  Color taskColor = Colors.white;
                   colorList.add(taskColor);
                   return Card(
                     color: taskColor, // Will change this, just wanted to see colors
@@ -166,18 +167,33 @@ class TaskPageState extends State<TaskPage> {
             child: ElevatedButton(
               child: Text('Done with my tasks'),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => StudyTaskSelectionPage(),
-                  ),
-                );
+                navigateToNextPage();
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+  void navigateToNextPage() {
+    bool studyTasks = false;
+    for(int i = 0; i < taskList.length; i++){
+      if(taskList[i].getArea() == "Study"){
+         studyTasks = true;
+      }
+    }
+    if(studyTasks == false) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EndPage()), // Modify as needed
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudyTaskSelectionPage()),
+      );
+    }
   }
 
   void _showEditReminderDialog(int index) {
@@ -196,7 +212,7 @@ class TaskPageState extends State<TaskPage> {
         preferredTimeOfTask: preftimeDropDownValue,
         difficultyOfTask: difficultyDropDownValue,
         fixedTime: fixedTime,
-        background: currentTask.chooseBackGround(colorList),
+        background: Colors.white,
         importanceLevel: importanceLevel.round(),
       );
 

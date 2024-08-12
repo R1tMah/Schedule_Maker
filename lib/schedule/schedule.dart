@@ -109,9 +109,16 @@ class Schedule {
     for(int i = 0; i < currStudyTaskList.length; i++){
       subSessionsNeededMap[currStudyTaskList[i]] = (currStudyTaskList[i].duration)/subtasktime;
     }
-    if(currStudyTaskList.isNotEmpty) {
+    if(currStudyTaskList.length >= workingtime / subtasktime) {
       int k = 0;
       while (k < workingtime / subtasktime) {
+        rotationList.add(currStudyTaskList[k]);
+        k++;
+      }
+    }
+    else{
+      int k = 0;
+      while(k < currStudyTaskList.length){
         rotationList.add(currStudyTaskList[k]);
         k++;
       }
