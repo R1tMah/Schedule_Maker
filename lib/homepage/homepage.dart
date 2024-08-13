@@ -5,6 +5,8 @@ import 'package:ran_app/reminders/reminderspage.dart';
 import 'package:ran_app/schedule/schedulepage.dart';
 import 'package:ran_app/schedule/scheduletest.dart';
 import 'package:ran_app/schedule/taskpage.dart';
+import 'package:ran_app/DatabaseTest.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -20,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HistoryPage(),
     SettingsPage(),
     ScheduleTestPage(),
+    DatabaseTest(),
   ];
 
   void _onItemTapped(int index) {
@@ -68,6 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.settings, color: Colors.teal),
               label: 'Schedule Test',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings, color: Colors.teal),
+              label: 'Database Test',
+            ),
           ],
           currentIndex: _selectedIndex,
           fixedColor: Colors.teal[900],
@@ -89,6 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return 'Settings';
       case 4:
         return 'Schedule Test';
+      case 5:
+        return 'Database Test';
       default:
         return 'Flutter Demo';
     }

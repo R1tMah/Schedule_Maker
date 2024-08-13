@@ -4,12 +4,12 @@ import 'package:path/path.dart';
 
 class DatabaseService {
   static Database? _db;
-  static final DatabaseService instance = DatabaseService.instance;
+  static final DatabaseService instance = DatabaseService._constructor();
 
   DatabaseService._constructor();
 
   Future<Database> get database async {
-    if(_db != null) return _db!;
+    if (_db != null) return _db!;
     _db = await getDatabase();
     return _db!;
   }
@@ -18,28 +18,30 @@ class DatabaseService {
     final databaseDirPath = await getDatabasesPath();
     final databasePath = join(databaseDirPath, "master.db");
     final database = await openDatabase(
-        databasePath,
-        onCreate: (db, version) {
-          db.execute('''
+      databasePath,
+      version: 1, // Specify the version here
+      onCreate: (db, version) {
+        db.execute('''
           CREATE TABLE schedules (
             date INTEGER PRIMARY KEY,
-            tasks TEXT NOT NULL,
+            tasks TEXT NOT NULL
           )
-          ''');
-        },
+        ''');
+      },
     );
     return database;
   }
 
-  void addSchedule(int date, String content) async {
+  Future<bool> addSchedule(int date, String content) async {
     final db = await database;
-    await db.insert(
+    int result = await db.insert(
       'schedules',
       {
         'date': date,
         'tasks': content,
       },
     );
+    return result > 0;
   }
 
   Future<String> getSchedule(int date) async {

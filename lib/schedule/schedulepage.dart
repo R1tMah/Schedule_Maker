@@ -86,6 +86,10 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     });
   }
 
+  void _resetSchedule() {
+
+  }
+
   void _initializeSchedule() {
     schedule.setTasks(taskList);
     schedule.initializeTasks();
