@@ -6,63 +6,63 @@ import 'package:ran_app/settings/change_split_page.dart';
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuizApp()),
-              );
-            },
-            child: Text('Retake personalized quiz'),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChangeSplitPage()),
-              );
-            },
-            child: Text('Change Split'),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotificationsPage()),
-              );
-              // Action for Notifications
-            },
-            child: Text('Notifications'),
-          ),
-          SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AboutUsPage()),
-              );
-              // Action for About Us
-            },
-            child: Text('About Us'),
-          ),
-          SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OurMission()),
-              );
-              // Action for Our Mission
-            },
-            child: Text('Our Mission'),
-          ),
-        ],
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuizApp()),
+                );
+              },
+              child: Text('Retake personalized quiz'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChangeSplitPage()),
+                );
+              },
+              child: Text('Change Split'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotificationsPage()),
+                );
+              },
+              child: Text('Notifications'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutUsPage()),
+                );
+              },
+              child: Text('About Us'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OurMission()),
+                );
+              },
+              child: Text('Our Mission'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -78,17 +78,13 @@ class RetakePersonalizedQuizPage extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-
-          },
+          onPressed: () {},
           child: const Text('Retake Personalized Quiz'),
         ),
       ),
     );
   }
 }
-
-
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
@@ -98,8 +94,7 @@ class NotificationsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Notifications Page'),
       ),
-      body: Center(
-      ),
+      body: Center(),
     );
   }
 }
@@ -112,11 +107,11 @@ class AboutUsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('About Us Page'),
       ),
-      body: Center(
-      ),
+      body: Center(),
     );
   }
 }
+
 class OurMission extends StatefulWidget {
   const OurMission({Key? key}) : super(key: key);
 
