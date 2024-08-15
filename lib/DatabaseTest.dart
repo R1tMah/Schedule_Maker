@@ -115,16 +115,10 @@ class _DatabaseTestState extends State<DatabaseTest> {
 
     String stringDate = "${strMonth}${strDay}${year}";
     int intDate = int.parse(stringDate);
-    String content = jsonEncode(taskTimeMap, toEncodable: (value) {
-      if (value is Task) {
-        return jsonEncode(value);
-      } else if (value is DateTimeRange){
-        return value.toString();
-      } else {
-        return 'test';
-      }
-    });
+    String content = jsonEncode(mapToJson(taskTimeMap));
     await _dbService.addSchedule(intDate, content);
+
+    printMap(taskTimeMap);
 
     setState(() {
       _retrievedData = 'Data added: $intDate -> $content';
@@ -144,9 +138,18 @@ class _DatabaseTestState extends State<DatabaseTest> {
     Map<Task, DateTimeRange> retrievedMap = {};
     int inputInt = int.parse(_retrieveIntController.text);
     String? data = await _dbService.getSchedule(inputInt);
-    if(data != null) {
-      retrievedMap = jsonDecode(data);
+    if (data != null) {
+      Map<String, dynamic> jsonMap = jsonDecode(data);
+      retrievedMap = jsonMap.map((taskJsonString, dateTimeRangeJson) {
+        Map<String, dynamic> taskJson = jsonDecode(taskJsonString);
+        Task task = Task.fromJson(taskJson);
+        DateTimeRange range = dateTimeRangeFromJson(Map<String, String>.from(dateTimeRangeJson));
+        return MapEntry(task, range);
+      });
     }
+
+    printMap(retrievedMap);
+
     setState(() {
       _retrievedData = data != null ? 'Retrieved data: $retrievedMap' : 'No data found for $inputInt';
     });
@@ -240,5 +243,32 @@ class _DatabaseTestState extends State<DatabaseTest> {
       taskTimeMap[tasks[i]] = DateTimeRange(start: currTime, end: currTime.add(Duration(minutes: tasks[i].duration)));
       currTime.add(Duration(minutes: tasks[i].duration));
     }
+  }
+
+  Map<String, String> dateTimeRangeToJson(DateTimeRange range) {
+    return {
+      'start': range.start.toIso8601String(),
+      'end': range.end.toIso8601String(),
+    };
+  }
+
+  DateTimeRange dateTimeRangeFromJson(Map<String, String> json) {
+    return DateTimeRange(
+      start: DateTime.parse(json['start']!),
+      end: DateTime.parse(json['end']!),
+    );
+  }
+
+  Map<String, dynamic> mapToJson(Map<Task, DateTimeRange> map) {
+    return map.map((task, dateTimeRange) =>
+        MapEntry(jsonEncode(task.toJson()), dateTimeRangeToJson(dateTimeRange)));
+  }
+
+  void printMap(Map<Task, DateTimeRange> map) {
+    print("This is the current taskTimeMap. \n");
+    for(Task t in map.keys){
+      print("Task " + t.getLabel() + " is mapped to ${map[t]}. \n" );
+    }
+    print("_________________________________________________________________________\n");
   }
 }

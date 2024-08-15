@@ -72,5 +72,33 @@ class Task{
   }
 
 
+  // Convert Task to a JSON-compatible map
+  Map<String, dynamic> toJson() {
+    return {
+      'label': label,
+      'area': area,
+      'background': background.value, // Convert Color to int
+      'duration': duration,
+      'preferredTimeOfTask': preferredTimeOfTask,
+      'difficultyOfTask': difficultyOfTask,
+      'fixedTime': fixedTime?.toIso8601String(), // Convert DateTime to String
+      'importanceLevel': importanceLevel,
+    };
+  }
 
+  // Create a Task from a JSON-compatible map
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      label: json['label'],
+      area: json['area'],
+      background: Color(json['background']), // Convert int to Color
+      duration: json['duration'],
+      preferredTimeOfTask: json['preferredTimeOfTask'],
+      difficultyOfTask: json['difficultyOfTask'],
+      fixedTime: json['fixedTime'] != null
+          ? DateTime.parse(json['fixedTime'])
+          : null, // Convert String to DateTime
+      importanceLevel: json['importanceLevel'],
+    );
+  }
 }
