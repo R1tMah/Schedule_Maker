@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/homepage.dart';
 import 'package:ran_app/keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:ran_app/questions/quiz.dart';
 import 'package:ran_app/questions/question2.dart';
@@ -45,29 +46,34 @@ var prompt = 'Questions and options: 1) How frequently do you check your phone '
     'only give the answers to the two questions separated by a comma';
 
 class EndPage extends StatefulWidget {
-  final String initialSplit;
-
-  const EndPage({Key? key, this.initialSplit = '30-10 rule'}) : super(key: key);
+  const EndPage({Key? key}) : super(key: key);
 
   @override
   _EndPageState createState() => _EndPageState();
 }
 
 class _EndPageState extends State<EndPage> {
-  late String _currentSplit;
+  late String _currentSplit = '30-10 rule'; // Default value
 
   @override
   void initState() {
     super.initState();
-    _currentSplit = widget.initialSplit;
+    _loadSplit();
   }
+
+  Future<void> _loadSplit() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentSplit = prefs.getString('selectedSplit') ?? '30-10 rule';
+    });
+  }
+
   Future<String> fetchResponse() async {
     final response = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${OPEN_AI_KEY}'
-
       },
       body: jsonEncode(
         {
@@ -120,20 +126,6 @@ class _EndPageState extends State<EndPage> {
 
     return result;
   }
-  void _changeSplit() async {
-    final updatedSplit = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChangeSplitPage(initialSplit: _currentSplit),
-      ),
-    );
-
-    if (updatedSplit != null) {
-      setState(() {
-        _currentSplit = updatedSplit;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +154,8 @@ class _EndPageState extends State<EndPage> {
                     child: Center(
                       child: Text(
                         fetchDisplay(split, work),
-                        style: TextStyle(
-                          color: Colors.white,
+                        style: const TextStyle(
+                          color: Colors.white, // Text color changed back to white
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -171,10 +163,6 @@ class _EndPageState extends State<EndPage> {
                       ),
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: _changeSplit,
-                  child: const Text('Change Split'),
                 ),
                 ElevatedButton(
                   onPressed: () {

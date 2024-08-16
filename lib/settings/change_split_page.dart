@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangeSplitPage extends StatefulWidget {
   final String initialSplit;
@@ -18,7 +19,9 @@ class _ChangeSplitPageState extends State<ChangeSplitPage> {
     _selectedSplit = widget.initialSplit;
   }
 
-  void _saveSplit() {
+  Future<void> _saveSplit() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedSplit', _selectedSplit);
     Navigator.pop(context, _selectedSplit);
   }
 
@@ -29,11 +32,22 @@ class _ChangeSplitPageState extends State<ChangeSplitPage> {
         title: const Text('Change Split'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            DropdownButton<String>(
+            const Text(
+              'Select a Split Rule:',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black54,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            DropdownButtonFormField<String>(
               value: _selectedSplit,
               onChanged: (newValue) {
                 setState(() {
@@ -44,12 +58,32 @@ class _ChangeSplitPageState extends State<ChangeSplitPage> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 );
               }).toList(),
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(color: Colors.blue, width: 2),
+                ),
+                filled: true,
+                fillColor: Colors.grey[200],
+              ),
             ),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: _saveSplit,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                textStyle: const TextStyle(fontSize: 18),
+              ),
               child: const Text('Save Split'),
             ),
           ],
