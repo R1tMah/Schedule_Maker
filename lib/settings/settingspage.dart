@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/questions/quiz.dart';
 import 'package:ran_app/questions/endpage.dart';
 import 'package:ran_app/settings/change_split_page.dart';
+import 'package:ran_app/settings/help.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -60,6 +61,16 @@ class SettingsPage extends StatelessWidget {
                 );
               },
               child: Text('Our Mission'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HelpPage()),
+                );
+              },
+              child: Text('Help'),
             ),
           ],
         ),

@@ -122,7 +122,7 @@ class _EndPageState extends State<EndPage> {
       result += "No working technique selected.\n\n\n";
     }
 
-    result += "With these strategies in place, your schedules will be customized to help you work smarter and stay on track. Every plan you create here will be tailored to fit these techniques, so you can focus on what matters and make steady progress throughout your day. If you'd like to adjust your techniques later on, you can always do that manually in the settings. Let’s get started!";
+    result += "With these strategies in place, your schedules will be customized to help you work smarter and stay on track. Every plan you create here will be tailored to fit these techniques, so you can focus on what matters and make steady progress throughout your day. If you'd like to adjust your techniques later on, you can always do that manually in the settings. \n\nLet’s get started!";
 
     return result;
   }
