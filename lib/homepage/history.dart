@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'dart:convert';
+import 'package:ran_app/databaseService.dart';
+import 'package:ran_app/schedule/task.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -9,7 +12,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  DateTime _selectedDay = DateTime(0);
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +71,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay; // update `_focusedDay` here as well
                     });
+                    _getData(_selectedDay);
                   },
                   onPageChanged: (focusedDay) {
                     _focusedDay = focusedDay;
@@ -105,6 +109,62 @@ class _HistoryPageState extends State<HistoryPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _getData(DateTime date) async {
+    final DatabaseService _dbService = DatabaseService.instance;
+
+    Map<Task, DateTimeRange> retrievedMap = {};
+
+    int month = date.month;
+    int day = date.day;
+    int year = date.year;
+
+    String strMonth = '';
+    if(month < 10) {
+      strMonth = '0${month}';
+    } else {
+      strMonth = '${month}';
+    }
+
+    String strDay = '';
+    if(day < 10) {
+      strDay = '0${day}';
+    } else {
+      strDay = '${day}';
+    }
+
+    String stringDate = "${year}${strMonth}${strDay}";
+
+
+    int inputInt = int.parse(stringDate);
+    String? data = await _dbService.getSchedule(inputInt);
+    if (data != null) {
+      if(data != 'No data found for provided date'){
+        Map<String, dynamic> jsonMap = jsonDecode(data);
+        retrievedMap = jsonMap.map((taskJsonString, dateTimeRangeJson) {
+          Map<String, dynamic> taskJson = jsonDecode(taskJsonString);
+          Task task = Task.fromJson(taskJson);
+          DateTimeRange range = dateTimeRangeFromJson(Map<String, String>.from(dateTimeRangeJson));
+          return MapEntry(task, range);
+        });
+      } else {
+        print("No schedule found");
+      }
+    }
+
+    print("This is what is in the task tim map right now. \n");
+    for(Task t in retrievedMap.keys){
+      print("Task " + t.getLabel() + " is scheduled for ${retrievedMap[t]}\n" );
+    }
+    print("_________________________________________________________________________\n");
+  }
+
+  DateTimeRange dateTimeRangeFromJson(Map<String, String> json) {
+    return DateTimeRange(
+      start: DateTime.parse(json['start']!),
+      end: DateTime.parse(json['end']!),
     );
   }
 }

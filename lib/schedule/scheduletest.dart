@@ -3,6 +3,8 @@ import 'package:ran_app/schedule/schedule.dart';
 import 'package:ran_app/schedule/task.dart';
 import 'package:time_planner/time_planner.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:ran_app/databaseService.dart';
 
 void main() {
   runApp(MyApp());
@@ -169,7 +171,32 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
   }
 
   // Method to reset the schedule
-  void _resetSchedule() {
+  void _resetSchedule() async {
+    final DatabaseService _dbService = DatabaseService.instance;
+
+    int month = lastScheduleDate.month;
+    int day = lastScheduleDate.day;
+    int year = lastScheduleDate.year;
+
+    String strMonth = '';
+    if(month < 10) {
+      strMonth = '0${month}';
+    } else {
+      strMonth = '${month}';
+    }
+
+    String strDay = '';
+    if(day < 10) {
+      strDay = '0${day}';
+    } else {
+      strDay = '${day}';
+    }
+
+    String stringDate = "${year}${strMonth}${strDay}";
+    int intDate = int.parse(stringDate);
+    String content = jsonEncode(mapToJson(schedule.taskTimeMap));
+    await _dbService.addSchedule(intDate, content);
+
     setState(() {
       finaltasks.clear();
       tasks.clear();// Clear the current tasks
@@ -181,6 +208,19 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
 
     });
   }
+
+  Map<String, String> dateTimeRangeToJson(DateTimeRange range) {
+    return {
+      'start': range.start.toIso8601String(),
+      'end': range.end.toIso8601String(),
+    };
+  }
+
+  Map<String, dynamic> mapToJson(Map<Task, DateTimeRange> map) {
+    return map.map((task, dateTimeRange) =>
+        MapEntry(jsonEncode(task.toJson()), dateTimeRangeToJson(dateTimeRange)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
