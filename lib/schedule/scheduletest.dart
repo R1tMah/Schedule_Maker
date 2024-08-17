@@ -41,8 +41,8 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
   void initState() {
     super.initState();
     _initializeSchedule();
-    _checkAndResetSchedule();
     schedule.scheduleTime();
+    _checkAndResetSchedule();
     schedule.taskTimeMap.forEach((task, timeSlot) {
       print("adding " + "${task.getLabel()} to the final tasks right now");
       _addTaskTimeObject(context, task);
@@ -195,7 +195,17 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     String stringDate = "${year}${strMonth}${strDay}";
 
     int intDate = int.parse(stringDate);
+
+
+    print("This is what pp is in the task tim map right now. \n");
+    for(Task t in schedule.taskTimeMap.keys){
+      print("Task " + t.getLabel() + " is scheduled for ${schedule.taskTimeMap[t]}\n" );
+    }
+    print("_________________________________________________________________________\n");
+
+
     String content = jsonEncode(mapToJson(schedule.taskTimeMap));
+    await _dbService.deleteSchedule(intDate);
     await _dbService.addSchedule(intDate, content);
 
     setState(() {
