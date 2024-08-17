@@ -58,4 +58,13 @@ class DatabaseService {
       return 'No data found for provided date';
     }
   }
+
+  Future<int> deleteSchedule(int date) async {
+    final db = await database;
+    return await db.delete(
+      'schedules',
+      where: 'date = ?',
+      whereArgs: [date],
+    );
+  }
 }

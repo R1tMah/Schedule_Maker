@@ -5,6 +5,8 @@
   import 'package:intl/intl.dart';
   import 'package:ran_app/schedule/schedule.dart';
   import 'package:ran_app/schedule/task.dart';
+  import 'dart:convert';
+  import 'package:ran_app/databaseService.dart';
 
   late Schedule schedule;
   DateTime lastScheduleDate = DateTime.now().subtract(const Duration(days: 1));
@@ -32,9 +34,9 @@
         studyMethod: 'Interleaved Practice',
         workingMethod: '60',
       );
-      _checkAndResetSchedule();
       _initializeSchedule();
       _populateTimePlannerTasks();
+      _checkAndResetSchedule();
 
     }
     String printInfo(Task task){
@@ -107,7 +109,42 @@
     }
 
     // Method to reset the schedule
-    void _resetSchedule() {
+    void _resetSchedule() async {
+      final DatabaseService _dbService = DatabaseService.instance;
+
+      int month = lastScheduleDate.month;
+      int day = lastScheduleDate.day;
+      int year = lastScheduleDate.year;
+
+      String strMonth = '';
+      if(month < 10) {
+        strMonth = '0${month}';
+      } else {
+        strMonth = '${month}';
+      }
+
+      String strDay = '';
+      if(day < 10) {
+        strDay = '0${day}';
+      } else {
+        strDay = '${day}';
+      }
+
+      String stringDate = "${year}${strMonth}${strDay}";
+      int intDate = int.parse(stringDate);
+
+
+      print("This is what pp is in the task tim map right now. \n");
+      for(Task t in schedule.taskTimeMap.keys){
+        print("Task " + t.getLabel() + " is scheduled for ${schedule.taskTimeMap[t]}\n" );
+      }
+      print("_________________________________________________________________________\n");
+
+
+      String content = jsonEncode(mapToJson(schedule.taskTimeMap));
+      await _dbService.deleteSchedule(intDate);
+      await _dbService.addSchedule(intDate, content);
+
       setState(() {
         finaltasks.clear();
         taskList.clear();// Clear the current tasks
@@ -118,6 +155,18 @@
         );
 
       });
+    }
+
+    Map<String, String> dateTimeRangeToJson(DateTimeRange range) {
+      return {
+        'start': range.start.toIso8601String(),
+        'end': range.end.toIso8601String(),
+      };
+    }
+
+    Map<String, dynamic> mapToJson(Map<Task, DateTimeRange> map) {
+      return map.map((task, dateTimeRange) =>
+          MapEntry(jsonEncode(task.toJson()), dateTimeRangeToJson(dateTimeRange)));
     }
 
     @override
