@@ -75,7 +75,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     });
   }
   void _initializeSchedule() {
-      tasks = [
+    tasks = [
       Task(
         area: 'Other',
         label: 'Go to the Gym',
