@@ -193,6 +193,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     }
 
     String stringDate = "${year}${strMonth}${strDay}";
+
     int intDate = int.parse(stringDate);
     String content = jsonEncode(mapToJson(schedule.taskTimeMap));
     await _dbService.addSchedule(intDate, content);

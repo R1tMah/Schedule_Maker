@@ -7,7 +7,7 @@
   import 'package:ran_app/schedule/task.dart';
 
   late Schedule schedule;
-  DateTime lastScheduleDate = DateTime.now().subtract(const Duration(days: 1));
+  DateTime lastScheduleDate = DateTime.now();
 
 
   class ScheduleHomePageState extends StatefulWidget {
