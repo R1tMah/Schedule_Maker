@@ -113,7 +113,7 @@ class _DatabaseTestState extends State<DatabaseTest> {
       strDay = '${day}';
     }
 
-    String stringDate = "${strMonth}${strDay}${year}";
+    String stringDate = "${year}${strMonth}${strDay}";
     int intDate = int.parse(stringDate);
     String content = jsonEncode(mapToJson(taskTimeMap));
     await _dbService.addSchedule(intDate, content);

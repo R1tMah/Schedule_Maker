@@ -8,6 +8,9 @@ void main() {
   runApp(MyApp());
 }
 
+DateTime lastScheduleDate = DateTime.now().subtract(Duration(days: 1));
+List<Task> tasks = [];
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
   void initState() {
     super.initState();
     _initializeSchedule();
+    _checkAndResetSchedule();
     schedule.scheduleTime();
     schedule.taskTimeMap.forEach((task, timeSlot) {
       print("adding " + "${task.getLabel()} to the final tasks right now");
@@ -71,7 +75,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     });
   }
   void _initializeSchedule() {
-    List<Task> tasks = [
+      tasks = [
       Task(
         area: 'Other',
         label: 'Go to the Gym',
@@ -155,7 +159,28 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
     schedule.setTasks(tasks);
     schedule.initializeTasks();
   }
+  void _checkAndResetSchedule() {
+    DateTime now = DateTime.now();
+    if (now.day != lastScheduleDate.day || now.month != lastScheduleDate.month || now.year != lastScheduleDate.year) {
+      // Reset the schedule
+      _resetSchedule();
+    }
+    lastScheduleDate = now;
+  }
 
+  // Method to reset the schedule
+  void _resetSchedule() {
+    setState(() {
+      finaltasks.clear();
+      tasks.clear();// Clear the current tasks
+      schedule = Schedule(
+        scheduleDate: DateTime.now(),
+        studyMethod: 'Interleaved Practice',
+        workingMethod: '60',
+      );
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
