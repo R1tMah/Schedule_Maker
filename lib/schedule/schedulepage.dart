@@ -35,6 +35,31 @@
         workingMethod: '60',
       );
       _initializeSchedule();
+      /*
+      if(schedule.TimeAfterTwelve()){
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Invalid Time"),
+                content: Text(
+                    "You have way too many tasks in your schedule right now. Either modify your tasks or change your wakeUpTime"),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+
+                    },
+                  ),
+                ],
+              );
+            });
+
+
+      }
+
+       */
       _populateTimePlannerTasks();
       _checkAndResetSchedule();
 

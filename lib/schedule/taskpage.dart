@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 
 List<Color> colorList = [];
 List<Task> taskList = [];
+List<Task> fixedTaskList = [];
 enum SampleItem { delete, edit }
 
+String worked = "";
 class TaskPage extends StatefulWidget {
   @override
   TaskPageState createState() => TaskPageState();
@@ -54,7 +56,7 @@ class TaskPageState extends State<TaskPage> {
                       task.preferredTimeOfTask;
 
                   if (task.preferredTimeOfTask == 'Fixed Time' && task.fixedTime != null) {
-                    currString += ' (' + finString + ')';
+                    currString += ' (' + DateFormat('hh:mm a').format(task.fixedTime!) + ')';
                   }
 
                   Color taskColor = Colors.white;
@@ -113,6 +115,7 @@ class TaskPageState extends State<TaskPage> {
             child: ElevatedButton(
               child: Text('Add Task'),
               onPressed: () {
+
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -131,10 +134,25 @@ class TaskPageState extends State<TaskPage> {
                     importanceLevel: importanceLevel.round(),
                   );
 
+                  if(currentTask.preferredTimeOfTask == "Fixed Time"){
+                    print("Added current Task to fixed Time");
+                    fixedTaskList.add(currentTask);
+                  }
                   setState(() {
-                    taskList.add(currentTask);
+                    if(worked == "Worked") {
+                      taskList.add(currentTask);
+                    }
                     titleController.clear();
-                    fixedTime = DateTime.now();
+                    taskNames.add(currentTask.label);
+                    finString = "";
+                    areaDropdownValue = 'Study';
+                    durationDropdownValue = 15;
+                    preftimeDropDownValue = 'Not Fixed Time';
+                    difficultyDropDownValue = 'Easy';
+                    importanceLevel = 1.0; // New variable for importance level
+                    currTime = DateTime.now();
+
+
                   });
 
                   Widget okButton = TextButton(

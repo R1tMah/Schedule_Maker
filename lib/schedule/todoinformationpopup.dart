@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ran_app/questions/question11.dart';
+import 'package:ran_app/schedule/taskpage.dart';
+import 'package:ran_app/schedule/task.dart';
 
 List<String> taskNames = []; // Global list to store task names
 
@@ -39,7 +41,26 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
       },
     );
   }
+  String checkFixedTimes(DateTimeRange newRange){
+    for (Task time in fixedTaskList) {
+      DateTime newStart = newRange.start;
+      DateTime newEnd = newRange.end;
+      DateTime oldStart = time.fixedTime!;
+      DateTime oldEnd = time.fixedTime!.add(Duration(minutes: time.duration));
 
+
+      // Check if newRange overlaps with an existing range in any way
+      if ((newStart.isBefore(oldEnd) && newEnd.isAfter(oldStart)) ||
+          (newStart.isBefore(oldEnd) && newStart.isAfter(oldStart)) ||
+          (newEnd.isBefore(oldEnd) && newEnd.isAfter(oldStart)) ||
+          (newStart.isAtSameMomentAs(oldStart) ||
+              newEnd.isAtSameMomentAs(oldEnd))) {
+        print("Overlap detected");
+        return time.label;
+      }
+    }
+    return "Value Fits";
+  }
   Future<DateTime?> _showTimePicker(BuildContext context) async {
     DateTime? selectedDateTime = selectedWakeUp;
 
@@ -55,11 +76,13 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 initialDateTime: selectedWakeUp,
                 use24hFormat: false,
                 onDateTimeChanged: (DateTime newDateTime) {
+
+
                   fixedTime = newDateTime;
                   // Only update selectedDateTime if newDateTime is after selectedWakeUp
                   if (newDateTime.isAfter(selectedWakeUp!) || newDateTime.isAtSameMomentAs(selectedWakeUp!)) {
                     selectedDateTime = newDateTime;
-                  } else {
+                  } else{
                     // Close the bottom sheet
                     Navigator.pop(context);
 
@@ -298,8 +321,10 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       onPressed: () async {
                         final DateTime? selectedTime = await _showTimePicker(context);
                         if (selectedTime != null) {
+                          DateTime TempSelectedTime = selectedTime;
                           setState(() {
-                            finString = DateFormat('hh:mm a').format(selectedTime);
+
+                            finString = DateFormat('hh:mm a').format(TempSelectedTime);
 
                           });
                         }
@@ -325,18 +350,49 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
               child: const Text("ADD"),
               onPressed: () {
+                finString = "";
                 String taskName = widget.titleController.text.trim().toLowerCase();
                 if (taskNames.contains(taskName)) {
                   _showDuplicateTaskDialog();
                 } else {
-                  taskNames.add(taskName);
+
                   if (preftimeDropDownValue == 'Fixed Time' ) {
+                    if(checkFixedTimes(DateTimeRange(start: fixedTime, end: fixedTime.add(Duration(minutes: durationDropdownValue)))) != "Value Fits") {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Invalid Time"),
+                              content: Text(
+                                  "This time overlaps with the task ${checkFixedTimes(
+                                      DateTimeRange(start: fixedTime,
+                                          end: fixedTime.add(Duration(
+                                              minutes: durationDropdownValue))))}"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    // Reopen the time picker with the correct time
+                                    _showTimePicker(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                      worked = "Didn't work";
+                      return;
+                    }
+                    taskNames.add(taskName);
+
                     print("Selected Fixed Time: $fixedTime");
+
 
                   }
                   print("Selected Importance Level: $importanceLevel"); // Print the importance level
                   Navigator.of(context).pop();
                 }
+                worked = "Worked";
               },
             ),
             const SizedBox(height: 10,),

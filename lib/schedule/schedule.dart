@@ -181,6 +181,12 @@ class Schedule {
       currTime = currTime.add(const Duration(minutes: 15));
     }
   }
+  bool TimeAfterTwelve(){
+    if(currTime.isAfter(DateTime(DateTime.now().day, 23, 59))){
+      return true;
+    }
+    return false;
+  }
 
   void addToTaskTimeMap(int duration){
     Task newTask =  Task(
