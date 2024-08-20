@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:ran_app/homepage/homepage.dart';
 import 'package:ran_app/keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +17,7 @@ import 'package:ran_app/questions/question9.dart';
 import 'package:ran_app/questions/question10.dart';
 
 import '../settings/change_split_page.dart';
+import '../settings/change_work_page.dart';
 
 var response = '';
 var prompt = 'Questions and options: 1) How frequently do you check your phone '
@@ -54,17 +55,19 @@ class EndPage extends StatefulWidget {
 
 class _EndPageState extends State<EndPage> {
   late String _currentSplit = '30-10 rule'; // Default value
+  late String _currentWork = 'Interleaved Practice'; // Default value
 
   @override
   void initState() {
     super.initState();
-    _loadSplit();
+    _loadPreferences();
   }
 
-  Future<void> _loadSplit() async {
+  Future<void> _loadPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _currentSplit = prefs.getString('selectedSplit') ?? '30-10 rule';
+      _currentWork = prefs.getString('selectedWork') ?? 'Interleaved Practice';
     });
   }
 
@@ -88,12 +91,11 @@ class _EndPageState extends State<EndPage> {
       ),
     );
     print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
     if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body);
-      return responseBody['choices'][0]['message']['content'];
+      final data = jsonDecode(response.body);
+      return data['choices'][0]['message']['content'];
     } else {
-      throw Exception('Failed to load response');
+      throw Exception('Failed to load data');
     }
   }
 
@@ -142,8 +144,8 @@ class _EndPageState extends State<EndPage> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             String responseText = snapshot.data.toString();
-            String split = _currentSplit; // Use the updated split
-            String work = (responseText.split(', '))[1];
+            String split = _currentSplit;
+            String work = _currentWork;
 
             return Column(
               children: [
@@ -155,7 +157,7 @@ class _EndPageState extends State<EndPage> {
                       child: Text(
                         fetchDisplay(split, work),
                         style: const TextStyle(
-                          color: Colors.white, // Text color changed back to white
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
