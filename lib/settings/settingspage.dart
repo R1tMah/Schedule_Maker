@@ -4,87 +4,85 @@ import 'package:ran_app/questions/endpage.dart';
 import 'package:ran_app/settings/change_split_page.dart';
 import 'package:ran_app/settings/change_work_page.dart';
 import 'package:ran_app/settings/help.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuizApp()),
-                );
-              },
-              child: Text('Retake personalized quiz'),
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 400),
+          child: ListView(
+            children: [
+              _CustomListTile(
+                title: "Retake Personalized Quiz",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuizApp()
+                      ),
+                  );
+                }
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChangeSplitPage()),
-                );
-              },
-              child: Text('Change Split'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChangeWorkPage()),
-                );
-              },
-              child: Text('Change Work Technique'),
-            ),
+              _CustomListTile(
+                  title: "Change Split",
 
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NotificationsPage()),
-                );
-              },
-              child: Text('Notifications'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AboutUsPage()),
-                );
-              },
-              child: Text('About Us'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OurMission()),
-                );
-              },
-              child: Text('Our Mission'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HelpPage()),
-                );
-              },
-              child: Text('Help'),
-            ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangeSplitPage()),
+                    );
+                  }),
+              _CustomListTile(
+                  title: "Change Work Technique",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangeWorkPage()),
+                    );
+                  }),
+              _CustomListTile(
+                  title: "Notifications",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationsPage()),
+                    );
+                  }),
+              _CustomListTile(
+                  title: "About Us Page",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AboutUsPage()),
+                    );
+                  }),
+              _CustomListTile(
+                  title: "Our Mission",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OurMission()),
+                    );
+                  }),
+              _CustomListTile(
+                  title: "Help",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HelpPage()),
+                    );
+                  }),
           ],
+          )
         ),
       ),
     );
@@ -202,6 +200,32 @@ class _OurMissionState extends State<OurMission> with SingleTickerProviderStateM
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CustomListTile extends StatelessWidget {
+  final String title;
+  final Function() onTap;
+
+  const _CustomListTile(
+      {Key? key, required this.title,  required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white, // White background
+      margin: const EdgeInsets.symmetric(vertical: 1), // Margin around the tile
+      child: ListTile(
+        title: Text(
+          textAlign: TextAlign.center,
+          title,
+          style: TextStyle(fontSize: 16.0, color: Colors.teal), // Green text
+        ),
+
+        onTap: onTap,
       ),
     );
   }
