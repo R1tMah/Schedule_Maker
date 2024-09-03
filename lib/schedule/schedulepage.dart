@@ -8,12 +8,16 @@ import 'package:ran_app/schedule/task.dart';
 import 'dart:convert';
 import 'package:ran_app/databaseService.dart';
 
+
 late Schedule schedule;
 DateTime lastScheduleDate = DateTime.now();
 
 
+
+
 class ScheduleHomePageState extends StatefulWidget {
   final List<Task> tasks; // Receive the list of tasks from previous page
+
 
   ScheduleHomePageState({required this.tasks});
   @override
@@ -21,8 +25,13 @@ class ScheduleHomePageState extends StatefulWidget {
 }// A State created by StatefulWidget to be displayed on screen.
 
 
+
+
 class SchedulePage extends  State<ScheduleHomePageState>{
   List<TimePlannerTask> finaltasks = [];
+
+
+
 
 
 
@@ -35,28 +44,38 @@ class SchedulePage extends  State<ScheduleHomePageState>{
       workingMethod: '60',
     );
     _initializeSchedule();
-    if(schedule.TimeAfterTwelve()){
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Invalid Time"),
-              content: Text(
-                  "You have way too many tasks in your schedule right now. Either modify your tasks ro"),
-              actions: <Widget>[
-                TextButton(
-                  child: Text("OK"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    // Reopen the time picker with the correct time
-                  },
-                ),
-              ],
-            );
-          });
-    }
+    /*
+   if(schedule.TimeAfterTwelve()){
+     showDialog(
+         context: context,
+         builder: (BuildContext context) {
+           return AlertDialog(
+             title: Text("Invalid Time"),
+             content: Text(
+                 "You have way too many tasks in your schedule right now. Either modify your tasks or change your wakeUpTime"),
+             actions: <Widget>[
+               TextButton(
+                 child: Text("OK"),
+                 onPressed: () {
+                   Navigator.of(context).pop();
+
+
+                 },
+               ),
+             ],
+           );
+         });
+
+
+
+
+   }
+
+
+    */
     _populateTimePlannerTasks();
     _checkAndResetSchedule();
+
 
   }
   String printInfo(Task task){
@@ -76,7 +95,13 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     Color color;
     if(currTask.getLabel() == "Break"){
       color = Colors.blue;
-    }else{
+    }else if(currTask.getArea() == "Study") {
+      color = Colors.green;
+    }
+    else if(currTask.getArea() == "Food"){
+      color = Colors.yellow;
+    }
+    else {
       color = Colors.red;
     }
     setState(() {
@@ -104,6 +129,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     });
   }
 
+
   void _populateTimePlannerTasks() {
     schedule.scheduleTime();
     schedule.taskTimeMap.forEach((task, timeSlot) {
@@ -114,10 +140,14 @@ class SchedulePage extends  State<ScheduleHomePageState>{
 
 
 
+
+
+
   void _initializeSchedule() {
     schedule.setTasks(taskList);
     schedule.initializeTasks();
   }
+
 
   void _checkAndResetSchedule() {
     DateTime now = DateTime.now();
@@ -128,13 +158,16 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     lastScheduleDate = now;
   }
 
+
   // Method to reset the schedule
   void _resetSchedule() async {
     final DatabaseService _dbService = DatabaseService.instance;
 
+
     int month = lastScheduleDate.month;
     int day = lastScheduleDate.day;
     int year = lastScheduleDate.year;
+
 
     String strMonth = '';
     if(month < 10) {
@@ -143,6 +176,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
       strMonth = '${month}';
     }
 
+
     String strDay = '';
     if(day < 10) {
       strDay = '0${day}';
@@ -150,8 +184,11 @@ class SchedulePage extends  State<ScheduleHomePageState>{
       strDay = '${day}';
     }
 
+
     String stringDate = "${year}${strMonth}${strDay}";
     int intDate = int.parse(stringDate);
+
+
 
 
     print("This is what pp is in the task tim map right now. \n");
@@ -161,9 +198,12 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     print("_________________________________________________________________________\n");
 
 
+
+
     String content = jsonEncode(mapToJson(schedule.taskTimeMap));
     await _dbService.deleteSchedule(intDate);
     await _dbService.addSchedule(intDate, content);
+
 
     setState(() {
       finaltasks.clear();
@@ -174,8 +214,10 @@ class SchedulePage extends  State<ScheduleHomePageState>{
         workingMethod: '60',
       );
 
+
     });
   }
+
 
   Map<String, String> dateTimeRangeToJson(DateTimeRange range) {
     return {
@@ -184,10 +226,12 @@ class SchedulePage extends  State<ScheduleHomePageState>{
     };
   }
 
+
   Map<String, dynamic> mapToJson(Map<Task, DateTimeRange> map) {
     return map.map((task, dateTimeRange) =>
         MapEntry(jsonEncode(task.toJson()), dateTimeRangeToJson(dateTimeRange)));
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -196,6 +240,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget> [
+
 
               Expanded(
                 flex: 8,
@@ -217,6 +262,7 @@ class SchedulePage extends  State<ScheduleHomePageState>{
                     cellHeight: 100,
                     // default value for width is 90
                     cellWidth: 200,
+
 
                     dividerColor: Colors.black,
                     showScrollBar: true,
