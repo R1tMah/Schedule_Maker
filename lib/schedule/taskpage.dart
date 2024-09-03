@@ -161,21 +161,6 @@ class TaskPageState extends State<TaskPage> {
                       Navigator.pop(context);
                     },
                   );
-                  String labelString =
-                  taskList.map((task) => task.label).join(", ");
-                  AlertDialog alert = AlertDialog(
-                    title: Text("Tasks Added"),
-                    content: Text(labelString),
-                    actions: [
-                      okButton,
-                    ],
-                  );
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return alert;
-                    },
-                  );
                 });
               },
             ),
