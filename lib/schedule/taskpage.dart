@@ -34,7 +34,11 @@ class TaskPageState extends State<TaskPage> {
           Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
-              child: Text("These are the tasks we have so far: "),
+              child: Text("These are the tasks we have so far: ",  style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,),
+              )
             ),
           ),
           Expanded(
