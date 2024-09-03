@@ -30,7 +30,12 @@ class EleventhQuestionState extends State<EleventhQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("When do you want to start your first task?"),
+                child: Text("When do you want to start your first task?", style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                  textAlign: TextAlign.center,),
               ),
             ),
           ),
