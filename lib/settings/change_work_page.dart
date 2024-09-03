@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ran_app/questions/endpage.dart';
+
+String _selectedWork = (((response.split(', '))[0]).split('-'))[0];
 
 class ChangeWorkPage extends StatefulWidget {
   @override
@@ -7,7 +10,7 @@ class ChangeWorkPage extends StatefulWidget {
 }
 
 class _ChangeWorkPageState extends State<ChangeWorkPage> {
-  late String _selectedWork = 'Interleaved Practice'; // Default value
+
 
   @override
   void initState() {
