@@ -45,6 +45,7 @@ var prompt = 'Questions and options: 1) How frequently do you check your phone '
     'the following that best fits the person: Interleaved Practice, Eat That '
     'Frog Technique, ABCDE method, Premack          When giving the answer, '
     'only give the answers to the two questions separated by a comma';
+late String _currentWork = 'Interleaved Practice'; // Default value
 
 class EndPage extends StatefulWidget {
   const EndPage({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class EndPage extends StatefulWidget {
 
 class _EndPageState extends State<EndPage> {
   late String _currentSplit = '30-10 rule'; // Default value
-  late String _currentWork = 'Interleaved Practice'; // Default value
+
 
   @override
   void initState() {

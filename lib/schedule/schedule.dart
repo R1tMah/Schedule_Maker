@@ -6,6 +6,7 @@ import 'package:time_range/time_range.dart';
 import 'package:ran_app/questions/question11.dart';
 import 'package:ran_app/questions/endpage.dart';
 
+
 var work = (((response.split(', '))[0]).split('-'))[0];
 var rest = (((((response.split(', '))[0]).split('-'))[1]).split(' '))[0];
 var workingMethod = (response.split(', '))[1];

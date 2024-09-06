@@ -8,8 +8,8 @@ import 'package:ran_app/schedule/task.dart';
 import 'dart:convert';
 import 'package:ran_app/databaseService.dart';
 import 'package:ran_app/settings/change_work_page.dart';
-
-
+import 'package:ran_app/questions/endpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -31,57 +31,54 @@ class ScheduleHomePageState extends StatefulWidget {
 
 
 
-class SchedulePage extends  State<ScheduleHomePageState>{
-  List<TimePlannerTask> finaltasks = [];
+  class SchedulePage extends  State<ScheduleHomePageState> {
+    List<TimePlannerTask> finaltasks = [];
+    late SharedPreferences prefs;
 
+    @override
+    void initState() {
+      super.initState();
+      _initializeSchedulePage();
+    }
 
+    Future<void> _initializeSchedulePage() async {
+      prefs = await SharedPreferences.getInstance();
 
+      schedule = Schedule(
+        scheduleDate: DateTime.now(),
+        studyMethod: prefs.getString('selectedWork') ?? 'Interleaved Practice',
+        // Add a default value if needed
+        workingMethod: '60',
+      );
 
+      _initializeSchedule();
 
-
-  @override
-  void initState() {
-    super.initState();
-    schedule = Schedule(
-      scheduleDate: DateTime.now(),
-      studyMethod: 'Interleaved Practice',
-      workingMethod: '60',
-    );
-    _initializeSchedule();
-    /*
-   if(schedule.TimeAfterTwelve()){
-     showDialog(
-         context: context,
-         builder: (BuildContext context) {
-           return AlertDialog(
-             title: Text("Invalid Time"),
-             content: Text(
-                 "You have way too many tasks in your schedule right now. Either modify your tasks or change your wakeUpTime"),
-             actions: <Widget>[
-               TextButton(
-                 child: Text("OK"),
-                 onPressed: () {
-                   Navigator.of(context).pop();
-
-
-                 },
-               ),
-             ],
-           );
-         });
-
-
-
-
-   }
-
-
+      /*
+    if (schedule.TimeAfterTwelve()) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Invalid Time"),
+            content: Text(
+                "You have way too many tasks in your schedule right now. Either modify your tasks or change your wakeUpTime"),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
     */
-    _populateTimePlannerTasks();
-    _checkAndResetSchedule();
 
-
-  }
+      _populateTimePlannerTasks();
+      _checkAndResetSchedule();
+    }
   String printInfo(Task task){
     DateTime? start = schedule.taskTimeMap[task]?.start;
     DateTime? end = schedule.taskTimeMap[task]?.end;
