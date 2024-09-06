@@ -3,7 +3,6 @@ import 'package:ran_app/questions/endpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
-
 var answer11 = '';
 DateTime? selectedWakeUp = DateTime.now();
 
@@ -30,12 +29,15 @@ class EleventhQuestionState extends State<EleventhQuestion> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(
-                child: Text("When do you want to start your first task?", style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+                child: Text(
+                  "When do you want to start your first task?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                  textAlign: TextAlign.center,),
               ),
             ),
           ),
@@ -43,8 +45,8 @@ class EleventhQuestionState extends State<EleventhQuestion> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
+                child: Text('Select Reminder Time'),
                 onPressed: () async {
-                  //final DateTime? selectedTime = await showCupertinoTimePicker(context);
                   selectedWakeUp = await showCupertinoTimePicker(context);
                   if (selectedWakeUp != null) {
                     setState(() {
@@ -52,24 +54,31 @@ class EleventhQuestionState extends State<EleventhQuestion> {
                     });
                   }
                 },
-                child: Text('Select Reminder Time'),
               ),
             ),
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
-              child: Text(answer11),
+              child: Text(
+                answer11,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(15.0),
               child: ElevatedButton(
+                child: Text('Next'),
                 onPressed: () {
                   _navigateToHomePage(context);
                 },
-                child: Text('Next'),
               ),
             ),
           ),
