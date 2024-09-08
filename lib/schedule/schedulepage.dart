@@ -265,7 +265,7 @@ class ScheduleHomePageState extends StatefulWidget {
                     // default value for height is 80
                     cellHeight: 100,
                     // default value for width is 90
-                    cellWidth: 200,
+                    cellWidth: 500,
 
 
                     dividerColor: Colors.black,
