@@ -263,9 +263,9 @@ class ScheduleHomePageState extends StatefulWidget {
                   style: TimePlannerStyle(
                     backgroundColor: Colors.white,
                     // default value for height is 80
-                    cellHeight: 100,
+                    cellHeight: 150,
                     // default value for width is 90
-                    cellWidth: 500,
+                    cellWidth: 340,
 
 
                     dividerColor: Colors.black,
