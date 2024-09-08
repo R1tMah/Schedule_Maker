@@ -19,7 +19,7 @@ double importanceLevel = 1.0; // New variable for importance level
 DateTime currTime = DateTime.now();
 
 class TodoInformationPopup extends StatefulWidget {
-  final TextEditingController titleController;
+    final TextEditingController titleController;
 
   const TodoInformationPopup({Key? key, required this.titleController}) : super(key: key);
 
@@ -384,7 +384,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       return;
                     }
                     taskNames.add(taskName);
-                    print(taskName);
+
                     print("Selected Fixed Time: $fixedTime");
 
 

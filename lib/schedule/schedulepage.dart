@@ -45,7 +45,7 @@ class ScheduleHomePageState extends StatefulWidget {
     Future<void> _initializeSchedulePage() async {
       prefs = await SharedPreferences.getInstance();
       TimePrefs = await SharedPreferences.getInstance();
-      print(TimePrefs.getString('selectedSplit')!.substring(0, 2));
+
 
       schedule = Schedule(
         scheduleDate: DateTime.now(),
