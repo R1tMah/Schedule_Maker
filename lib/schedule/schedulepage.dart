@@ -45,11 +45,13 @@ class ScheduleHomePageState extends StatefulWidget {
     Future<void> _initializeSchedulePage() async {
       prefs = await SharedPreferences.getInstance();
       TimePrefs = await SharedPreferences.getInstance();
+      print(TimePrefs.getString('selectedSplit')!.substring(0, 2));
+
       schedule = Schedule(
         scheduleDate: DateTime.now(),
         studyMethod: prefs.getString('selectedWork') ?? 'Interleaved Practice',
         // Add a default value if needed
-        workingMethod: '60',
+        workingtime: int.parse(TimePrefs.getString('selectedSplit')!.substring(0, 2)),
       );
 
       _initializeSchedule();
@@ -213,7 +215,7 @@ class ScheduleHomePageState extends StatefulWidget {
       schedule = Schedule(
         scheduleDate: DateTime.now(),
         studyMethod: 'Interleaved Practice',
-        workingMethod: '60',
+        workingtime: 60,
       );
 
 

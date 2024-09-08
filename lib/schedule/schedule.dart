@@ -15,12 +15,12 @@ class Schedule {
   Schedule({
     this.scheduleDate,
     this.studyMethod = '',
-    this.workingMethod = '',
+    this.workingtime = 0,
   });
 
   DateTime? scheduleDate;
   String studyMethod;
-  String workingMethod;
+  String? workingMethod;
   List<Task> currTaskList = [];
 
   List<Task> currStudyTaskList = [];
@@ -29,7 +29,7 @@ class Schedule {
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
   List<Task> othertasks = [];
-  var workingtime = 30;
+  int workingtime;
   var breaktime = 10;
   var remainingTime = 0;
   DateTime currTime = selectedWakeUp!;

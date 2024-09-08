@@ -34,7 +34,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
   Schedule schedule = Schedule(
     scheduleDate: DateTime.now(),
     studyMethod: 'Interleaved Practice',
-    workingMethod: '60',
+    workingtime: 60,
   );
 
   @override
@@ -214,7 +214,7 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
       schedule = Schedule(
         scheduleDate: DateTime.now(),
         studyMethod: 'Interleaved Practice',
-        workingMethod: '60',
+        workingtime: 60,
       );
 
     });
