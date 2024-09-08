@@ -144,7 +144,6 @@ class Schedule {
     }
     return null;
   }
-
   int stringToInt(String time) {
     int newTime = int.parse(time);
     return newTime;
