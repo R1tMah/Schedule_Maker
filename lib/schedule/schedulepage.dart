@@ -34,6 +34,7 @@ class ScheduleHomePageState extends StatefulWidget {
   class SchedulePage extends  State<ScheduleHomePageState> {
     List<TimePlannerTask> finaltasks = [];
     late SharedPreferences prefs;
+    late SharedPreferences TimePrefs;
 
     @override
     void initState() {
@@ -43,7 +44,7 @@ class ScheduleHomePageState extends StatefulWidget {
 
     Future<void> _initializeSchedulePage() async {
       prefs = await SharedPreferences.getInstance();
-
+      TimePrefs = await SharedPreferences.getInstance();
       schedule = Schedule(
         scheduleDate: DateTime.now(),
         studyMethod: prefs.getString('selectedWork') ?? 'Interleaved Practice',
