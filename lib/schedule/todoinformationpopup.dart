@@ -384,7 +384,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                       return;
                     }
                     taskNames.add(taskName);
-
+                    print(taskName);
                     print("Selected Fixed Time: $fixedTime");
 
 
