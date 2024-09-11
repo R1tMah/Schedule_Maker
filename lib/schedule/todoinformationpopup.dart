@@ -381,7 +381,6 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                             );
                           });
                       worked = "Didn't work";
-                      return;
                     }
                     taskNames.add(taskName);
 
@@ -389,13 +388,27 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
 
 
                   }
+                  else{
+                    taskNames.add(taskName);
+                  }
                   print("Selected Importance Level: $importanceLevel"); // Print the importance level
-                  Navigator.of(context).pop();
+
                 }
                 worked = "Worked";
+                Navigator.of(context).pop(true);
               },
             ),
             const SizedBox(height: 10,),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey, // Cancel button styling
+                textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              child: const Text("CANCEL"),
+              onPressed: () {
+                Navigator.of(context).pop(false); // Closes the popup when clicked
+              },
+            ),
           ],
         ),
       ),

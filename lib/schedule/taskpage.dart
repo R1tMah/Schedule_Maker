@@ -122,42 +122,44 @@ class TaskPageState extends State<TaskPage> {
 
                 showDialog(
                   context: context,
+                  barrierDismissible: false,
                   builder: (context) {
                     return TodoInformationPopup(
                         titleController: titleController);
                   },
                 ).then((value) {
-                  currentTask = Task(
-                    area: areaDropdownValue,
-                    label: titleController.text,
-                    duration: durationDropdownValue,
-                    preferredTimeOfTask: preftimeDropDownValue,
-                    difficultyOfTask: difficultyDropDownValue,
-                    fixedTime: fixedTime,
-                    background: currentTask.chooseBackGround(colorList),
-                    importanceLevel: importanceLevel.round(),
-                  );
+                  if(value == true) {
+                    currentTask = Task(
+                      area: areaDropdownValue,
+                      label: titleController.text,
+                      duration: durationDropdownValue,
+                      preferredTimeOfTask: preftimeDropDownValue,
+                      difficultyOfTask: difficultyDropDownValue,
+                      fixedTime: fixedTime,
+                      background: currentTask.chooseBackGround(colorList),
+                      importanceLevel: importanceLevel.round(),
+                    );
 
-                  if(currentTask.preferredTimeOfTask == "Fixed Time"){
-                    print("Added current Task to fixed Time");
-                    fixedTaskList.add(currentTask);
-                  }
-                  setState(() {
-                    if(worked == "Worked") {
-                      taskList.add(currentTask);
+                    if (currentTask.preferredTimeOfTask == "Fixed Time") {
+                      print("Added current Task to fixed Time");
+                      fixedTaskList.add(currentTask);
                     }
-                    titleController.clear();
-                    taskNames.add(currentTask.label);
-                    finString = "";
-                    areaDropdownValue = 'Study';
-                    durationDropdownValue = 15;
-                    preftimeDropDownValue = 'Not Fixed Time';
-                    difficultyDropDownValue = 'Easy';
-                    importanceLevel = 1.0; // New variable for importance level
-                    currTime = DateTime.now();
-
-
-                  });
+                    setState(() {
+                      if (worked == "Worked") {
+                        taskList.add(currentTask);
+                      }
+                      titleController.clear();
+                      taskNames.add(currentTask.label);
+                      finString = "";
+                      areaDropdownValue = 'Study';
+                      durationDropdownValue = 15;
+                      preftimeDropDownValue = 'Not Fixed Time';
+                      difficultyDropDownValue = 'Easy';
+                      importanceLevel =
+                      1.0; // New variable for importance level
+                      currTime = DateTime.now();
+                    });
+                  }
 
                   Widget okButton = TextButton(
                     child: Text("OK"),
@@ -208,45 +210,48 @@ class TaskPageState extends State<TaskPage> {
 
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return TodoInformationPopup(titleController: titleController);
       },
     ).then((value) {
-      currTask = Task(
-        area: areaDropdownValue,
-        label: titleController.text,
-        duration: durationDropdownValue,
-        preferredTimeOfTask: preftimeDropDownValue,
-        difficultyOfTask: difficultyDropDownValue,
-        fixedTime: fixedTime,
-        background: Colors.white,
-        importanceLevel: importanceLevel.round(),
-      );
+      if(value == true) {
+        currTask = Task(
+          area: areaDropdownValue,
+          label: titleController.text,
+          duration: durationDropdownValue,
+          preferredTimeOfTask: preftimeDropDownValue,
+          difficultyOfTask: difficultyDropDownValue,
+          fixedTime: fixedTime,
+          background: Colors.white,
+          importanceLevel: importanceLevel.round(),
+        );
 
-      setState(() {
-        taskList[index] = currTask;
-        titleController.clear();
-        fixedTime = DateTime(0);
-      });
+        setState(() {
+          taskList[index] = currTask;
+          titleController.clear();
+          fixedTime = DateTime(0);
+        });
 
-      Widget okButton = TextButton(
-        child: Text("OK"),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
-      AlertDialog alert = AlertDialog(
-        title: Text("Tasks Edited"),
-        actions: [
-          okButton,
-        ],
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
+        Widget okButton = TextButton(
+          child: Text("OK"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+        AlertDialog alert = AlertDialog(
+          title: Text("Tasks Edited"),
+          actions: [
+            okButton,
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
     });
   }
 }

@@ -46,12 +46,14 @@ class ScheduleHomePageState extends StatefulWidget {
       prefs = await SharedPreferences.getInstance();
       TimePrefs = await SharedPreferences.getInstance();
 
-
+      if(TimePrefs.getString('selectedSplit') == null){
+        TimePrefs.setString('selectedSplit', "30");
+      }
       schedule = Schedule(
         scheduleDate: DateTime.now(),
         studyMethod: prefs.getString('selectedWork') ?? 'Interleaved Practice',
         // Add a default value if needed
-        workingtime: int.parse(TimePrefs.getString('selectedSplit')!.substring(0, 2)),
+        workingtime: int.parse(TimePrefs.getString('selectedSplit')!. substring(0, 2)),
       );
 
       _initializeSchedule();
