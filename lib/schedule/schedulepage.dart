@@ -227,7 +227,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
               ],
               style: TimePlannerStyle(
                 backgroundColor: Colors.white,
-                cellHeight: 150,
+                cellHeight: 100,
                 cellWidth: 340,
                 dividerColor: Colors.black,
                 showScrollBar: true,

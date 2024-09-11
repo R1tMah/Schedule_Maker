@@ -19,7 +19,7 @@ class SettingsPage extends StatelessWidget {
           child: ListView(
             children: [
               _CustomListTile(
-                  title: "Adjustments",
+                  title: "Preferences",
                   onTap: () {
                     Navigator.push(
                       context,
@@ -37,7 +37,7 @@ class SettingsPage extends StatelessWidget {
                     );
                   }),
               _CustomListTile(
-                  title: "About Us Page",
+                  title: "About Us",
                   onTap: () {
                     Navigator.push(
                       context,
@@ -97,7 +97,7 @@ class ModificationsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.teal[900],
         foregroundColor: Colors.white,
-        title: const Text('Modifications Page'),
+        title: const Text('Preferences Page'),
       ),
       body: Center(
         child: Container(
