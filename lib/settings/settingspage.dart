@@ -19,45 +19,14 @@ class SettingsPage extends StatelessWidget {
           child: ListView(
             children: [
               _CustomListTile(
-                title: "Retake Personalized Quiz",
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => QuizApp()
-                      ),
-                  );
-                }
-            ),
-              _CustomListTile(
-                  title: "Change Split",
-
+                  title: "Adjustments",
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ChangeSplitPage()),
+                          builder: (context) => ModificationsPage()),
                     );
                   }),
-              _CustomListTile(
-                  title: "Change Work Technique",
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChangeWorkPage()),
-                    );
-                  }),
-              _CustomListTile(
-                title: "Change Start Time",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EleventhQuestion(),
-                    ),
-                  );
-                },
-              ),
               _CustomListTile(
                   title: "Notifications",
                   onTap: () {
@@ -114,6 +83,69 @@ class RetakePersonalizedQuizPage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {},
           child: const Text('Retake Personalized Quiz'),
+        ),
+      ),
+    );
+  }
+}
+
+class ModificationsPage extends StatelessWidget {
+  const ModificationsPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal[900],
+        foregroundColor: Colors.white,
+        title: const Text('Modifications Page'),
+      ),
+      body: Center(
+        child: Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: ListView(
+              children: [
+                _CustomListTile(
+                    title: "Retake Personalized Quiz",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => QuizApp()
+                        ),
+                      );
+                    }
+                ),
+                _CustomListTile(
+                    title: "Change Split",
+
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangeSplitPage()),
+                      );
+                    }),
+                _CustomListTile(
+                    title: "Change Work Technique",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangeWorkPage()),
+                      );
+                    }),
+                _CustomListTile(
+                  title: "Change Start Time",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EleventhQuestion(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            )
         ),
       ),
     );

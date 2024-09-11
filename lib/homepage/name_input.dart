@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/homepage.dart';
 import 'package:ran_app/questions/quiz.dart';
-var name = ' ';
-var firstTime = 1;
+import 'package:shared_preferences/shared_preferences.dart';
+
 class NameInputPage extends StatefulWidget {
   const NameInputPage({Key? key}) : super(key: key);
 
@@ -19,6 +19,11 @@ class _NameInputPageState extends State<NameInputPage> {
     super.dispose();
   }
 
+  Future<void> _setFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('firstTime', false); // Mark that the user has completed the first-time input
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,29 +38,27 @@ class _NameInputPageState extends State<NameInputPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              style: TextStyle(
-                  color: Colors.white
-              ),
+              style: TextStyle(color: Colors.white),
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: 'Name',
-                labelStyle: TextStyle(
-                    color: Colors.white
-                ),
+                labelStyle: TextStyle(color: Colors.white),
                 border: OutlineInputBorder(),
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Get the entered name
-                name = _nameController.text;
-                // Call the callback function to pass the name to the parent widget
-                firstTime = 0;
-                // Navigate back
-                Navigator.push(
+                String name = _nameController.text;
+
+                // Mark the user has passed the name input
+                await _setFirstTime();
+
+                // Navigate to QuizApp or HomePage
+                Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>  QuizApp()),
+                  MaterialPageRoute(builder: (context) => QuizApp()),
                 );
               },
               child: const Text('Submit'),

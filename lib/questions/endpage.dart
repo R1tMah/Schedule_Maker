@@ -169,7 +169,7 @@ class _EndPageState extends State<EndPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const MyHomePage()),
                     );
