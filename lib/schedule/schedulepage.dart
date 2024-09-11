@@ -36,7 +36,9 @@ class SchedulePage extends State<ScheduleHomePageState> {
   Future<void> _initializeSchedulePage() async {
     prefs = await SharedPreferences.getInstance();
     TimePrefs = await SharedPreferences.getInstance();
-
+    if(TimePrefs.getString('selectedSplit') == null){
+      TimePrefs.setString('selectedSplit', "30");
+    }
     schedule = Schedule(
       scheduleDate: DateTime.now(),
       studyMethod: prefs.getString('selectedWork') ?? 'Interleaved Practice',
