@@ -42,8 +42,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
     schedule = Schedule(
       scheduleDate: DateTime.now(),
       studyMethod: prefs.getString('selectedWork') ?? 'Interleaved Practice',
-      workingtime: int.parse(
-          TimePrefs.getString('selectedSplit')!.substring(0, 2)),
+      workingtime: int.parse(TimePrefs.getString('selectedSplit')!.substring(0, 2)),
     );
 
     _initializeSchedule();
@@ -197,11 +196,9 @@ class SchedulePage extends State<ScheduleHomePageState> {
 
     print("This is what pp is in the task time map right now. \n");
     for (Task t in schedule.taskTimeMap.keys) {
-      print("Task " + t.getLabel() +
-          " is scheduled for ${schedule.taskTimeMap[t]}\n");
+      print("Task " + t.getLabel() + " is scheduled for ${schedule.taskTimeMap[t]}\n");
     }
-    print(
-        "_________________________________________________________________________\n");
+    print("_________________________________________________________________________\n");
 
     String content = jsonEncode(mapToJson(schedule.taskTimeMap));
     await _dbService.deleteSchedule(intDate);
@@ -227,8 +224,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
 
   Map<String, dynamic> mapToJson(Map<Task, DateTimeRange> map) {
     return map.map((task, dateTimeRange) =>
-        MapEntry(
-            jsonEncode(task.toJson()), dateTimeRangeToJson(dateTimeRange)));
+        MapEntry(jsonEncode(task.toJson()), dateTimeRangeToJson(dateTimeRange)));
   }
 
   @override
@@ -246,9 +242,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
               headers: [
                 TimePlannerTitle(
                   date: DateFormat('MM-dd-yyyy').format(DateTime.now()),
-                  title: DateFormat('EEEE').format(DateTime.now()),
-
-                  /// e.g Thursday,
+                  title: DateFormat('EEEE').format(DateTime.now()), /// e.g Thursday,
                 ),
               ],
               style: TimePlannerStyle(
