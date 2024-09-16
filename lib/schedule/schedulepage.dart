@@ -36,7 +36,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
   Future<void> _initializeSchedulePage() async {
     prefs = await SharedPreferences.getInstance();
     TimePrefs = await SharedPreferences.getInstance();
-    if(TimePrefs.getString('selectedSplit') == null){
+    if (TimePrefs.getString('selectedSplit') == null) {
       TimePrefs.setString('selectedSplit', "30");
     }
     schedule = Schedule(
@@ -107,16 +107,36 @@ class SchedulePage extends State<ScheduleHomePageState> {
               content: Text(printInfo(currTask)),
             ));
           },
-          // Modify the child widget to include task name and time
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                '${currTask.getLabel()}',
-                style: TextStyle(color: Colors.grey[350], fontSize: 12),
+              Flexible(
+                child: Text(
+                  '${currTask.getLabel()}',
+                  style: TextStyle(
+                    color: Colors.grey[350],
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
-              Text(
-                '$startTime - $endTime', // Display the time next to the task name in 12-hour format
-                style: TextStyle(color: Colors.grey[350], fontSize: 10),
+              SizedBox(width: 4), // Space between task name and time
+              Flexible(
+                child: Text(
+                  '$startTime - $endTime',
+                  style: TextStyle(
+                    color: Colors.grey[350],
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.right,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
             ],
           ),
@@ -174,7 +194,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
     String stringDate = "${year}${strMonth}${strDay}";
     int intDate = int.parse(stringDate);
 
-    print("This is what pp is in the task tim map right now. \n");
+    print("This is what pp is in the task time map right now. \n");
     for (Task t in schedule.taskTimeMap.keys) {
       print("Task " + t.getLabel() + " is scheduled for ${schedule.taskTimeMap[t]}\n");
     }
