@@ -69,13 +69,13 @@ class _EndPageState extends State<EndPage> {
   Future<void> _loadPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _currentSplit = prefs.getString('selectedSplit') ?? '30-10 rule';
-      _currentWork = prefs.getString('selectedWork') ?? 'Interleaved Practice';
+      _currentSplit = prefs.getString('selectedSplit') ?? "30";
+      _currentWork = prefs.getString('selectedWork') ?? "Interleaved Practice";
     });
   }
 
   Future<String> fetchResponse() async {
-    final response = await http.post(
+    final chatResponse = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
       headers: {
         'Content-Type': 'application/json',
@@ -93,9 +93,11 @@ class _EndPageState extends State<EndPage> {
         },
       ),
     );
-    print('Response status code: ${response.statusCode}');
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+
+    print('Response status code: ${chatResponse.statusCode}');
+    if (chatResponse.statusCode == 200) {
+      final data = jsonDecode(chatResponse.body);
+      response = data['choices'][0]['message']['content'];
       return data['choices'][0]['message']['content'];
     } else {
       throw Exception('Failed to load data');
@@ -147,9 +149,11 @@ class _EndPageState extends State<EndPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
+            print("Response: " + response);
             String responseText = snapshot.data.toString();
             String split = _currentSplit;
-            String work = _currentWork;
+            print("Split: " + split);
+            work = _currentWork;
 
             return Column(
               children: [
