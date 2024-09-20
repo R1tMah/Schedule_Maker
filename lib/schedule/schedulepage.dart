@@ -37,7 +37,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
     prefs = await SharedPreferences.getInstance();
     TimePrefs = await SharedPreferences.getInstance();
     if (TimePrefs.getString('selectedSplit') == null) {
-      TimePrefs.setString('selectedSplit', "30");
+      TimePrefs.setString('selectedSplit', (response.split(", ")[0]).split("-")[0]);
     }
     schedule = Schedule(
       scheduleDate: DateTime.now(),

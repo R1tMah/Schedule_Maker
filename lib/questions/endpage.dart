@@ -108,11 +108,11 @@ class _EndPageState extends State<EndPage> {
   String fetchDisplay(String split, String work) {
     String result = "Based on your answers, we've analyzed your responses and determined the best techniques to help you maximize your productivity and focus. Here's what we recommend:\n\n\n";
 
-    if(split == '30-10 rule'){
+    if(split == '30'){
       result += "The 30-10 rule is a time management technique where you work for 30 minutes followed by a 10-minute break. This method helps maintain focus and productivity by giving your brain regular intervals of rest.\n\n";
-    } else if(split == '60-20 rule') {
+    } else if(split == '60') {
       result += "The 60-20 rule suggests working for 60 minutes and then taking a 20-minute break. This approach allows for deep focus while also ensuring you have time to recharge, which can enhance long-term productivity.\n\n";
-    } else if(split == '90-30 rule') {
+    } else if(split == '90') {
       result += "The 90-30 rule involves working for 90 minutes followed by a 30-minute break. This technique is ideal for tackling large tasks that require sustained attention, providing ample time for rest afterward.\n\n";
     } else {
       result += "No split technique selected.\n\n";
@@ -151,6 +151,8 @@ class _EndPageState extends State<EndPage> {
           } else {
             print("Response: " + response);
             String responseText = snapshot.data.toString();
+            _currentSplit = (response.toString().split(", ")[0]).split("-")[0];
+            _currentWork = response.toString().split(", ")[1];
             String split = _currentSplit;
             print("Split: " + split);
             work = _currentWork;
