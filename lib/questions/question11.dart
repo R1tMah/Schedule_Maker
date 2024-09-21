@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 var answer11 = '';
-DateTime? selectedWakeUp = DateTime.now();
+DateTime? selectedWakeUp = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 0);
 
 class EleventhQuestion extends StatefulWidget {
   @override

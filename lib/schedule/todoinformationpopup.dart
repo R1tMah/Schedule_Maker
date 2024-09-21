@@ -6,7 +6,7 @@ import 'package:ran_app/schedule/taskpage.dart';
 import 'package:ran_app/schedule/task.dart';
 
 List<String> taskNames = []; // Global list to store task names
-
+String error = "";
 // Global variable to store the selected fixed time
 DateTime fixedTime = DateTime(DateTime.tuesday);
 String finString = '';
@@ -155,6 +155,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
           children: [
             const SizedBox(height: 10,),
             const Text("Add Task", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 35),),
+            Text(error, style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20)),
             const SizedBox(height: 40,),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
@@ -355,10 +356,13 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               child: const Text("ADD"),
               onPressed: () {
                 finString = "";
+                error = "";
                 String taskName = widget.titleController.text.trim().toLowerCase();
                 if (taskNames.contains(taskName)) {
                   print("Hi");
-
+                  setState(() {
+                    error = "This task name already exists!";
+                  });
                   _showDuplicateTaskDialog();
                 } else {
 
@@ -386,6 +390,13 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                               ],
                             );
                           });
+                      setState(() {
+                        error = "This time overlaps with the task ${checkFixedTimes(
+                            DateTimeRange(start: fixedTime,
+                                end: fixedTime.add(Duration(
+                                    minutes: durationDropdownValue))))}!";
+                      });
+
                       worked = "Didn't work";
                     }
 
@@ -414,6 +425,8 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
               ),
               child: const Text("CANCEL"),
               onPressed: () {
+                String taskName = widget.titleController.text.trim().toLowerCase();
+                taskNames.remove(taskName);
                 Navigator.of(context).pop(false); // Closes the popup when clicked
               },
             ),
