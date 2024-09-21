@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ran_app/questions/endpage.dart';
 
 class ChangeWorkPage extends StatefulWidget {
+  final String initalWorking;
+
+  ChangeWorkPage({Key? key, this.initalWorking = "Interleaved Practice"}) : super(key: key);
+
   @override
   _ChangeWorkPageState createState() => _ChangeWorkPageState();
 }
@@ -13,12 +18,13 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
   void initState() {
     super.initState();
     _loadWork();
+
   }
 
   Future<void> _loadWork() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _selectedWork = prefs.getString('selectedWork') ?? 'Nothing';
+      _selectedWork = prefs.getString('selectedWork') ?? 'Interleaved Practice';
     });
   }
 
