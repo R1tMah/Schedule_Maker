@@ -3,6 +3,12 @@ import 'package:table_calendar/table_calendar.dart';
 import 'dart:convert';
 import 'package:ran_app/databaseService.dart';
 import 'package:ran_app/schedule/task.dart';
+import 'package:time_planner/time_planner.dart';
+import 'package:ran_app/homepage/historyDisplay.dart';
+import 'package:intl/intl.dart';
+
+List<TimePlannerTask> finaltasks = [];
+Map<Task, DateTimeRange> retrievedMap = {};
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -69,7 +75,8 @@ class _HistoryPageState extends State<HistoryPage> {
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
                       _selectedDay = selectedDay;
-                      _focusedDay = focusedDay; // update `_focusedDay` here as well
+                      _focusedDay =
+                          focusedDay; // update `_focusedDay` here as well
                     });
                     _getData(_selectedDay);
                   },
@@ -77,10 +84,14 @@ class _HistoryPageState extends State<HistoryPage> {
                     _focusedDay = focusedDay;
                   },
                   calendarStyle: CalendarStyle(
-                    defaultTextStyle: TextStyle(color: Colors.black87), // Default day text color
-                    weekendTextStyle: TextStyle(color: Colors.black87), // Weekend day text color
-                    selectedTextStyle: TextStyle(color: Colors.black), // Selected day text color
-                    todayTextStyle: TextStyle(color: Colors.black), // Today's day text color
+                    defaultTextStyle: TextStyle(color: Colors.black87),
+                    // Default day text color
+                    weekendTextStyle: TextStyle(color: Colors.black87),
+                    // Weekend day text color
+                    selectedTextStyle: TextStyle(color: Colors.black),
+                    // Selected day text color
+                    todayTextStyle: TextStyle(color: Colors.black),
+                    // Today's day text color
                     todayDecoration: BoxDecoration(
                       color: Colors.white, // Background color for today
                       shape: BoxShape.circle,
@@ -92,7 +103,8 @@ class _HistoryPageState extends State<HistoryPage> {
                     ),
                   ),
                   headerStyle: HeaderStyle(
-                    titleTextStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    titleTextStyle: TextStyle(
+                        color: Colors.black, fontSize: 16),
                     leftChevronIcon: Icon(
                       Icons.chevron_left,
                       color: Colors.black,
@@ -112,24 +124,31 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  void _getData(DateTime date) async {
-    final DatabaseService _dbService = DatabaseService.instance;
+  DateTimeRange dateTimeRangeFromJson(Map<String, String> json) {
+    return DateTimeRange(
+      start: DateTime.parse(json['start']!),
+      end: DateTime.parse(json['end']!),
+    );
+  }
 
-    Map<Task, DateTimeRange> retrievedMap = {};
+  void _getData(DateTime date) async {
+    finaltasks = [];
+    retrievedMap = {};
+    final DatabaseService _dbService = DatabaseService.instance;
 
     int month = date.month;
     int day = date.day;
     int year = date.year;
 
     String strMonth = '';
-    if(month < 10) {
+    if (month < 10) {
       strMonth = '0${month}';
     } else {
       strMonth = '${month}';
     }
 
     String strDay = '';
-    if(day < 10) {
+    if (day < 10) {
       strDay = '0${day}';
     } else {
       strDay = '${day}';
@@ -141,30 +160,133 @@ class _HistoryPageState extends State<HistoryPage> {
     int inputInt = int.parse(stringDate);
     String? data = await _dbService.getSchedule(inputInt);
     if (data != null) {
-      if(data != 'No data found for provided date'){
+      if (data != 'No data found for provided date') {
         Map<String, dynamic> jsonMap = jsonDecode(data);
         retrievedMap = jsonMap.map((taskJsonString, dateTimeRangeJson) {
           Map<String, dynamic> taskJson = jsonDecode(taskJsonString);
           Task task = Task.fromJson(taskJson);
-          DateTimeRange range = dateTimeRangeFromJson(Map<String, String>.from(dateTimeRangeJson));
+          DateTimeRange range = dateTimeRangeFromJson(
+              Map<String, String>.from(dateTimeRangeJson));
           return MapEntry(task, range);
         });
       } else {
         print("No schedule found");
+        return;
       }
     }
 
     print("This is what is in the task tim map right now. \n");
-    for(Task t in retrievedMap.keys){
-      print("Task " + t.getLabel() + " is scheduled for ${retrievedMap[t]}\n" );
+    for (Task t in retrievedMap.keys) {
+      print("Task " + t.getLabel() + " is scheduled for ${retrievedMap[t]}\n");
     }
-    print("_________________________________________________________________________\n");
+    print(
+        "_________________________________________________________________________\n");
+
+    retrievedMap.forEach((task, timeSlot) {
+      _addTaskTimeObject(context, task);
+    });
+
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => HistoryDisplay(),
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+      ),
+    );
   }
 
-  DateTimeRange dateTimeRangeFromJson(Map<String, String> json) {
-    return DateTimeRange(
-      start: DateTime.parse(json['start']!),
-      end: DateTime.parse(json['end']!),
-    );
+  void _addTaskTimeObject(BuildContext context, Task currTask) {
+    Color color;
+    if (currTask.getLabel() == "Break") {
+      color = Colors.blue;
+    } else if (currTask.getArea() == "Study") {
+      color = Colors.green;
+    } else if (currTask.getArea() == "Food") {
+      color = Colors.yellow;
+    } else {
+      color = Colors.red;
+    }
+
+    setState(() {
+      int? hour = retrievedMap[currTask]?.start.hour;
+      int? minutes = retrievedMap[currTask]?.start.minute;
+
+      // Get the formatted start and end time in 12-hour format with AM/PM
+      String startTime =
+      DateFormat('h:mm a').format(retrievedMap[currTask]!.start);
+      String endTime =
+      DateFormat('h:mm a').format(retrievedMap[currTask]!.end);
+
+      finaltasks.add(
+        TimePlannerTask(
+          color: color,
+          dateTime: TimePlannerDateTime(
+            day: 0,
+            hour: hour!,
+            minutes: minutes!,
+          ),
+          minutesDuration: currTask.duration,
+          daysDuration: 1,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(printInfo(currTask)),
+            ));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  '${currTask.getLabel()}',
+                  style: TextStyle(
+                    color: Colors.grey[350],
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+              SizedBox(width: 4), // Space between task name and time
+              Flexible(
+                child: Text(
+                  '$startTime - $endTime',
+                  style: TextStyle(
+                    color: Colors.grey[350],
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.right,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  String printInfo(Task task) {
+    DateTime? start = retrievedMap[task]?.start;
+    DateTime? end = retrievedMap[task]?.end;
+    if (task.getLabel() != "Break") {
+      return "Task " +
+          task.getLabel() +
+          ": " +
+          DateFormat('h:mm a').format(start!) +
+          "-" +
+          DateFormat('h:mm a').format(end!);
+    } else {
+      return "Break from" +
+          ": " +
+          DateFormat('h:mm a').format(start!) +
+          "-" +
+          DateFormat('h:mm a').format(end!);
+    }
   }
 }
