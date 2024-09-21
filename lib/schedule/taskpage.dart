@@ -149,7 +149,7 @@ class TaskPageState extends State<TaskPage> {
                         taskList.add(currentTask);
                       }
                       titleController.clear();
-                      taskNames.add(currentTask.label);
+
                       finString = "";
                       areaDropdownValue = 'Study';
                       durationDropdownValue = 15;

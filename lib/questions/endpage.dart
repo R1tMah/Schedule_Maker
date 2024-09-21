@@ -20,6 +20,8 @@ import '../settings/change_split_page.dart';
 import '../settings/change_work_page.dart';
 
 var response = '';
+var work = '';
+var workingMethod = '';
 var prompt = 'Questions and options: 1) How frequently do you check your phone '
     'notifications throughout the day? [Very frequently, Frequently, Sometimes'
     ', Not frequently, Very rarely] 2) On a scale of 1 to 10, how motivated do'
@@ -45,7 +47,7 @@ var prompt = 'Questions and options: 1) How frequently do you check your phone '
     'the following that best fits the person: Interleaved Practice, Eat That '
     'Frog Technique, ABCDE method, Premack          When giving the answer, '
     'only give the answers to the two questions separated by a comma';
-late String _currentWork = 'Interleaved Practice'; // Default value
+late String _currentWork = ''; // Default value
 
 class EndPage extends StatefulWidget {
   const EndPage({Key? key}) : super(key: key);
@@ -55,7 +57,7 @@ class EndPage extends StatefulWidget {
 }
 
 class _EndPageState extends State<EndPage> {
-  late String _currentSplit = '30-10 rule'; // Default value
+  late String _currentSplit = ''; // Default value
 
 
   @override
@@ -67,13 +69,13 @@ class _EndPageState extends State<EndPage> {
   Future<void> _loadPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _currentSplit = prefs.getString('selectedSplit') ?? '30-10 rule';
-      _currentWork = prefs.getString('selectedWork') ?? 'Interleaved Practice';
+      _currentSplit = prefs.getString('selectedSplit') ?? "30";
+      _currentWork = prefs.getString('selectedWork') ?? "Interleaved Practice";
     });
   }
 
   Future<String> fetchResponse() async {
-    final response = await http.post(
+    final chatResponse = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
       headers: {
         'Content-Type': 'application/json',
@@ -91,23 +93,26 @@ class _EndPageState extends State<EndPage> {
         },
       ),
     );
-    print('Response status code: ${response.statusCode}');
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+
+    print('Response status code: ${chatResponse.statusCode}');
+    if (chatResponse.statusCode == 200) {
+      final data = jsonDecode(chatResponse.body);
+      response = data['choices'][0]['message']['content'];
       return data['choices'][0]['message']['content'];
     } else {
       throw Exception('Failed to load data');
     }
+
   }
 
   String fetchDisplay(String split, String work) {
     String result = "Based on your answers, we've analyzed your responses and determined the best techniques to help you maximize your productivity and focus. Here's what we recommend:\n\n\n";
 
-    if(split == '30-10 rule'){
+    if(split == '30'){
       result += "The 30-10 rule is a time management technique where you work for 30 minutes followed by a 10-minute break. This method helps maintain focus and productivity by giving your brain regular intervals of rest.\n\n";
-    } else if(split == '60-20 rule') {
+    } else if(split == '60') {
       result += "The 60-20 rule suggests working for 60 minutes and then taking a 20-minute break. This approach allows for deep focus while also ensuring you have time to recharge, which can enhance long-term productivity.\n\n";
-    } else if(split == '90-30 rule') {
+    } else if(split == '90') {
       result += "The 90-30 rule involves working for 90 minutes followed by a 30-minute break. This technique is ideal for tackling large tasks that require sustained attention, providing ample time for rest afterward.\n\n";
     } else {
       result += "No split technique selected.\n\n";
@@ -144,9 +149,13 @@ class _EndPageState extends State<EndPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
+            print("Response: " + response);
             String responseText = snapshot.data.toString();
+            _currentSplit = (response.toString().split(", ")[0]).split("-")[0];
+            _currentWork = response.toString().split(", ")[1];
             String split = _currentSplit;
-            String work = _currentWork;
+            print("Split: " + split);
+            work = _currentWork;
 
             return Column(
               children: [

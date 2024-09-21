@@ -18,7 +18,7 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
   Future<void> _loadWork() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _selectedWork = prefs.getString('selectedWork') ?? 'Interleaved Practice';
+      _selectedWork = prefs.getString('selectedWork') ?? 'Nothing';
     });
   }
 

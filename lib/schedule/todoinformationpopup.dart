@@ -119,6 +119,9 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
   }
 
   void _showDuplicateTaskDialog() {
+    if (!mounted) return;
+
+    print("got to here!");
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -136,6 +139,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
         );
       },
     );
+    print("got to here part 2!");
   }
 
   @override
@@ -353,6 +357,8 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                 finString = "";
                 String taskName = widget.titleController.text.trim().toLowerCase();
                 if (taskNames.contains(taskName)) {
+                  print("Hi");
+
                   _showDuplicateTaskDialog();
                 } else {
 
@@ -382,15 +388,17 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
                           });
                       worked = "Didn't work";
                     }
-                    taskNames.add(taskName);
+
 
                     print("Selected Fixed Time: $fixedTime");
-
+                    taskNames.add(taskName);
+                    print("Selected Fixed Time: $fixedTime");
 
                   }
                   else{
                     taskNames.add(taskName);
                   }
+                  print("Task Name: " + taskName);
                   print("Selected Importance Level: $importanceLevel"); // Print the importance level
 
                 }
@@ -401,7 +409,7 @@ class _TodoInformationPopupState extends State<TodoInformationPopup> {
             const SizedBox(height: 10,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, // Cancel button styling
+                backgroundColor: Colors.red, // Cancel button styling
                 textStyle: const TextStyle(fontWeight: FontWeight.bold),
               ),
               child: const Text("CANCEL"),
