@@ -18,7 +18,6 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
   void initState() {
     super.initState();
     _loadWork();
-
   }
 
   Future<void> _loadWork() async {
@@ -51,7 +50,7 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.black54,
+                color: Colors.white,  // Changed to white
               ),
               textAlign: TextAlign.center,
             ),
@@ -73,7 +72,10 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
                   value: value,
                   child: Text(
                     value,
-                    style: const TextStyle(fontSize: 18),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,  // Changed to white
+                    ),
                   ),
                 );
               }).toList(),
