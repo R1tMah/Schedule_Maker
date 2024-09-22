@@ -42,7 +42,7 @@ class _ChangeSplitPageState extends State<ChangeSplitPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,  // Changed to white
+                color: Colors.white,  // Only this text is white
               ),
               textAlign: TextAlign.center,
             ),
@@ -62,7 +62,7 @@ class _ChangeSplitPageState extends State<ChangeSplitPage> {
                     value,
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Colors.white,  // Changed to white
+                      color: Colors.black,  // Text remains black
                     ),
                   ),
                 );

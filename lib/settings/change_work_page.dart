@@ -50,7 +50,7 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,  // Changed to white
+                color: Colors.white,  // Only this text is white
               ),
               textAlign: TextAlign.center,
             ),
@@ -74,7 +74,7 @@ class _ChangeWorkPageState extends State<ChangeWorkPage> {
                     value,
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Colors.white,  // Changed to white
+                      color: Colors.black,  // Text remains black
                     ),
                   ),
                 );
