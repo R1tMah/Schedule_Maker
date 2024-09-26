@@ -26,7 +26,7 @@ class Schedule {
   List<Task> currTaskList = [];
 
   List<Task> currStudyTaskList = [];
-
+  var overflow = false;
   List<Task> easyTasks = [];
   List<Task> mediumTasks = [];
   List<Task> hardTasks = [];
@@ -44,6 +44,9 @@ class Schedule {
   List<Task> rotationList = []; //length of the list is workingtime/subtask
   var subtasktime;
 
+  bool getOverflow(){
+    return overflow;
+  }
   //adds tasks to currTaskList
   void setTasks(List<Task> taskList){
     for(int i = 0; i < taskList.length; i++){
@@ -183,12 +186,7 @@ class Schedule {
       currTime = currTime.add(const Duration(minutes: 15));
     }
   }
-  bool TimeAfterTwelve(){
-    if(currTime.isAfter(DateTime(DateTime.now().day, 23, 59))){
-      return true;
-    }
-    return false;
-  }
+
 
   void addToTaskTimeMap(int duration){
     Task newTask =  Task(
@@ -235,6 +233,10 @@ class Schedule {
   //add
   void scheduleTimesBasedOnList(List<Task> taskList){
     while(taskList.isNotEmpty){
+      if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59))){
+        overflow = true;
+      }
+      print("Overflow ${overflow}");
 
       int breakValue = 0;
 
@@ -332,7 +334,9 @@ class Schedule {
   void interleavedPractice(){
 
     while(currStudyTaskList.isNotEmpty){
-
+      if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59))){
+        overflow = true;
+      }
       printTaskTimeMap();
       printSubSessionsMap();
       printTaskList(currStudyTaskList);
@@ -516,7 +520,9 @@ class Schedule {
         addToTaskTimeMap(othertasks[0].duration);
         othertasks.removeAt(0);
         currTime = currTime.add(Duration(minutes: currTask.duration));
-
+        if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59))){
+          overflow = true;
+        }
       }
       if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 58))){
         print("There are way too many tasks right now");
@@ -553,9 +559,35 @@ class Schedule {
         currTime = currTime.add(Duration(minutes: currTask.duration));
       }
     }
+    if(currTime.isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59))){
+      overflow = true;
+    }
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

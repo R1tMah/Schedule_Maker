@@ -207,7 +207,7 @@ class TaskPageState extends State<TaskPage> {
 
   void _showEditReminderDialog(int index) {
     Task currTask = Task();
-
+    taskNames.removeAt(index);
     showDialog(
       context: context,
       barrierDismissible: false,

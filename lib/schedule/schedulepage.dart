@@ -91,7 +91,6 @@ class SchedulePage extends State<ScheduleHomePageState> {
       DateFormat('h:mm a').format(schedule.taskTimeMap[currTask]!.start);
       String endTime =
       DateFormat('h:mm a').format(schedule.taskTimeMap[currTask]!.end);
-
       finaltasks.add(
         TimePlannerTask(
           color: color,
@@ -147,10 +146,18 @@ class SchedulePage extends State<ScheduleHomePageState> {
 
   void _populateTimePlannerTasks() {
     schedule.scheduleTime();
-    schedule.taskTimeMap.forEach((task, timeSlot) {
-      print("Adding ${task.getLabel()} to the final tasks.");
-      _addTaskTimeObject(context, task);
-    });
+    if(schedule.getOverflow() == true){
+      print("You have too many tasks");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("You have too many tasks or your tasks are too long to fit in the schedule. Please change your tasks in the task page."),
+      ));
+    }
+    else {
+      schedule.taskTimeMap.forEach((task, timeSlot) {
+        print("Adding ${task.getLabel()} to the final tasks.");
+        _addTaskTimeObject(context, task);
+      });
+    }
   }
 
   void _initializeSchedule() {
