@@ -11,7 +11,7 @@ import 'package:ran_app/settings/change_work_page.dart';
 import 'package:ran_app/questions/endpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-late Schedule schedule;
+late Schedule schedule;//k
 DateTime lastScheduleDate = DateTime.now();
 
 class ScheduleHomePageState extends StatefulWidget {
@@ -170,9 +170,11 @@ class SchedulePage extends State<ScheduleHomePageState> {
     if (now.day != lastScheduleDate.day ||
         now.month != lastScheduleDate.month ||
         now.year != lastScheduleDate.year) {
+      print("Time Changed!");
       // Reset the schedule
       _resetSchedule();
     }
+
     lastScheduleDate = now;
   }
 
@@ -248,8 +250,8 @@ class SchedulePage extends State<ScheduleHomePageState> {
               endHour: 23,
               headers: [
                 TimePlannerTitle(
-                  date: DateFormat('MM-dd-yyyy').format(DateTime.now()),
-                  title: DateFormat('EEEE').format(DateTime.now()), /// e.g Thursday,
+                  date: DateFormat('MM-dd-yyyy').format(lastScheduleDate),
+                  title: DateFormat('EEEE').format(lastScheduleDate), /// e.g Thursday,
                 ),
               ],
               style: TimePlannerStyle(
