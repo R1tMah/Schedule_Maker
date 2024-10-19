@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ran_app/homepage/homepage.dart';
 import 'package:ran_app/questions/quiz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:notification_permissions/notification_permissions.dart';
+
+var notificationPermission = false;
 
 class NameInputPage extends StatefulWidget {
   const NameInputPage({Key? key}) : super(key: key);
@@ -17,6 +20,17 @@ class _NameInputPageState extends State<NameInputPage> {
   void dispose() {
     _nameController.dispose();
     super.dispose();
+  }
+
+  Future<void> _requestNotificationPermission() async {
+    // Request the permission
+    var permissionStatus = await NotificationPermissions.requestNotificationPermissions();
+    if (permissionStatus == PermissionStatus.granted) {
+      notificationPermission = true;
+      print("Notification permission granted");
+    } else {
+      print("Notification permission denied");
+    }
   }
 
   Future<void> _setFirstTime() async {
@@ -49,13 +63,12 @@ class _NameInputPageState extends State<NameInputPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                // Get the entered name
-                String name = _nameController.text;
 
-                // Mark the user has passed the name input
+                await _requestNotificationPermission();
+
+                print(notificationPermission);
+
                 await _setFirstTime();
-
-                // Navigate to QuizApp or HomePage
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => QuizApp()),

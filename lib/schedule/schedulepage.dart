@@ -12,7 +12,8 @@ import 'package:ran_app/questions/endpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late Schedule schedule;
-DateTime lastScheduleDate = DateTime.now();
+//DateTime lastScheduleDate = DateTime.now();
+DateTime lastScheduleDate = DateTime.now().subtract(Duration(days: 1));
 
 class ScheduleHomePageState extends StatefulWidget {
   final List<Task> tasks; // Receive the list of tasks from previous page
@@ -236,6 +237,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
 
   @override
   Widget build(BuildContext context) {
+    _checkAndResetSchedule();
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -248,8 +250,8 @@ class SchedulePage extends State<ScheduleHomePageState> {
               endHour: 23,
               headers: [
                 TimePlannerTitle(
-                  date: DateFormat('MM-dd-yyyy').format(DateTime.now()),
-                  title: DateFormat('EEEE').format(DateTime.now()), /// e.g Thursday,
+                  date: DateFormat('MM-dd-yyyy').format(lastScheduleDate),
+                  title: DateFormat('EEEE').format(lastScheduleDate), /// e.g Thursday,
                 ),
               ],
               style: TimePlannerStyle(

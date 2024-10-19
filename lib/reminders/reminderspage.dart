@@ -41,6 +41,9 @@ class _RemindersPageState extends State<RemindersPage> {
     setState(() {
       reminders[index] = Reminder(title: title, reminderTime: reminderTime);
     });
+
+    // Reschedule the notification when the reminder is edited
+    await _storage.scheduleNotification(reminders[index], index);
     await _saveReminders();
   }
 
@@ -48,6 +51,10 @@ class _RemindersPageState extends State<RemindersPage> {
     setState(() {
       reminders.removeAt(index);
     });
+
+    // Cancel the notification when a reminder is deleted
+    await _storage.flutterLocalNotificationsPlugin.cancel(index);
+
     await _saveReminders();
   }
 
