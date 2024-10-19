@@ -45,6 +45,9 @@ dependencies:
   #Event Calender
   time_planner: ^0.1.2+1
 
+  flutter_local_notifications: ^14.0.0
+  permission_handler: ^11.1.0
+
 
 dev_dependencies:
   flutter_test:
