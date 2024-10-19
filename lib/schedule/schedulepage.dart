@@ -252,6 +252,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
                   title: DateFormat('EEEE').format(DateTime.now()), /// e.g Thursday,
                 ),
               ],
+
               style: TimePlannerStyle(
                 backgroundColor: Colors.white,
                 cellHeight: 100,
@@ -260,6 +261,7 @@ class SchedulePage extends State<ScheduleHomePageState> {
                 showScrollBar: true,
                 horizontalTaskPadding: 5,
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
+
               ),
               tasks: finaltasks,
             ),
