@@ -238,6 +238,36 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 8,
+                child: ListView(
+                  children: schedule.taskTimeMap.entries.map((entry) {
+                    Task task = entry.key;
+                    DateTimeRange dateTimeRange = entry.value;
+                    return Card(
+                      child: ListTile(
+                        title: Text(task.getLabel()),
+                        subtitle: Text(
+                            'Scheduled from ${DateFormat('hh:mm a').format(dateTimeRange.start)} to ${DateFormat('hh:mm a').format(dateTimeRange.end)}'),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                    child: Text('Enter Tasks'),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ]
+            /*
             children: <Widget> [
 
               Expanded(
@@ -282,8 +312,13 @@ class _ScheduleTestPageState extends State<ScheduleTestPage> {
                     },
                   ),
                 ),
+
+
               ),
+
             ]
+
+             */
         )
     );
   }
